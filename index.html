@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Developer Portfolio | AI/ML & Python Engineer</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              400: '#38bdf8', // Cyan
+              500: '#0ea5e9', // Blue
+              600: '#0284c7', // Deep Blue
+              accent: '#8b5cf6' // Purple
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          },
+          animation: {
+            'fade-in-up': 'fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          },
+          keyframes: {
+            fadeInUp: {
+              '0%': { opacity: '0', transform: 'translateY(30px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #030712; }
+    .code-font { font-family: 'JetBrains Mono', monospace; }
+    
+    /* Glassmorphism & Cyber Aesthetics */
+    .glass {
+      background: rgba(17, 24, 39, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    
+    .cyber-glow:hover {
+      box-shadow: 0 0 25px rgba(14, 165, 233, 0.25);
+      border-color: rgba(56, 189, 248, 0.5);
+    }
+
+    /* Scroll Reveal Initial State */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .reveal.active-reveal {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* Hide scrollbar for horizontal tabs */
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="text-gray-100 min-h-screen selection:bg-brand-500 selection:text-white relative overflow-x-hidden">
+
+  <!-- ================= BACKGROUND NEURAL CANVAS ================= -->
+  <canvas id="neural-canvas" class="fixed top-0 left-0 w-full h-full" style="z-index: 0; pointer-events: none; opacity: 0.8;"></canvas>
+
+  <!-- ================= ALL CONTENT WRAPPER ================= -->
+  <div class="relative z-10 flex flex-col min-h-screen">
+
+    <!-- ================= TOP NAVIGATION ================= -->
+    <nav class="fixed top-0 left-0 w-full z-40 glass border-b border-gray-800/80">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+        
+        <!-- Logo -->
+        <a href="#" class="text-lg sm:text-xl font-bold tracking-tight text-white flex items-center gap-2 group">
+          <span class="text-brand-400 code-font group-hover:text-brand-accent transition-colors">&lt;</span>
+          <span id="nav-name">Portfolio</span>
+          <span class="text-brand-400 code-font group-hover:text-brand-accent transition-colors">/&gt;</span>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+          <a href="#about" class="hover:text-brand-400 transition-colors">About</a>
+          <a href="#skills" class="hover:text-brand-400 transition-colors">Skills</a>
+          <a href="#projects" class="hover:text-brand-400 transition-colors">Projects</a>
+          <a href="#contact" class="hover:text-brand-400 transition-colors">Contact</a>
+        </div>
+
+        <!-- Action Buttons & Mobile Toggle -->
+        <div class="flex items-center gap-3 sm:gap-4">
+          <a id="nav-resume-btn" href="#" target="_blank" class="text-xs sm:text-sm px-3 sm:px-4 py-2 rounded-lg font-semibold bg-brand-600 hover:bg-brand-500 text-white transition-all shadow-[0_0_15px_rgba(2,132,199,0.4)]">
+            <i class="fa-solid fa-file-arrow-down sm:mr-1.5"></i> <span class="hidden sm:inline">Resume</span>
+          </a>
+          
+          <button id="mobile-menu-toggle" class="md:hidden text-gray-300 hover:text-white p-2 focus:outline-none">
+            <i class="fa-solid fa-bars text-xl"></i>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Mobile Dropdown Menu -->
+      <div id="mobile-menu" class="hidden md:hidden absolute top-16 left-0 w-full glass border-b border-gray-800 flex-col shadow-2xl">
+        <a href="#about" class="mobile-link block px-6 py-4 text-gray-300 hover:text-white hover:bg-gray-800/50 border-b border-gray-800/50">About</a>
+        <a href="#skills" class="mobile-link block px-6 py-4 text-gray-300 hover:text-white hover:bg-gray-800/50 border-b border-gray-800/50">Skills</a>
+        <a href="#projects" class="mobile-link block px-6 py-4 text-gray-300 hover:text-white hover:bg-gray-800/50 border-b border-gray-800/50">Projects</a>
+        <a href="#contact" class="mobile-link block px-6 py-4 text-gray-300 hover:text-white hover:bg-gray-800/50">Contact</a>
+      </div>
+    </nav>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="flex-grow pt-24 px-4 sm:px-6">
+
+      <!-- HERO SECTION -->
+      <section id="about" class="max-w-5xl mx-auto py-16 sm:py-20 md:py-28 flex flex-col items-start relative">
+        <div class="opacity-0 animate-fade-in-up inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass border border-brand-500/40 text-brand-400 text-[10px] sm:text-xs font-semibold mb-6 sm:mb-8" style="animation-delay: 100ms;">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          Available for High-Impact Roles & Projects
+        </div>
+
+        <!-- 1. THE HI LINE -->
+        <h1 class="opacity-0 animate-fade-in-up text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight text-white leading-tight mb-2 sm:mb-4" style="animation-delay: 200ms;">
+          Hi, I'm <span id="hero-name" class="bg-gradient-to-r from-brand-400 via-indigo-400 to-brand-accent bg-clip-text text-transparent drop-shadow-lg pb-1">Nakul Sharma</span>
+        </h1>
+
+        <!-- 2. THE TYPEWRITER ANIMATION (Directly below name) -->
+        <div class="opacity-0 animate-fade-in-up mb-8 sm:mb-12" style="animation-delay: 300ms;">
+          <span id="typewriter" class="text-2xl sm:text-3xl md:text-4xl font-semibold text-brand-400 code-font border-r-2 border-brand-400 pr-1 py-1"></span>
+        </div>
+
+        <!-- 3. "I BUILD" (On its own line before the bio) -->
+        <h2 class="opacity-0 animate-fade-in-up text-xl sm:text-2xl font-bold text-white mb-2" style="animation-delay: 400ms;">
+          I build
+        </h2>
+
+        <!-- 4. THE BIO / DESCRIPTION -->
+        <p id="hero-bio" class="opacity-0 animate-fade-in-up text-gray-400 text-sm sm:text-base md:text-lg max-w-2xl leading-relaxed mb-8 sm:mb-10" style="animation-delay: 500ms;">
+          Specializing in building scalable machine learning pipelines, deep neural architectures, and high-performance backend systems.
+        </p>
+
+        <div class="opacity-0 animate-fade-in-up flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto" style="animation-delay: 600ms;">
+          <a href="#projects" class="px-6 py-3.5 sm:py-3 rounded-xl bg-brand-500 hover:bg-brand-400 text-white font-semibold transition-all shadow-[0_0_15px_rgba(14,165,233,0.4)] flex justify-center items-center gap-2 text-sm sm:text-base">
+            View Projects <i class="fa-solid fa-arrow-down text-sm"></i>
+          </a>
+          <a id="hero-contact-btn" href="#contact" class="px-6 py-3.5 sm:py-3 rounded-xl glass hover:bg-gray-800 text-gray-200 font-semibold transition-all flex justify-center text-sm sm:text-base">
+            Get in Touch
+          </a>
+        </div>
+      </section>
+
+      <!-- SKILLS SECTION -->
+      <section id="skills" class="max-w-5xl mx-auto py-16 sm:py-20 border-t border-gray-800/50">
+        <div class="reveal flex flex-col sm:flex-row sm:items-center justify-between mb-10 sm:mb-12 gap-2">
+          <div>
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight flex items-center gap-3">
+              <i class="fa-solid fa-microchip text-brand-400 text-xl sm:text-2xl"></i> Technical Arsenal
+            </h2>
+            <p class="text-gray-400 text-xs sm:text-sm mt-2 code-font">// Tools and frameworks I deploy to production</p>
+          </div>
+        </div>
+
+        <div id="skills-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          <!-- Injected via JavaScript -->
+        </div>
+      </section>
+
+      <!-- PROJECTS SECTION -->
+      <section id="projects" class="max-w-5xl mx-auto py-16 sm:py-20 border-t border-gray-800/50">
+        <div class="reveal flex flex-col sm:flex-row sm:items-center justify-between mb-10 sm:mb-12 gap-2">
+          <div>
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight flex items-center gap-3">
+              <i class="fa-solid fa-network-wired text-brand-400 text-xl sm:text-2xl"></i> Featured Architectures
+            </h2>
+            <p class="text-gray-400 text-xs sm:text-sm mt-2 code-font">// Production-grade ML models and APIs</p>
+          </div>
+        </div>
+
+        <div id="projects-container" class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+          <!-- Injected via JavaScript -->
+        </div>
+      </section>
+
+      <!-- CONTACT SECTION -->
+      <section id="contact" class="max-w-5xl mx-auto py-16 sm:py-24 border-t border-gray-800/50">
+        <div class="reveal glass p-6 sm:p-10 md:p-14 rounded-3xl text-center border border-gray-800 relative overflow-hidden cyber-glow transition-all duration-500">
+          <div class="absolute -top-24 -left-24 w-60 h-60 bg-brand-500/20 rounded-full blur-3xl pointer-events-none animate-pulse-slow"></div>
+          
+          <h2 class="text-2xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6">Let's Build Something Intelligent</h2>
+          <p class="text-gray-400 max-w-xl mx-auto mb-8 sm:mb-10 text-xs sm:text-sm md:text-base leading-relaxed">
+            Have an AI/ML initiative, a complex dataset, or a robust backend architecture in mind? Let's discuss algorithms, scaling, and collaboration.
+          </p>
+
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a id="email-btn" href="mailto:contact@example.com" class="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-brand-500 hover:bg-brand-400 text-white font-semibold transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(14,165,233,0.4)]">
+              <i class="fa-regular fa-envelope"></i> Initialize Contact
+            </a>
+            <a id="github-link" href="#" target="_blank" class="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl glass hover:bg-gray-800 text-gray-200 font-semibold transition-all flex items-center justify-center gap-2">
+              <i class="fa-brands fa-github text-lg sm:text-xl"></i> GitHub
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="border-t border-gray-900 py-6 sm:py-8 text-center text-gray-500 text-xs sm:text-sm glass mt-auto">
+      <div class="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p>© <span id="year"></span> <span id="footer-name">Nakul Sharma</span>. Engineering the future.</p>
+        
+        <div class="flex items-center gap-2">
+          <span class="text-[10px] sm:text-xs text-gray-600 code-font">System Status: Online</span>
+          <button onclick="openLoginModal()" class="text-gray-700 hover:text-brand-400 transition-colors p-1.5 rounded" title="Admin Portal">
+            <i class="fa-solid fa-lock text-xs"></i>
+          </button>
+        </div>
+      </div>
+    </footer>
+  
+  </div> <!-- END OF RELATIVE CONTENT WRAPPER -->
+
+  <!-- ================= MODAL 1: AUTHENTICATION ================= -->
+  <div id="login-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="glass w-full max-w-md p-6 sm:p-8 rounded-2xl border border-brand-500/30 shadow-[0_0_40px_rgba(14,165,233,0.15)] relative">
+      <button onclick="closeLoginModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+      <div class="text-center mb-6">
+        <h3 class="text-lg sm:text-xl font-bold text-white code-font">Root Access</h3>
+      </div>
+      <form onsubmit="handleLogin(event)" class="space-y-4">
+        <input type="password" id="admin-password-input" placeholder="Enter decryption key..." class="w-full px-4 py-3 rounded-xl bg-gray-900 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:border-brand-400 focus:ring-1 focus:ring-brand-400 transition-all text-sm code-font text-center" required />
+        <div id="login-error" class="text-red-400 text-xs font-medium hidden text-center">Decryption failed.</div>
+        <button type="submit" class="w-full py-3 rounded-xl bg-brand-500 hover:bg-brand-400 font-bold text-white transition-all text-sm shadow-[0_0_15px_rgba(14,165,233,0.3)]">INITIALIZE DASHBOARD</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL 2: DASHBOARD ================= -->
+  <div id="dashboard-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-lg hidden flex items-center justify-center p-2 sm:p-6 overflow-y-auto">
+    <div class="glass w-full max-w-4xl rounded-2xl border border-gray-700 shadow-2xl my-auto flex flex-col max-h-[95vh] sm:max-h-[90vh]">
+      <!-- Dashboard Header -->
+      <div class="p-4 sm:p-6 border-b border-gray-800 flex items-center justify-between bg-gray-900/50">
+        <div><h3 class="font-bold text-white text-base sm:text-lg code-font">Data Control Center</h3></div>
+        <div class="flex items-center gap-1 sm:gap-2">
+          <button onclick="exportData()" class="text-[10px] sm:text-xs px-2 sm:px-3 py-1.5 rounded-lg glass text-gray-300 border border-gray-700"><i class="fa-solid fa-download sm:mr-1"></i> <span class="hidden sm:inline">Backup</span></button>
+          <button onclick="closeDashboardModal()" class="text-gray-400 hover:text-white p-2"><i class="fa-solid fa-xmark text-lg"></i></button>
+        </div>
+      </div>
+      <!-- Tabs (Scrollable on small screens) -->
+      <div class="flex border-b border-gray-800 bg-gray-900/80 px-2 sm:px-6 text-xs sm:text-sm font-medium text-gray-400 overflow-x-auto hide-scrollbar whitespace-nowrap">
+        <button onclick="switchTab('profile')" id="tab-profile-btn" class="py-3 px-3 sm:px-4 text-brand-400 border-b-2 border-brand-400 font-semibold transition-all">Identity Node</button>
+        <button onclick="switchTab('projects')" id="tab-projects-btn" class="py-3 px-3 sm:px-4 hover:text-gray-200 transition-all">Model Deployments</button>
+        <button onclick="switchTab('skills')" id="tab-skills-btn" class="py-3 px-3 sm:px-4 hover:text-gray-200 transition-all">Skill Vectors</button>
+      </div>
+      <!-- Contents -->
+      <div class="p-4 sm:p-6 overflow-y-auto flex-grow space-y-6">
+        <!-- PROFILE TAB -->
+        <div id="tab-profile" class="space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div><label class="block text-xs font-semibold text-gray-300 mb-1 code-font">name</label><input type="text" id="edit-name" class="w-full p-2.5 rounded-lg bg-gray-950 border border-gray-700 text-white text-sm" /></div>
+            <div><label class="block text-xs font-semibold text-gray-300 mb-1 code-font">roles (comma separated)</label><input type="text" id="edit-roles" class="w-full p-2.5 rounded-lg bg-gray-950 border border-gray-700 text-white text-sm" /></div>
+          </div>
+          <div><label class="block text-xs font-semibold text-gray-300 mb-1 code-font">description</label><textarea id="edit-bio" rows="3" class="w-full p-2.5 rounded-lg bg-gray-950 border border-gray-700 text-white text-sm"></textarea></div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div><label class="block text-xs text-gray-300 mb-1 code-font">email</label><input type="email" id="edit-email" class="w-full p-2.5 rounded-lg bg-gray-950 border border-gray-700 text-white text-sm" /></div>
+            <div><label class="block text-xs text-gray-300 mb-1 code-font">github</label><input type="url" id="edit-github" class="w-full p-2.5 rounded-lg bg-gray-950 border border-gray-700 text-white text-sm" /></div>
+            <div><label class="block text-xs text-gray-300 mb-1 code-font">linkedin</label><input type="url" id="edit-linkedin" class="w-full p-2.5 rounded-lg bg-gray-950 border border-gray-700 text-white text-sm" /></div>
+          </div>
+          <div><label class="block text-xs text-gray-300 mb-1 code-font">resume link</label><input type="url" id="edit-resume" class="w-full p-2.5 rounded-lg bg-gray-950 border border-gray-700 text-white text-sm" /></div>
+          <button onclick="saveProfile()" class="w-full sm:w-auto px-5 py-2.5 bg-brand-500 hover:bg-brand-600 text-white rounded-lg text-sm font-bold shadow-[0_0_10px_rgba(14,165,233,0.4)]">Commit Changes</button>
+        </div>
+        <!-- PROJECTS TAB -->
+        <div id="tab-projects" class="space-y-6 hidden">
+          <div class="bg-gray-900/50 p-4 sm:p-5 rounded-xl border border-gray-800">
+            <h4 class="text-sm font-bold text-white mb-3">Deploy New Architecture</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+              <input type="text" id="new-proj-title" placeholder="Title" class="p-2.5 rounded-lg bg-gray-950 border border-gray-700 text-white text-sm" />
+              <input type="text" id="new-proj-tech" placeholder="Tech Stack" class="p-2.5 rounded-lg bg-gray-950 border border-gray-700 text-white text-sm" />
+            </div>
+            <textarea id="new-proj-desc" rows="2" placeholder="Description" class="w-full p-2.5 rounded-lg bg-gray-950 border border-gray-700 text-white text-sm mb-3"></textarea>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+              <input type="url" id="new-proj-github" placeholder="GitHub URL" class="p-2.5 rounded-lg bg-gray-950 border border-gray-700 text-white text-sm" />
+              <input type="url" id="new-proj-live" placeholder="Live URL" class="p-2.5 rounded-lg bg-gray-950 border border-gray-700 text-white text-sm" />
+            </div>
+            <button onclick="addProject()" class="w-full sm:w-auto px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-bold">Inject Project</button>
+          </div>
+          <div id="admin-projects-list" class="space-y-3"></div>
+        </div>
+        <!-- SKILLS TAB -->
+        <div id="tab-skills" class="space-y-6 hidden">
+          <div class="bg-gray-900/50 p-4 sm:p-5 rounded-xl border border-gray-800">
+            <h4 class="text-sm font-bold text-white mb-3">Map New Skill Vector</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-3">
+              <select id="skill-category-select" class="p-2.5 rounded-lg bg-gray-950 border border-gray-700 text-white text-sm">
+                <option value="Machine Learning & AI">Machine Learning & AI</option>
+                <option value="Backend & APIs">Backend & APIs</option>
+                <option value="Data & Analytics">Data & Analytics</option>
+              </select>
+              <input type="text" id="new-skill-name" placeholder="Skill Name" class="p-2.5 rounded-lg bg-gray-950 border border-gray-700 text-white text-sm sm:col-span-2" />
+            </div>
+            <button onclick="addSkill()" class="w-full sm:w-auto px-4 py-2 bg-brand-500 text-white rounded-lg text-sm font-bold">Append Vector</button>
+          </div>
+          <div id="admin-skills-list" class="space-y-4"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= LOGIC & JAVASCRIPT ================= -->
+  <script>
+    // -------------------------------------------------------------
+    // MOBILE MENU TOGGLE LOGIC
+    // -------------------------------------------------------------
+    const mobileMenuBtn = document.getElementById('mobile-menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+    
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      mobileMenu.classList.toggle('flex');
+    });
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        mobileMenu.classList.remove('flex');
+      });
+    });
+
+    // -------------------------------------------------------------
+    // 1. NEURAL NETWORK CANVAS ANIMATION 
+    // -------------------------------------------------------------
+    const canvas = document.getElementById('neural-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let particles = [];
+    
+    function initCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      particles = [];
+      const numParticles = Math.min(Math.floor(window.innerWidth / 12), 120); 
+      
+      for(let i=0; i<numParticles; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.8,
+          vy: (Math.random() - 0.5) * 0.8,
+          radius: Math.random() * 2 + 1
+        });
+      }
+    }
+
+    function drawCanvas() {
+      ctx.clearRect(0, 0, width, height);
+      
+      for(let i=0; i<particles.length; i++) {
+        let p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        
+        if(p.x < 0 || p.x > width) p.vx = -p.vx;
+        if(p.y < 0 || p.y > height) p.vy = -p.vy;
+        
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(14, 165, 233, 1)'; 
+        ctx.fill();
+        
+        for(let j=i+1; j<particles.length; j++) {
+          let p2 = particles[j];
+          let dist = Math.sqrt(Math.pow(p.x - p2.x, 2) + Math.pow(p.y - p2.y, 2));
+          
+          if(dist < 130) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(14, 165, 233, ${1 - dist/130})`;
+            ctx.lineWidth = 0.8;
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(drawCanvas);
+    }
+    
+    window.addEventListener('resize', initCanvas);
+    initCanvas();
+    drawCanvas();
+
+    // -------------------------------------------------------------
+    // 2. SCROLL REVEAL ANIMATIONS
+    // -------------------------------------------------------------
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active-reveal');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    // -------------------------------------------------------------
+    // 3. CMS STATE & RENDERING
+    // -------------------------------------------------------------
+    const MASTER_PASS = 'nakulsh123456789';
+    const DEFAULT_DATA = {
+      name: "Nakul Sharma",
+      roles: ["AI/ML Engineer", "Python Developer", "Backend Architect", "Data Scientist"],
+      bio: "Engineering intelligent predictive models, resilient backend services, and scalable data-driven solutions using modern Python ecosystems.",
+      email: "contact@example.com",
+      github: "https://github.com",
+      linkedin: "https://linkedin.com",
+      resume: "#",
+      skills: [
+        { category: "Machine Learning & AI", items: ["Python", "Scikit-Learn", "NLP", "Pandas", "NumPy"] },
+        { category: "Backend & APIs", items: ["FastAPI", "Flask", "RESTful APIs", "MySQL"] }
+      ],
+      projects: [
+        { id: 1, title: "AI-Sentinel", tech: "NLP, FastAPI", desc: "Data leakage prevention system.", github: "#", live: "#" },
+        { id: 2, title: "Loan Predictor", tech: "Scikit-Learn, Python", desc: "End-to-end predictive risk engine.", github: "#", live: "#" }
+      ]
+    };
+
+    let state = JSON.parse(localStorage.getItem('portfolio_data')) || DEFAULT_DATA;
+    
+    if (!state || typeof state !== 'object' || !state.name || !Array.isArray(state.roles) || state.roles.length === 0) {
+      localStorage.removeItem('portfolio_data');
+      state = DEFAULT_DATA;
+    }
+
+    function saveState() { localStorage.setItem('portfolio_data', JSON.stringify(state)); renderApp(); }
+
+    function renderApp() {
+      document.getElementById('nav-name').innerText = state.name || "Portfolio";
+      document.getElementById('hero-name').innerText = state.name || "Developer";
+      document.getElementById('footer-name').innerText = state.name || "Developer";
+      document.getElementById('hero-bio').innerText = state.bio || "";
+      document.getElementById('nav-resume-btn').href = state.resume || "#";
+      document.getElementById('email-btn').href = `mailto:${state.email || ""}`;
+      document.getElementById('github-link').href = state.github || "#";
+      
+      const linkedinLnk = document.getElementById('linkedin-link');
+      if(linkedinLnk) linkedinLnk.href = state.linkedin || "#";
+      
+      document.getElementById('year').innerText = new Date().getFullYear();
+
+      if (state.skills && Array.isArray(state.skills)) {
+        document.getElementById('skills-container').innerHTML = state.skills.map((group, idx) => `
+          <div class="reveal glass p-5 sm:p-6 rounded-2xl border border-gray-800 hover:border-brand-500/40 transition-all cyber-glow" style="transition-delay: ${idx * 100}ms">
+            <h3 class="text-sm sm:text-base font-bold text-white mb-4 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-brand-400"></span>${group.category}</h3>
+            <div class="flex flex-wrap gap-2">${(group.items || []).map(item => `<span class="px-2.5 sm:px-3 py-1 rounded-lg text-[10px] sm:text-xs font-medium bg-gray-900/90 text-gray-300 border border-gray-700/60 code-font shadow-inner">${item}</span>`).join('')}</div>
+          </div>
+        `).join('');
+      }
+
+      if (state.projects && Array.isArray(state.projects)) {
+        document.getElementById('projects-container').innerHTML = state.projects.map((proj, idx) => `
+          <div class="reveal glass p-5 sm:p-7 rounded-2xl border border-gray-800 transition-all flex flex-col justify-between group cyber-glow relative overflow-hidden" style="transition-delay: ${idx * 100}ms">
+            <div class="relative z-10">
+              <div class="flex items-center justify-between mb-3 sm:mb-4">
+                <h3 class="text-lg sm:text-xl font-bold text-white group-hover:text-brand-400 transition-colors">${proj.title}</h3>
+                <span class="text-[9px] sm:text-[10px] uppercase tracking-wider px-2 py-1 rounded bg-brand-500/10 text-brand-400 border border-brand-500/20 font-bold code-font">Live</span>
+              </div>
+              <p class="text-[10px] sm:text-xs text-brand-300 code-font mb-3 sm:mb-4 border-l-2 border-brand-500 pl-2">${proj.tech}</p>
+              <p class="text-gray-400 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-6">${proj.desc}</p>
+            </div>
+            <div class="relative z-10 flex flex-wrap items-center gap-3 sm:gap-4 pt-4 border-t border-gray-800/80 text-xs sm:text-sm">
+              ${proj.github ? `<a href="${proj.github}" target="_blank" class="text-gray-300 hover:text-white font-medium"><i class="fa-brands fa-github mr-1"></i> Source</a>` : ''}
+              ${proj.live ? `<a href="${proj.live}" target="_blank" class="text-brand-400 hover:text-brand-300 font-medium"><i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> Demo</a>` : ''}
+            </div>
+          </div>
+        `).join('');
+      }
+
+      document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+      document.getElementById('edit-name').value = state.name || "";
+      document.getElementById('edit-roles').value = (state.roles || []).join(', ');
+      document.getElementById('edit-bio').value = state.bio || "";
+      document.getElementById('edit-email').value = state.email || "";
+      document.getElementById('edit-github').value = state.github || "";
+      document.getElementById('edit-resume').value = state.resume || "";
+      if(document.getElementById('edit-linkedin')) document.getElementById('edit-linkedin').value = state.linkedin || "";
+
+      renderAdminProjectList();
+      renderAdminSkillsList();
+    }
+
+    // -------------------------------------------------------------
+    // 4. TYPEWRITER EFFECT
+    // -------------------------------------------------------------
+    let roleIndex = 0; let charIndex = 0; let isDeleting = false;
+    function typeEffect() {
+      const roles = (state.roles && state.roles.length > 0) ? state.roles : ["Developer"];
+      const currentRole = roles[roleIndex] || roles[0];
+      const typewriterEl = document.getElementById('typewriter');
+      if (!typewriterEl) return;
+
+      if (isDeleting) {
+        typewriterEl.innerText = currentRole.substring(0, charIndex - 1);
+        charIndex--;
+      } else {
+        typewriterEl.innerText = currentRole.substring(0, charIndex + 1);
+        charIndex++;
+      }
+
+      let typingSpeed = isDeleting ? 30 : 80;
+      if (!isDeleting && charIndex === currentRole.length) { 
+        typingSpeed = 2000; 
+        isDeleting = true; 
+      } else if (isDeleting && charIndex === 0) { 
+        isDeleting = false; 
+        roleIndex = (roleIndex + 1) % roles.length; 
+        typingSpeed = 400; 
+      }
+      setTimeout(typeEffect, typingSpeed);
+    }
+
+    // -------------------------------------------------------------
+    // 5. DASHBOARD & AUTHENTICATION LOGIC
+    // -------------------------------------------------------------
+    function openLoginModal() { document.getElementById('login-modal').classList.remove('hidden'); }
+    function closeLoginModal() { document.getElementById('login-modal').classList.add('hidden'); document.getElementById('login-error').classList.add('hidden'); }
+    function handleLogin(e) {
+      e.preventDefault();
+      if (document.getElementById('admin-password-input').value === MASTER_PASS) {
+        closeLoginModal(); document.getElementById('dashboard-modal').classList.remove('hidden');
+      } else { document.getElementById('login-error').classList.remove('hidden'); }
+    }
+    function closeDashboardModal() { document.getElementById('dashboard-modal').classList.add('hidden'); }
+    function switchTab(tab) {
+      ['profile', 'projects', 'skills'].forEach(t => {
+        document.getElementById(`tab-${t}`).classList.add('hidden');
+        document.getElementById(`tab-${t}-btn`).classList.remove('text-brand-400', 'border-b-2', 'border-brand-400');
+      });
+      document.getElementById(`tab-${tab}`).classList.remove('hidden');
+      document.getElementById(`tab-${tab}-btn`).classList.add('text-brand-400', 'border-b-2', 'border-brand-400');
+    }
+    
+    function saveProfile() {
+      state.name = document.getElementById('edit-name').value.trim();
+      state.roles = document.getElementById('edit-roles').value.split(',').map(r => r.trim()).filter(Boolean);
+      if (state.roles.length === 0) state.roles = ["AI/ML Engineer"]; 
+      state.bio = document.getElementById('edit-bio').value.trim();
+      state.email = document.getElementById('edit-email').value.trim();
+      state.github = document.getElementById('edit-github').value.trim();
+      if(document.getElementById('edit-linkedin')) state.linkedin = document.getElementById('edit-linkedin').value.trim();
+      state.resume = document.getElementById('edit-resume').value.trim();
+      saveState(); alert('Profile updated successfully! Note: You may need to refresh the page to see changes in the typewriter.');
+    }
+
+    function renderAdminProjectList() {
+      if (!state.projects || !Array.isArray(state.projects)) return;
+      document.getElementById('admin-projects-list').innerHTML = state.projects.map((p) => `
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between p-3 rounded-lg bg-gray-950 border border-gray-800 text-sm gap-2">
+          <div><span class="font-bold text-white">${p.title}</span><span class="text-[10px] sm:text-xs text-gray-500 ml-2 code-font">(${p.tech})</span></div>
+          <button onclick="deleteProject(${p.id})" class="text-red-400 hover:text-red-300 text-left sm:text-right text-xs"><i class="fa-solid fa-trash"></i> Drop</button>
+        </div>`).join('');
+    }
+
+    function addProject() {
+      const title = document.getElementById('new-proj-title').value.trim();
+      const desc = document.getElementById('new-proj-desc').value.trim();
+      if (!title || !desc) { alert('Title and Description required.'); return; }
+      if (!state.projects) state.projects = [];
+      state.projects.unshift({ id: Date.now(), title, tech: document.getElementById('new-proj-tech').value.trim() || 'Python, ML', desc, github: document.getElementById('new-proj-github').value.trim(), live: document.getElementById('new-proj-live').value.trim() });
+      ['title','tech','desc','github','live'].forEach(id => document.getElementById(`new-proj-${id}`).value = '');
+      saveState();
+    }
+
+    function deleteProject(id) { if (confirm('Drop this deployment?')) { state.projects = state.projects.filter(p => p.id !== id); saveState(); } }
+    
+    function renderAdminSkillsList() {
+      if (!state.skills || !Array.isArray(state.skills)) return;
+      document.getElementById('admin-skills-list').innerHTML = state.skills.map((group, gIdx) => `
+        <div class="p-3 bg-gray-950 rounded-lg border border-gray-800"><h5 class="text-xs font-bold text-brand-400 mb-2">${group.category}</h5>
+        <div class="flex flex-wrap gap-2">${(group.items || []).map((item, iIdx) => `<span class="px-2 py-1 rounded bg-gray-900 text-[10px] sm:text-xs text-gray-300 border border-gray-700">${item} <button onclick="removeSkill(${gIdx}, ${iIdx})" class="text-gray-500 hover:text-red-400 ml-1">×</button></span>`).join('')}</div></div>`).join('');
+    }
+
+    function addSkill() {
+      const cat = document.getElementById('skill-category-select').value; const name = document.getElementById('new-skill-name').value.trim();
+      if (!name) return; 
+      if (!state.skills) state.skills = [];
+      let group = state.skills.find(g => g.category === cat);
+      if (group) { if (!group.items.includes(name)) group.items.push(name); } else { state.skills.push({ category: cat, items: [name] }); }
+      document.getElementById('new-skill-name').value = ''; saveState();
+    }
+
+    function removeSkill(gIdx, iIdx) { state.skills[gIdx].items.splice(iIdx, 1); saveState(); }
+    
+    function exportData() {
+      const a = document.createElement('a'); a.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state, null, 2));
+      a.download = "portfolio_backup.json"; document.body.appendChild(a); a.click(); a.remove();
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      if (!state || typeof state !== 'object' || !state.name || !Array.isArray(state.roles) || state.roles.length === 0) {
+        localStorage.removeItem('portfolio_data'); state = DEFAULT_DATA;
+      }
+      setTimeout(() => { document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el)); }, 100);
+      renderApp(); typeEffect();
+    });
+  </script>
+</body>
+</html>
