@@ -1,630 +1,1148 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Developer Portfolio | AI/ML & Python Engineer</title>
-  
-  <!-- Tailwind CSS CDN -->
+  <title>Nakul Sharma | AI/ML & Python Backend Developer</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <script>
     tailwind.config = {
       darkMode: 'class',
       theme: {
         extend: {
           colors: {
-            brand: {
-              400: '#38bdf8', // Cyan
-              500: '#0ea5e9', // Blue
-              600: '#0284c7', // Deep Blue
-              accent: '#8b5cf6' // Purple
+            dark: {
+              950: '#050816',
+              900: '#0b1120',
+              800: '#111827',
+              700: '#1e293b'
             }
           },
           fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace']
-          },
-          animation: {
-            'fade-in-up': 'fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards',
-            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-          },
-          keyframes: {
-            fadeInUp: {
-              '0%': { opacity: '0', transform: 'translateY(30px)' },
-              '100%': { opacity: '1', transform: 'translateY(0)' },
-            }
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Fira Code', 'monospace']
           }
         }
       }
-    }
+    };
   </script>
-  
-  <!-- Google Fonts & Font Awesome Icons -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-
   <style>
-    body { font-family: 'Inter', sans-serif; background-color: #030712; }
-    .code-font { font-family: 'JetBrains Mono', monospace; }
-    
-    /* Glassmorphism & Cyber Aesthetics */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+    body {
+      background-color: #050816;
+      color: #e2e8f0;
+      font-family: 'Inter', sans-serif;
+    }
     .glass {
-      background: rgba(17, 24, 39, 0.6);
+      background: rgba(15, 23, 42, 0.7);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(148, 163, 184, 0.12);
     }
-    
-    .cyber-glow:hover {
-      box-shadow: 0 0 25px rgba(14, 165, 233, 0.25);
-      border-color: rgba(56, 189, 248, 0.5);
+    .gradient-text {
+      background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
-
-    /* Scroll Reveal Initial State */
-    .reveal {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    .hero-glow {
+      background: radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.15) 0%, rgba(129, 140, 248, 0.08) 35%, transparent 70%);
     }
-    .reveal.active-reveal {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    
-    /* Hide scrollbar for horizontal tabs */
-    .hide-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-    .hide-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #050816; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #334155; }
   </style>
 </head>
-<body class="text-gray-100 min-h-screen selection:bg-brand-500 selection:text-white relative overflow-x-hidden">
+<body class="antialiased selection:bg-sky-500/30 selection:text-sky-200">
 
-  <!-- ================= BACKGROUND NEURAL CANVAS ================= -->
-  <canvas id="neural-canvas" class="fixed top-0 left-0 w-full h-full" style="z-index: 0; pointer-events: none; opacity: 0.8;"></canvas>
-
-  <!-- ================= ALL CONTENT WRAPPER ================= -->
-  <div class="relative z-10 flex flex-col min-h-screen">
-
-    <!-- ================= TOP NAVIGATION ================= -->
-    <nav class="fixed top-0 left-0 w-full z-40 glass border-b border-gray-800/80">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-        
-        <!-- Logo -->
-        <a href="#" class="text-lg sm:text-xl font-bold tracking-tight text-white flex items-center gap-2 group">
-          <span class="text-brand-400 code-font group-hover:text-brand-accent transition-colors">&lt;</span>
-          <span id="nav-name">Portfolio</span>
-          <span class="text-brand-400 code-font group-hover:text-brand-accent transition-colors">/&gt;</span>
-        </a>
-
-        <!-- Desktop Navigation Links -->
-        <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
-          <a href="#about" class="hover:text-brand-400 transition-colors">About</a>
-          <a href="#skills" class="hover:text-brand-400 transition-colors">Skills</a>
-          <a href="#projects" class="hover:text-brand-400 transition-colors">Projects</a>
-          <a href="#contact" class="hover:text-brand-400 transition-colors">Contact</a>
-        </div>
-
-        <!-- Action Buttons & Mobile Toggle -->
-        <div class="flex items-center gap-3 sm:gap-4">
-          <a id="nav-resume-btn" href="#" target="_blank" class="text-xs sm:text-sm px-3 sm:px-4 py-2 rounded-lg font-semibold bg-brand-600 hover:bg-brand-500 text-white transition-all shadow-[0_0_15px_rgba(2,132,199,0.4)]">
-            <i class="fa-solid fa-file-arrow-down sm:mr-1.5"></i> <span class="hidden sm:inline">Resume</span>
-          </a>
-          
-          <button id="mobile-menu-toggle" class="md:hidden text-gray-300 hover:text-white p-2 focus:outline-none">
-            <i class="fa-solid fa-bars text-xl"></i>
-          </button>
-        </div>
-      </div>
-      
-      <!-- Mobile Dropdown Menu -->
-      <div id="mobile-menu" class="hidden md:hidden absolute top-16 left-0 w-full glass border-b border-gray-800 flex-col shadow-2xl">
-        <a href="#about" class="mobile-link block px-6 py-4 text-gray-300 hover:text-white hover:bg-gray-800/50 border-b border-gray-800/50">About</a>
-        <a href="#skills" class="mobile-link block px-6 py-4 text-gray-300 hover:text-white hover:bg-gray-800/50 border-b border-gray-800/50">Skills</a>
-        <a href="#projects" class="mobile-link block px-6 py-4 text-gray-300 hover:text-white hover:bg-gray-800/50 border-b border-gray-800/50">Projects</a>
-        <a href="#contact" class="mobile-link block px-6 py-4 text-gray-300 hover:text-white hover:bg-gray-800/50">Contact</a>
-      </div>
-    </nav>
-
-    <!-- ================= MAIN CONTENT ================= -->
-    <main class="flex-grow pt-24 px-4 sm:px-6">
-
-      <!-- HERO SECTION -->
-      <section id="about" class="max-w-5xl mx-auto py-16 sm:py-20 md:py-28 flex flex-col items-start relative">
-        <div class="opacity-0 animate-fade-in-up inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass border border-brand-500/40 text-brand-400 text-[10px] sm:text-xs font-semibold mb-6 sm:mb-8" style="animation-delay: 100ms;">
-          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          Available for High-Impact Roles & Projects
-        </div>
-
-        <!-- 1. THE HI LINE -->
-        <h1 class="opacity-0 animate-fade-in-up text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight text-white leading-tight mb-2 sm:mb-4" style="animation-delay: 200ms;">
-          Hi, I'm <span id="hero-name" class="bg-gradient-to-r from-brand-400 via-indigo-400 to-brand-accent bg-clip-text text-transparent drop-shadow-lg pb-1">Nakul Sharma</span>
-        </h1>
-
-        <!-- 2. THE TYPEWRITER ANIMATION -->
-        <div class="opacity-0 animate-fade-in-up mb-8 sm:mb-12" style="animation-delay: 300ms;">
-          <span id="typewriter" class="text-2xl sm:text-3xl md:text-4xl font-semibold text-brand-400 code-font border-r-2 border-brand-400 pr-1 py-1"></span>
-        </div>
-
-        <!-- 3. "I BUILD" -->
-        <h2 class="opacity-0 animate-fade-in-up text-xl sm:text-2xl font-bold text-white mb-2" style="animation-delay: 400ms;">
-          I build
-        </h2>
-
-        <!-- 4. THE BIO -->
-        <p id="hero-bio" class="opacity-0 animate-fade-in-up text-gray-400 text-sm sm:text-base md:text-lg max-w-2xl leading-relaxed mb-8 sm:mb-10" style="animation-delay: 500ms;">
-          Specializing in building scalable machine learning pipelines, deep neural architectures, and high-performance backend systems.
-        </p>
-
-        <div class="opacity-0 animate-fade-in-up flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto" style="animation-delay: 600ms;">
-          <a href="#projects" class="px-6 py-3.5 sm:py-3 rounded-xl bg-brand-500 hover:bg-brand-400 text-white font-semibold transition-all shadow-[0_0_15px_rgba(14,165,233,0.4)] flex justify-center items-center gap-2 text-sm sm:text-base">
-            View Projects <i class="fa-solid fa-arrow-down text-sm"></i>
-          </a>
-          <a id="hero-contact-btn" href="#contact" class="px-6 py-3.5 sm:py-3 rounded-xl glass hover:bg-gray-800 text-gray-200 font-semibold transition-all flex justify-center text-sm sm:text-base">
-            Get in Touch
-          </a>
-        </div>
-      </section>
-
-      <!-- SKILLS SECTION -->
-      <section id="skills" class="max-w-5xl mx-auto py-16 sm:py-20 border-t border-gray-800/50">
-        <div class="reveal flex flex-col sm:flex-row sm:items-center justify-between mb-10 sm:mb-12 gap-2">
-          <div>
-            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight flex items-center gap-3">
-              <i class="fa-solid fa-microchip text-brand-400 text-xl sm:text-2xl"></i> Technical Arsenal
-            </h2>
-            <p class="text-gray-400 text-xs sm:text-sm mt-2 code-font">// Tools and frameworks I deploy to production</p>
-          </div>
-        </div>
-
-        <div id="skills-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          <!-- Injected via JavaScript -->
-        </div>
-      </section>
-
-      <!-- PROJECTS SECTION -->
-      <section id="projects" class="max-w-5xl mx-auto py-16 sm:py-20 border-t border-gray-800/50">
-        <div class="reveal flex flex-col sm:flex-row sm:items-center justify-between mb-10 sm:mb-12 gap-2">
-          <div>
-            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight flex items-center gap-3">
-              <i class="fa-solid fa-network-wired text-brand-400 text-xl sm:text-2xl"></i> Featured Architectures
-            </h2>
-            <p class="text-gray-400 text-xs sm:text-sm mt-2 code-font">// Production-grade ML models and APIs</p>
-          </div>
-        </div>
-
-        <div id="projects-container" class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-          <!-- Injected via JavaScript -->
-        </div>
-      </section>
-
-      <!-- CONTACT SECTION (Now with GitHub & LinkedIn buttons!) -->
-      <section id="contact" class="max-w-5xl mx-auto py-16 sm:py-24 border-t border-gray-800/50">
-        <div class="reveal glass p-6 sm:p-10 md:p-14 rounded-3xl text-center border border-gray-800 relative overflow-hidden cyber-glow transition-all duration-500">
-          <div class="absolute -top-24 -left-24 w-60 h-60 bg-brand-500/20 rounded-full blur-3xl pointer-events-none animate-pulse-slow"></div>
-          
-          <h2 class="text-2xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6">Let's Build Something Intelligent</h2>
-          <p class="text-gray-400 max-w-xl mx-auto mb-8 sm:mb-10 text-xs sm:text-sm md:text-base leading-relaxed">
-            Have an AI/ML initiative, a complex dataset, or a robust backend architecture in mind? Let's discuss algorithms, scaling, and collaboration.
-          </p>
-
-          <div class="flex flex-wrap items-center justify-center gap-4">
-            <a id="email-btn" href="mailto:contact@example.com" class="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-brand-500 hover:bg-brand-400 text-white font-semibold transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(14,165,233,0.4)]">
-              <i class="fa-regular fa-envelope"></i> Initialize Contact
-            </a>
-            <a id="github-link" href="#" target="_blank" class="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl glass hover:bg-gray-800 text-gray-200 font-semibold transition-all flex items-center justify-center gap-2">
-              <i class="fa-brands fa-github text-lg sm:text-xl"></i> GitHub
-            </a>
-            <a id="linkedin-link" href="#" target="_blank" class="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl glass hover:bg-gray-800 text-gray-200 font-semibold transition-all flex items-center justify-center gap-2">
-              <i class="fa-brands fa-linkedin text-lg sm:text-xl text-blue-400"></i> LinkedIn
-            </a>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <!-- ================= FOOTER ================= -->
-    <footer class="border-t border-gray-900 py-6 sm:py-8 text-center text-gray-500 text-xs sm:text-sm glass mt-auto">
-      <div class="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p>© <span id="year"></span> <span id="footer-name">Nakul Sharma</span>. Engineering the future.</p>
-        
-        <div class="flex items-center gap-2">
-          <span class="text-[10px] sm:text-xs text-gray-600 code-font">System Status: Online</span>
-          <button onclick="openLoginModal()" class="text-gray-700 hover:text-brand-400 transition-colors p-1.5 rounded" title="Admin Portal">
-            <i class="fa-solid fa-lock text-xs"></i>
-          </button>
-        </div>
-      </div>
-    </footer>
-  
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed top-5 right-5 z-[100] hidden items-center gap-3 px-4 py-3 rounded-xl glass border border-sky-500/30 text-sm font-medium text-slate-100 shadow-2xl transition-all duration-300">
+    <i id="toast-icon" class="fa-solid fa-circle-check text-sky-400"></i>
+    <span id="toast-msg">Saved successfully</span>
   </div>
 
-  <!-- ================= MODAL 1: AUTHENTICATION ================= -->
-  <div id="login-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
-    <div class="glass w-full max-w-md p-6 sm:p-8 rounded-2xl border border-brand-500/30 shadow-[0_0_40px_rgba(14,165,233,0.15)] relative">
-      <button onclick="closeLoginModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
-      <div class="text-center mb-6">
-        <h3 class="text-lg sm:text-xl font-bold text-white code-font">Root Access</h3>
+  <!-- Navbar -->
+  <header class="fixed top-0 inset-x-0 z-40 glass border-b border-slate-800/80">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="#home" class="text-lg font-bold tracking-tight flex items-center gap-2">
+        <span class="w-8 h-8 rounded-lg bg-gradient-to-br from-sky-500 to-indigo-600 flex items-center justify-center text-white text-sm font-mono font-bold"></></span>
+        <span id="nav-brand" class="text-slate-100">Nakul<span class="text-sky-400">.dev</span></span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-slate-300">
+        <a href="#about" class="hover:text-sky-400 transition">About</a>
+        <a href="#skills" class="hover:text-sky-400 transition">Skills</a>
+        <a href="#projects" class="hover:text-sky-400 transition">Projects</a>
+        <a href="#experience" class="hover:text-sky-400 transition">Experience</a>
+        <a href="#certifications" class="hover:text-sky-400 transition">Certifications</a>
+        <a href="#contact" class="px-4 py-2 rounded-lg bg-sky-500/10 text-sky-400 border border-sky-500/30 hover:bg-sky-500 hover:text-slate-950 transition">Contact</a>
+      </nav>
+
+      <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-slate-300 hover:bg-slate-800" aria-label="Toggle Menu">
+        <i class="fa-solid fa-bars text-lg"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Nav -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-slate-800 bg-dark-900/95 px-4 py-4 space-y-2 text-sm font-medium">
+      <a href="#about" class="block px-3 py-2 rounded-lg hover:bg-slate-800 text-slate-300">About</a>
+      <a href="#skills" class="block px-3 py-2 rounded-lg hover:bg-slate-800 text-slate-300">Skills</a>
+      <a href="#projects" class="block px-3 py-2 rounded-lg hover:bg-slate-800 text-slate-300">Projects</a>
+      <a href="#experience" class="block px-3 py-2 rounded-lg hover:bg-slate-800 text-slate-300">Experience</a>
+      <a href="#certifications" class="block px-3 py-2 rounded-lg hover:bg-slate-800 text-slate-300">Certifications</a>
+      <a href="#contact" class="block px-3 py-2 rounded-lg bg-sky-500/10 text-sky-400">Contact</a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="home" class="relative pt-32 pb-20 md:pt-44 md:pb-28 hero-glow overflow-hidden">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-mono mb-6">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span id="hero-badge">Open to AI/ML & Backend Opportunities</span>
+        </div>
+
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-tight mb-4">
+          Hi, I'm <span id="hero-name" class="gradient-text">Nakul Sharma</span>
+        </h1>
+        <h2 id="hero-role" class="text-xl sm:text-2xl font-semibold text-slate-300 mb-6">
+          AI/ML Engineer & Python Backend Developer
+        </h2>
+        <p id="hero-tagline" class="text-base sm:text-lg text-slate-400 leading-relaxed mb-8 max-w-2xl">
+          Building intelligent NLP systems, scalable FastAPI & Django backends, and production-ready Machine Learning applications.
+        </p>
+
+        <div class="flex flex-wrap items-center gap-4">
+          <a href="#projects" class="px-6 py-3 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 text-white font-semibold text-sm hover:opacity-90 transition shadow-lg shadow-sky-500/20 flex items-center gap-2">
+            <span>View Projects</span>
+            <i class="fa-solid fa-arrow-right text-xs"></i>
+          </a>
+          <a id="hero-resume-btn" href="#contact" class="px-6 py-3 rounded-xl glass text-slate-200 font-semibold text-sm hover:border-sky-500/40 hover:text-sky-400 transition flex items-center gap-2">
+            <i class="fa-regular fa-paper-plane text-xs"></i>
+            <span>Get in Touch</span>
+          </a>
+          <div class="flex items-center gap-3 ml-1">
+            <a id="hero-github" href="https://github.com/nakulsharma02" target="_blank" rel="noopener" class="w-11 h-11 rounded-xl glass flex items-center justify-center text-slate-300 hover:text-white hover:border-sky-500/40 transition" title="GitHub">
+              <i class="fa-brands fa-github text-lg"></i>
+            </a>
+            <a id="hero-linkedin" href="https://linkedin.com/in/nakul-sharma-782576356" target="_blank" rel="noopener" class="w-11 h-11 rounded-xl glass flex items-center justify-center text-slate-300 hover:text-sky-400 hover:border-sky-500/40 transition" title="LinkedIn">
+              <i class="fa-brands fa-linkedin-in text-lg"></i>
+            </a>
+          </div>
+        </div>
       </div>
-      <form onsubmit="handleLogin(event)" class="space-y-4">
-        <input type="password" id="admin-password-input" placeholder="Enter decryption key..." class="w-full px-4 py-3 rounded-xl bg-gray-900 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:border-brand-400 focus:ring-1 focus:ring-brand-400 transition-all text-sm code-font text-center" required />
-        <div id="login-error" class="text-red-400 text-xs font-medium hidden text-center">Decryption failed.</div>
-        <button type="submit" class="w-full py-3 rounded-xl bg-brand-500 hover:bg-brand-400 font-bold text-white transition-all text-sm shadow-[0_0_15px_rgba(14,165,233,0.3)]">INITIALIZE DASHBOARD</button>
+    </div>
+  </section>
+
+  <!-- About & Education -->
+  <section id="about" class="py-20 border-t border-slate-800/60">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center gap-3 mb-10">
+        <span class="text-sky-400 font-mono text-sm">01.</span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-white">About & Education</h2>
+        <div class="h-px bg-slate-800 flex-1 ml-4"></div>
+      </div>
+
+      <div class="grid md:grid-cols-12 gap-8 items-start">
+        <div class="md:col-span-7 space-y-4">
+          <p id="about-bio" class="text-slate-300 leading-relaxed text-base"></p>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-4">
+            <div class="glass rounded-xl p-4">
+              <div id="about-location" class="text-sm font-semibold text-white">Ghaziabad, India</div>
+              <div class="text-xs text-slate-400 mt-1">Location</div>
+            </div>
+            <div class="glass rounded-xl p-4">
+              <div id="about-cgpa" class="text-sm font-semibold text-sky-400">7.21 / 10</div>
+              <div class="text-xs text-slate-400 mt-1">Current CGPA</div>
+            </div>
+            <div class="glass rounded-xl p-4 col-span-2 sm:col-span-1">
+              <div id="about-focus" class="text-sm font-semibold text-indigo-400">AI/ML & Backend</div>
+              <div class="text-xs text-slate-400 mt-1">Core Focus</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="md:col-span-5 glass rounded-2xl p-6 border border-slate-800">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-sky-400">
+              <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+            <div>
+              <h3 class="text-sm font-mono uppercase tracking-wider text-sky-400">Education</h3>
+              <p id="edu-period" class="text-xs text-slate-400">2023 – 2027</p>
+            </div>
+          </div>
+          <h4 id="edu-degree" class="text-lg font-bold text-white leading-snug">B.Tech in Computer Science & Engineering (AI)</h4>
+          <p id="edu-institution" class="text-sm text-slate-300 mt-2">ABES Institute of Technology, Ghaziabad</p>
+          <p id="edu-details" class="text-xs text-slate-400 mt-3 leading-relaxed"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills" class="py-20 border-t border-slate-800/60">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center gap-3 mb-10">
+        <span class="text-sky-400 font-mono text-sm">02.</span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-white">Technical Skills</h2>
+        <div class="h-px bg-slate-800 flex-1 ml-4"></div>
+      </div>
+
+      <div id="skills-grid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="py-20 border-t border-slate-800/60">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center gap-3 mb-10">
+        <span class="text-sky-400 font-mono text-sm">03.</span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-white">Featured Projects</h2>
+        <div class="h-px bg-slate-800 flex-1 ml-4"></div>
+      </div>
+
+      <div id="projects-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </div>
+  </section>
+
+  <!-- Experience & Achievements -->
+  <section id="experience" class="py-20 border-t border-slate-800/60">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center gap-3 mb-10">
+        <span class="text-sky-400 font-mono text-sm">04.</span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-white">Experience & Achievements</h2>
+        <div class="h-px bg-slate-800 flex-1 ml-4"></div>
+      </div>
+
+      <div id="experience-list" class="space-y-6 relative before:absolute before:left-4 md:before:left-6 before:top-2 before:bottom-2 before:w-px before:bg-slate-800"></div>
+    </div>
+  </section>
+
+  <!-- Certifications -->
+  <section id="certifications" class="py-20 border-t border-slate-800/60">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center gap-3 mb-10">
+        <span class="text-sky-400 font-mono text-sm">05.</span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-white">Certifications</h2>
+        <div class="h-px bg-slate-800 flex-1 ml-4"></div>
+      </div>
+
+      <div id="certifications-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-20 border-t border-slate-800/60">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <span class="text-sky-400 font-mono text-sm">06. What's Next?</span>
+      <h2 class="text-3xl sm:text-4xl font-bold text-white mt-2 mb-4">Get In Touch</h2>
+      <p id="contact-subtitle" class="text-slate-400 max-w-xl mx-auto mb-10">
+        I'm actively seeking entry-level AI/ML Engineer, Data Science, and Python Backend Developer roles. Feel free to reach out!
+      </p>
+
+      <div class="grid sm:grid-cols-3 gap-5 text-left">
+        <div class="glass rounded-2xl p-5 flex flex-col justify-between hover:border-sky-500/40 transition">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center mb-4">
+              <i class="fa-solid fa-envelope"></i>
+            </div>
+            <h3 class="text-sm font-semibold text-white">Email</h3>
+            <p id="contact-email-text" class="text-xs text-slate-400 mt-1 break-all">nakulsharmavats123@gmail.com</p>
+          </div>
+          <div class="flex items-center gap-2 mt-4">
+            <button id="copy-email-btn" class="flex-1 py-2 px-3 rounded-lg bg-sky-500/10 text-sky-400 text-xs font-semibold hover:bg-sky-500 hover:text-slate-950 transition">
+              <i class="fa-regular fa-copy mr-1"></i> Copy
+            </button>
+            <a id="contact-email-link" href="mailto:nakulsharmavats123@gmail.com" class="py-2 px-3 rounded-lg bg-slate-800 text-slate-200 text-xs font-semibold hover:bg-slate-700 transition">
+              Mail
+            </a>
+          </div>
+        </div>
+
+        <a id="contact-github-card" href="https://github.com/nakulsharma02" target="_blank" rel="noopener" class="glass rounded-2xl p-5 flex flex-col justify-between hover:border-sky-500/40 transition group">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-slate-800 text-slate-200 group-hover:text-white flex items-center justify-center mb-4">
+              <i class="fa-brands fa-github text-lg"></i>
+            </div>
+            <h3 class="text-sm font-semibold text-white">GitHub</h3>
+            <p id="contact-github-text" class="text-xs text-slate-400 mt-1 break-all">github.com/nakulsharma02</p>
+          </div>
+          <span class="text-xs text-sky-400 font-medium mt-4 inline-flex items-center gap-1">
+            Explore Repos <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+          </span>
+        </a>
+
+        <a id="contact-linkedin-card" href="https://linkedin.com/in/nakul-sharma-782576356" target="_blank" rel="noopener" class="glass rounded-2xl p-5 flex flex-col justify-between hover:border-sky-500/40 transition group">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center mb-4">
+              <i class="fa-brands fa-linkedin-in text-lg"></i>
+            </div>
+            <h3 class="text-sm font-semibold text-white">LinkedIn</h3>
+            <p id="contact-linkedin-text" class="text-xs text-slate-400 mt-1 break-all">linkedin.com/in/nakul-sharma-782576356</p>
+          </div>
+          <span class="text-xs text-sky-400 font-medium mt-4 inline-flex items-center gap-1">
+            Connect <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer with Discreet Secret Lock Icon -->
+  <footer class="border-t border-slate-800/80 py-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+      <div class="flex items-center gap-2">
+        <span>© <span id="footer-year">2026</span> <span id="footer-name">Nakul Sharma</span>. All rights reserved.</span>
+        <span id="sync-badge" class="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-900 border border-slate-800 text-[10px] text-slate-400">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+          <span id="sync-badge-text">Local Mode</span>
+        </span>
+      </div>
+      <div class="flex items-center gap-4">
+        <span class="font-mono text-slate-600">Built with Tailwind & Vanilla JS</span>
+        <button id="admin-lock-btn" title="Admin Editor" class="w-8 h-8 rounded-lg flex items-center justify-center text-slate-600 hover:text-sky-400 hover:bg-slate-800/70 transition" aria-label="Open Admin Panel">
+          <i class="fa-solid fa-lock text-xs"></i>
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Secret Key Auth Modal -->
+  <div id="auth-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/75 backdrop-blur-sm p-4">
+    <div class="glass w-full max-w-md rounded-2xl p-6 border border-slate-700 shadow-2xl">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-white">Portfolio Admin Access</h3>
+            <p class="text-xs text-slate-400">Enter your secret key to unlock the editor</p>
+          </div>
+        </div>
+        <button id="close-auth-btn" class="text-slate-400 hover:text-white p-1">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <form id="auth-form" class="space-y-4">
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1.5">Secret Key</label>
+          <input id="secret-key-input" type="password" required placeholder="Enter secret key..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900/90 border border-slate-700 text-sm text-white focus:outline-none focus:border-sky-500" />
+          <p id="auth-error" class="hidden text-xs text-rose-400 mt-1.5">Incorrect secret key. Please try again.</p>
+        </div>
+        <button type="submit" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 text-white font-semibold text-sm hover:opacity-90 transition">
+          Unlock Editor
+        </button>
       </form>
     </div>
   </div>
 
-  <!-- ================= MODAL 2: DASHBOARD ================= -->
-  <div id="dashboard-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-lg hidden flex items-center justify-center p-2 sm:p-6 overflow-y-auto">
-    <div class="glass w-full max-w-4xl rounded-2xl border border-gray-700 shadow-2xl my-auto flex flex-col max-h-[95vh] sm:max-h-[90vh]">
-      <!-- Dashboard Header -->
-      <div class="p-4 sm:p-6 border-b border-gray-800 flex items-center justify-between bg-gray-900/50">
-        <div><h3 class="font-bold text-white text-base sm:text-lg code-font">Data Control Center</h3></div>
-        <div class="flex items-center gap-1 sm:gap-2">
-          <button onclick="exportData()" class="text-[10px] sm:text-xs px-2 sm:px-3 py-1.5 rounded-lg glass text-gray-300 border border-gray-700"><i class="fa-solid fa-download sm:mr-1"></i> <span class="hidden sm:inline">Backup</span></button>
-          <button onclick="closeDashboardModal()" class="text-gray-400 hover:text-white p-2"><i class="fa-solid fa-xmark text-lg"></i></button>
+  <!-- Full 7-Tab Admin Editor Modal -->
+  <div id="admin-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-md p-3 sm:p-6">
+    <div class="glass w-full max-w-5xl max-h-[92vh] rounded-2xl border border-slate-700 shadow-2xl flex flex-col overflow-hidden">
+      <!-- Header -->
+      <div class="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-900/80">
+        <div class="flex items-center gap-3">
+          <span class="w-8 h-8 rounded-lg bg-sky-500/15 text-sky-400 flex items-center justify-center">
+            <i class="fa-solid fa-sliders"></i>
+          </span>
+          <div>
+            <h3 class="text-base font-bold text-white">Portfolio Admin Editor</h3>
+            <p class="text-xs text-slate-400">Edit any section and save changes in real time</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="admin-save-btn" class="px-4 py-2 rounded-lg bg-sky-500 text-slate-950 font-semibold text-xs hover:bg-sky-400 transition flex items-center gap-1.5">
+            <i class="fa-solid fa-floppy-disk"></i> Save Changes
+          </button>
+          <button id="close-admin-btn" class="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800">
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
         </div>
       </div>
+
       <!-- Tabs -->
-      <div class="flex border-b border-gray-800 bg-gray-900/80 px-2 sm:px-6 text-xs sm:text-sm font-medium text-gray-400 overflow-x-auto hide-scrollbar whitespace-nowrap">
-        <button onclick="switchTab('profile')" id="tab-profile-btn" class="py-3 px-3 sm:px-4 text-brand-400 border-b-2 border-brand-400 font-semibold transition-all">Identity Node</button>
-        <button onclick="switchTab('projects')" id="tab-projects-btn" class="py-3 px-3 sm:px-4 hover:text-gray-200 transition-all">Model Deployments</button>
-        <button onclick="switchTab('skills')" id="tab-skills-btn" class="py-3 px-3 sm:px-4 hover:text-gray-200 transition-all">Skill Vectors</button>
+      <div id="admin-tabs" class="px-4 py-2.5 border-b border-slate-800 bg-slate-950/60 flex items-center gap-1.5 overflow-x-auto text-xs font-medium">
+        <button data-tab="hero" class="admin-tab px-3.5 py-2 rounded-lg whitespace-nowrap bg-sky-500/15 text-sky-400">Hero</button>
+        <button data-tab="about" class="admin-tab px-3.5 py-2 rounded-lg whitespace-nowrap text-slate-400 hover:text-white">About & Edu</button>
+        <button data-tab="skills" class="admin-tab px-3.5 py-2 rounded-lg whitespace-nowrap text-slate-400 hover:text-white">Skills</button>
+        <button data-tab="projects" class="admin-tab px-3.5 py-2 rounded-lg whitespace-nowrap text-slate-400 hover:text-white">Projects</button>
+        <button data-tab="experience" class="admin-tab px-3.5 py-2 rounded-lg whitespace-nowrap text-slate-400 hover:text-white">Experience</button>
+        <button data-tab="certifications" class="admin-tab px-3.5 py-2 rounded-lg whitespace-nowrap text-slate-400 hover:text-white">Certifications</button>
+        <button data-tab="settings" class="admin-tab px-3.5 py-2 rounded-lg whitespace-nowrap text-slate-400 hover:text-white">Contact & Security</button>
       </div>
-      <!-- Contents -->
-      <div class="p-4 sm:p-6 overflow-y-auto flex-grow space-y-6">
-        <!-- PROFILE TAB -->
-        <div id="tab-profile" class="space-y-4">
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div><label class="block text-xs font-semibold text-gray-300 mb-1 code-font">name</label><input type="text" id="edit-name" class="w-full p-2.5 rounded-lg bg-gray-950 border border-gray-700 text-white text-sm" /></div>
-            <div><label class="block text-xs font-semibold text-gray-300 mb-1 code-font">roles (comma separated)</label><input type="text" id="edit-roles" class="w-full p-2.5 rounded-lg bg-gray-950 border border-gray-700 text-white text-sm" /></div>
-          </div>
-          <div><label class="block text-xs font-semibold text-gray-300 mb-1 code-font">description</label><textarea id="edit-bio" rows="3" class="w-full p-2.5 rounded-lg bg-gray-950 border border-gray-700 text-white text-sm"></textarea></div>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div><label class="block text-xs text-gray-300 mb-1 code-font">email</label><input type="email" id="edit-email" class="w-full p-2.5 rounded-lg bg-gray-950 border border-gray-700 text-white text-sm" /></div>
-            <div><label class="block text-xs text-gray-300 mb-1 code-font">github</label><input type="url" id="edit-github" class="w-full p-2.5 rounded-lg bg-gray-950 border border-gray-700 text-white text-sm" /></div>
-            <div><label class="block text-xs text-gray-300 mb-1 code-font">linkedin</label><input type="url" id="edit-linkedin" class="w-full p-2.5 rounded-lg bg-gray-950 border border-gray-700 text-white text-sm" /></div>
-          </div>
-          <div><label class="block text-xs text-gray-300 mb-1 code-font">resume link</label><input type="url" id="edit-resume" class="w-full p-2.5 rounded-lg bg-gray-950 border border-gray-700 text-white text-sm" /></div>
-          <button onclick="saveProfile()" class="w-full sm:w-auto px-5 py-2.5 bg-brand-500 hover:bg-brand-600 text-white rounded-lg text-sm font-bold shadow-[0_0_10px_rgba(14,165,233,0.4)]">Commit Changes</button>
-        </div>
-        <!-- PROJECTS TAB -->
-        <div id="tab-projects" class="space-y-6 hidden">
-          <div class="bg-gray-900/50 p-4 sm:p-5 rounded-xl border border-gray-800">
-            <h4 class="text-sm font-bold text-white mb-3">Deploy New Architecture</h4>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
-              <input type="text" id="new-proj-title" placeholder="Title" class="p-2.5 rounded-lg bg-gray-950 border border-gray-700 text-white text-sm" />
-              <input type="text" id="new-proj-tech" placeholder="Tech Stack" class="p-2.5 rounded-lg bg-gray-950 border border-gray-700 text-white text-sm" />
-            </div>
-            <textarea id="new-proj-desc" rows="2" placeholder="Description" class="w-full p-2.5 rounded-lg bg-gray-950 border border-gray-700 text-white text-sm mb-3"></textarea>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
-              <input type="url" id="new-proj-github" placeholder="GitHub URL" class="p-2.5 rounded-lg bg-gray-950 border border-gray-700 text-white text-sm" />
-              <input type="url" id="new-proj-live" placeholder="Live URL" class="p-2.5 rounded-lg bg-gray-950 border border-gray-700 text-white text-sm" />
-            </div>
-            <button onclick="addProject()" class="w-full sm:w-auto px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-bold">Inject Project</button>
-          </div>
-          <div id="admin-projects-list" class="space-y-3"></div>
-        </div>
-        <!-- SKILLS TAB -->
-        <div id="tab-skills" class="space-y-6 hidden">
-          <div class="bg-gray-900/50 p-4 sm:p-5 rounded-xl border border-gray-800">
-            <h4 class="text-sm font-bold text-white mb-3">Map New Skill Vector</h4>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-3">
-              <select id="skill-category-select" class="p-2.5 rounded-lg bg-gray-950 border border-gray-700 text-white text-sm">
-                <option value="Machine Learning & AI">Machine Learning & AI</option>
-                <option value="Backend & APIs">Backend & APIs</option>
-                <option value="Data & Analytics">Data & Analytics</option>
-              </select>
-              <input type="text" id="new-skill-name" placeholder="Skill Name" class="p-2.5 rounded-lg bg-gray-950 border border-gray-700 text-white text-sm sm:col-span-2" />
-            </div>
-            <button onclick="addSkill()" class="w-full sm:w-auto px-4 py-2 bg-brand-500 text-white rounded-lg text-sm font-bold">Append Vector</button>
-          </div>
-          <div id="admin-skills-list" class="space-y-4"></div>
-        </div>
-      </div>
+
+      <!-- Tab Content -->
+      <div id="admin-content" class="flex-1 overflow-y-auto p-6 space-y-6 bg-slate-900/40"></div>
     </div>
   </div>
 
-  <!-- ================= LOGIC & JAVASCRIPT ================= -->
-  <script>
-    // -------------------------------------------------------------
-    // MOBILE MENU TOGGLE LOGIC
-    // -------------------------------------------------------------
-    const mobileMenuBtn = document.getElementById('mobile-menu-toggle');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const mobileLinks = document.querySelectorAll('.mobile-link');
-    
-    mobileMenuBtn.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
-      mobileMenu.classList.toggle('flex');
-    });
+  <!-- Firebase SDK (Optional Global Real-Time Sync across all devices/browsers) -->
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+    import { getFirestore, doc, onSnapshot, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
-    mobileLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        mobileMenu.classList.add('hidden');
-        mobileMenu.classList.remove('flex');
-      });
-    });
-
-    // -------------------------------------------------------------
-    // 1. NEURAL NETWORK CANVAS ANIMATION 
-    // -------------------------------------------------------------
-    const canvas = document.getElementById('neural-canvas');
-    const ctx = canvas.getContext('2d');
-    let width, height;
-    let particles = [];
-    
-    function initCanvas() {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-      particles = [];
-      const numParticles = Math.min(Math.floor(window.innerWidth / 12), 120); 
-      
-      for(let i=0; i<numParticles; i++) {
-        particles.push({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          vx: (Math.random() - 0.5) * 0.8,
-          vy: (Math.random() - 0.5) * 0.8,
-          radius: Math.random() * 2 + 1
-        });
-      }
-    }
-
-    function drawCanvas() {
-      ctx.clearRect(0, 0, width, height);
-      
-      for(let i=0; i<particles.length; i++) {
-        let p = particles[i];
-        p.x += p.vx;
-        p.y += p.vy;
-        
-        if(p.x < 0 || p.x > width) p.vx = -p.vx;
-        if(p.y < 0 || p.y > height) p.vy = -p.vy;
-        
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(14, 165, 233, 1)'; 
-        ctx.fill();
-        
-        for(let j=i+1; j<particles.length; j++) {
-          let p2 = particles[j];
-          let dist = Math.sqrt(Math.pow(p.x - p2.x, 2) + Math.pow(p.y - p2.y, 2));
-          
-          if(dist < 130) {
-            ctx.beginPath();
-            ctx.strokeStyle = `rgba(14, 165, 233, ${1 - dist/130})`;
-            ctx.lineWidth = 0.8;
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.stroke();
-          }
-        }
-      }
-      requestAnimationFrame(drawCanvas);
-    }
-    
-    window.addEventListener('resize', initCanvas);
-    initCanvas();
-    drawCanvas();
-
-    // -------------------------------------------------------------
-    // 2. SCROLL REVEAL ANIMATIONS
-    // -------------------------------------------------------------
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('active-reveal');
-        }
-      });
-    }, { threshold: 0.1 });
-
-    // -------------------------------------------------------------
-    // 3. CMS STATE & RENDERING
-    // -------------------------------------------------------------
-    const MASTER_PASS = 'nakulsh123456789';
-    const DEFAULT_DATA = {
-      name: "Nakul Sharma",
-      roles: ["AI/ML Engineer", "Python Developer", "Backend Architect", "Data Scientist"],
-      bio: "Engineering intelligent predictive models, resilient backend services, and scalable data-driven solutions using modern Python ecosystems.",
-      email: "contact@example.com",
-      github: "https://github.com",
-      linkedin: "https://linkedin.com",
-      resume: "#",
-      skills: [
-        { category: "Machine Learning & AI", items: ["Python", "Scikit-Learn", "NLP", "Pandas", "NumPy"] },
-        { category: "Backend & APIs", items: ["FastAPI", "Flask", "RESTful APIs", "MySQL"] }
-      ],
-      projects: [
-        { id: 1, title: "AI-Sentinel", tech: "NLP, FastAPI", desc: "Data leakage prevention system.", github: "#", live: "#" },
-        { id: 2, title: "Loan Predictor", tech: "Scikit-Learn, Python", desc: "End-to-end predictive risk engine.", github: "#", live: "#" }
-      ]
+    /* =========================================================================
+       GLOBAL CLOUD SYNC CONFIGURATION (FIREBASE FIRESTORE)
+       To sync edits globally across every device, browser, and visitor:
+       1. Create a free Firebase project -> Enable Firestore Database
+       2. Paste your firebaseConfig values below (replace empty strings)
+       3. Until configured, the portfolio automatically uses localStorage.
+       ========================================================================= */
+    const FIREBASE_CONFIG = {
+      apiKey: "",
+      authDomain: "",
+      projectId: "",
+      storageBucket: "",
+      messagingSenderId: "",
+      appId: ""
     };
 
-    let state = JSON.parse(localStorage.getItem('portfolio_data')) || DEFAULT_DATA;
-    
-    if (!state || typeof state !== 'object' || !state.name || !Array.isArray(state.roles) || state.roles.length === 0) {
-      localStorage.removeItem('portfolio_data');
-      state = DEFAULT_DATA;
+    const FIRESTORE_DOC_PATH = ['portfolio_config', 'nakul_sharma_main'];
+    const STORAGE_KEY = 'nakul_portfolio_data_v2';
+    const DEFAULT_SECRET = 'nakul2026';
+
+    const DEFAULT_DATA = {
+      hero: {
+        brand: 'Nakul.dev',
+        badge: 'Open to AI/ML & Python Backend Roles',
+        name: 'Nakul Sharma',
+        role: 'AI/ML Engineer & Python Backend Developer',
+        tagline: 'Final-year B.Tech (CSE - AI) student passionate about building NLP pipelines, LangChain applications, and high-performance FastAPI & Django backends.',
+        githubUrl: 'https://github.com/nakulsharma02',
+        linkedinUrl: 'https://linkedin.com/in/nakul-sharma-782576356'
+      },
+      about: {
+        bio: 'I am a Computer Science & Engineering (Artificial Intelligence) undergraduate at ABES Institute of Technology, Ghaziabad. I specialize in end-to-end Machine Learning systems, NLP classification pipelines, and scalable backend architectures using Python, FastAPI, Django, SQL, and MongoDB. I actively practice DSA in C++ and enjoy shipping practical AI products.',
+        location: 'Ghaziabad, UP, India',
+        cgpa: '7.21 / 10',
+        focus: 'AI/ML & Backend',
+        degree: 'B.Tech in Computer Science & Engineering (Artificial Intelligence)',
+        institution: 'ABES Institute of Technology, Ghaziabad',
+        period: '2023 – 2027 (4th Year)',
+        eduDetails: 'Relevant Coursework: Machine Learning, Natural Language Processing, Data Structures & Algorithms, Database Management Systems, Operating Systems.'
+      },
+      skills: [
+        {
+          category: 'Languages',
+          icon: 'fa-code',
+          items: ['Python', 'C++', 'SQL', 'JavaScript', 'HTML5', 'CSS3']
+        },
+        {
+          category: 'AI / ML & NLP',
+          icon: 'fa-brain',
+          items: ['Scikit-Learn', 'XGBoost', 'PyTorch', 'LangChain', 'spaCy', 'NLTK', 'Pandas', 'NumPy', 'Seaborn']
+        },
+        {
+          category: 'Backend & Web',
+          icon: 'fa-server',
+          items: ['FastAPI', 'Django', 'Flask', 'Streamlit', 'Tailwind CSS', 'Pydantic', 'REST APIs']
+        },
+        {
+          category: 'Databases & Tools',
+          icon: 'fa-database',
+          items: ['MySQL', 'SQLAlchemy', 'MongoDB (PyMongo)', 'PostgreSQL', 'Git & GitHub', 'VS Code']
+        }
+      ],
+      projects: [
+        {
+          title: 'Dual-Scorer Clickbait & Fake News Detection System',
+          description: 'End-to-end NLP web application pairing a fine-tuned XGBoost model (TF-IDF + spaCy POS features on ISOT & Kaggle datasets) with LangChain and Grok API reasoning via FastAPI and Streamlit.',
+          tech: ['Python', 'FastAPI', 'Streamlit', 'LangChain', 'XGBoost', 'spaCy'],
+          liveUrl: 'https://clickbait-fakenews-detector.streamlit.app',
+          githubUrl: 'https://github.com/nakulsharma02'
+        },
+        {
+          title: 'BankX Asynchronous Digital Banking Portal',
+          description: 'High-concurrency digital banking backend built with asynchronous FastAPI endpoints, strict Pydantic payload validation, and a responsive JavaScript frontend.',
+          tech: ['Python', 'FastAPI', 'Pydantic', 'JavaScript', 'HTML/CSS'],
+          liveUrl: 'https://bankx-portal-demo.onrender.com',
+          githubUrl: 'https://github.com/nakulsharma02'
+        },
+        {
+          title: 'CreditStore E-Commerce Web Platform',
+          description: 'Full-stack e-commerce web platform featuring transactional credit-point deduction schemas, secure user workflows, and relational persistence in PostgreSQL.',
+          tech: ['Python', 'Flask', 'PostgreSQL', 'HTML/CSS'],
+          liveUrl: 'https://creditstore-demo.onrender.com',
+          githubUrl: 'https://github.com/nakulsharma02'
+        },
+        {
+          title: 'Credit Card Fraud Detection System',
+          description: 'Machine learning fraud classifier engineered with Scikit-Learn, XGBoost, and SMOTE oversampling to handle severe class imbalance on financial transaction datasets.',
+          tech: ['Python', 'Scikit-Learn', 'XGBoost', 'SMOTE', 'Pandas'],
+          liveUrl: 'https://fraud-detection-ml-demo.streamlit.app',
+          githubUrl: 'https://github.com/nakulsharma02'
+        },
+        {
+          title: 'House Price Prediction Engine',
+          description: 'Predictive regression pipeline utilizing Random Forest and GridSearchCV hyperparameter tuning, achieving an R² evaluation score of 0.78 on real estate housing data.',
+          tech: ['Python', 'Scikit-Learn', 'Random Forest', 'GridSearchCV', 'NumPy'],
+          liveUrl: 'https://house-price-engine.streamlit.app',
+          githubUrl: 'https://github.com/nakulsharma02'
+        }
+      ],
+      experience: [
+        {
+          role: 'Data Science & Analytics Intern',
+          organization: 'Wheeltrix',
+          period: 'Jun 2026',
+          description: 'Worked on data exploration, feature engineering, and analytical reporting pipelines for real-world business datasets.'
+        },
+        {
+          role: 'Data Analytics Job Simulation',
+          organization: 'Deloitte Australia (Forage)',
+          period: 'Aug 2026',
+          description: 'Analyzed complex operational datasets and built interactive Tableau dashboards to uncover actionable insights.'
+        },
+        {
+          role: 'Research Paper Accepted (ICSACS 2026)',
+          organization: 'International Conference on Secure Automation, Cognitive Systems & Smart Technologies',
+          period: '2026',
+          description: 'Authored and got accepted a research paper focused on solar energy feasibility assessment.'
+        },
+        {
+          role: 'Smart India Hackathon (SIH) — Round 3 Qualifier',
+          organization: 'ABES Institute of Technology',
+          period: 'Aug 2026',
+          description: 'Qualified for Round 3 of the college-level SIH selection process, pitching an AI-driven software solution.'
+        },
+        {
+          role: 'Summer Analytics 2026 Participant',
+          organization: 'Consulting & Analytics Club, IIT Guwahati',
+          period: '2026',
+          description: 'Completed structured data science and machine learning modules and competitive assignments via HackerEarth.'
+        }
+      ],
+      certifications: [
+        {
+          title: 'Programming Fundamentals Using Python (Parts 1 & 2)',
+          issuer: 'Infosys Springboard',
+          date: '2025 – 2026'
+        },
+        {
+          title: 'Introduction to Data Science',
+          issuer: 'Infosys Springboard',
+          date: '2026'
+        },
+        {
+          title: 'AI Agents for Beginners',
+          issuer: 'Simplilearn',
+          date: '2026'
+        },
+        {
+          title: 'Power BI Practical Course',
+          issuer: 'Udemy',
+          date: '2026'
+        },
+        {
+          title: 'Python (Basic) Certification',
+          issuer: 'HackerRank',
+          date: '2026'
+        },
+        {
+          title: 'Business Model Canvas Masterclass',
+          issuer: 'Udemy',
+          date: '2026'
+        }
+      ],
+      contact: {
+        email: 'nakulsharmavats123@gmail.com',
+        subtitle: "I'm actively seeking entry-level AI/ML Engineer, Data Science, and Python Backend Developer roles. Feel free to reach out!"
+      },
+      security: {
+        passwordHash: ''
+      }
+    };
+
+    let portfolioData = structuredClone(DEFAULT_DATA);
+    let draftData = null;
+    let activeTab = 'hero';
+    let db = null;
+    let cloudEnabled = false;
+
+    // Helpers
+    function escapeHtml(str = '') {
+      return String(str)
+        .replace(/&/g, '&')
+        .replace(/</g, '<')
+        .replace(/>/g, '>')
+        .replace(/"/g, '"')
+        .replace(/'/g, ''');
     }
 
-    function saveState() { localStorage.setItem('portfolio_data', JSON.stringify(state)); renderApp(); }
+    async function sha256(message) {
+      const msgBuffer = new TextEncoder().encode(message);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
 
-    function renderApp() {
-      document.getElementById('nav-name').innerText = state.name || "Portfolio";
-      document.getElementById('hero-name').innerText = state.name || "Developer";
-      document.getElementById('footer-name').innerText = state.name || "Developer";
-      document.getElementById('hero-bio').innerText = state.bio || "";
-      document.getElementById('nav-resume-btn').href = state.resume || "#";
-      document.getElementById('email-btn').href = `mailto:${state.email || ""}`;
-      document.getElementById('github-link').href = state.github || "#";
-      
-      const linkedinLnk = document.getElementById('linkedin-link');
-      if(linkedinLnk) linkedinLnk.href = state.linkedin || "#";
-      
-      document.getElementById('year').innerText = new Date().getFullYear();
+    function showToast(msg, isError = false) {
+      const toast = document.getElementById('toast');
+      const icon = document.getElementById('toast-icon');
+      const text = document.getElementById('toast-msg');
+      text.textContent = msg;
+      icon.className = isError
+        ? 'fa-solid fa-circle-exclamation text-rose-400'
+        : 'fa-solid fa-circle-check text-sky-400';
+      toast.classList.remove('hidden');
+      toast.classList.add('flex');
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => {
+        toast.classList.add('hidden');
+        toast.classList.remove('flex');
+      }, 3000);
+    }
 
-      if (state.skills && Array.isArray(state.skills)) {
-        document.getElementById('skills-container').innerHTML = state.skills.map((group, idx) => `
-          <div class="reveal glass p-5 sm:p-6 rounded-2xl border border-gray-800 hover:border-brand-500/40 transition-all cyber-glow" style="transition-delay: ${idx * 100}ms">
-            <h3 class="text-sm sm:text-base font-bold text-white mb-4 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-brand-400"></span>${group.category}</h3>
-            <div class="flex flex-wrap gap-2">${(group.items || []).map(item => `<span class="px-2.5 sm:px-3 py-1 rounded-lg text-[10px] sm:text-xs font-medium bg-gray-900/90 text-gray-300 border border-gray-700/60 code-font shadow-inner">${item}</span>`).join('')}</div>
-          </div>
-        `).join('');
+    function normalizeData(raw) {
+      const merged = {
+        ...structuredClone(DEFAULT_DATA),
+        ...(raw || {}),
+        hero: { ...DEFAULT_DATA.hero, ...(raw?.hero || {}) },
+        about: { ...DEFAULT_DATA.about, ...(raw?.about || {}) },
+        contact: { ...DEFAULT_DATA.contact, ...(raw?.contact || {}) },
+        security: { ...DEFAULT_DATA.security, ...(raw?.security || {}) }
+      };
+      if (Array.isArray(raw?.projects)) {
+        merged.projects = raw.projects.map(p => ({
+          title: p.title || '',
+          description: p.description || '',
+          tech: Array.isArray(p.tech) ? p.tech : [],
+          liveUrl: p.liveUrl ?? p.demoUrl ?? '',
+          githubUrl: p.githubUrl ?? p.repoUrl ?? ''
+        }));
       }
+      return merged;
+    }
 
-      if (state.projects && Array.isArray(state.projects)) {
-        document.getElementById('projects-container').innerHTML = state.projects.map((proj, idx) => `
-          <div class="reveal glass p-5 sm:p-7 rounded-2xl border border-gray-800 transition-all flex flex-col justify-between group cyber-glow relative overflow-hidden" style="transition-delay: ${idx * 100}ms">
-            <div class="relative z-10">
-              <div class="flex items-center justify-between mb-3 sm:mb-4">
-                <h3 class="text-lg sm:text-xl font-bold text-white group-hover:text-brand-400 transition-colors">${proj.title}</h3>
-                <span class="text-[9px] sm:text-[10px] uppercase tracking-wider px-2 py-1 rounded bg-brand-500/10 text-brand-400 border border-brand-500/20 font-bold code-font">Live</span>
+    // Persistence
+    async function initStorage() {
+      const localRaw = localStorage.getItem(STORAGE_KEY);
+      if (localRaw) {
+        try {
+          portfolioData = normalizeData(JSON.parse(localRaw));
+        } catch (_) {}
+      }
+      renderPortfolio();
+
+      if (FIREBASE_CONFIG.apiKey && FIREBASE_CONFIG.projectId) {
+        try {
+          const app = initializeApp(FIREBASE_CONFIG);
+          db = getFirestore(app);
+          cloudEnabled = true;
+          document.getElementById('sync-badge-text').textContent = 'Cloud Synced';
+          const ref = doc(db, ...FIRESTORE_DOC_PATH);
+          onSnapshot(ref, (snap) => {
+            if (snap.exists()) {
+              portfolioData = normalizeData(snap.data());
+              localStorage.setItem(STORAGE_KEY, JSON.stringify(portfolioData));
+              renderPortfolio();
+            }
+          });
+        } catch (err) {
+          console.error('Firebase init failed, using localStorage:', err);
+        }
+      }
+    }
+
+    async function persistData(newData) {
+      portfolioData = normalizeData(newData);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(portfolioData));
+      renderPortfolio();
+      if (cloudEnabled && db) {
+        const ref = doc(db, ...FIRESTORE_DOC_PATH);
+        await setDoc(ref, portfolioData, { merge: true });
+      }
+    }
+
+    // Render Portfolio UI
+    function renderPortfolio() {
+      const d = portfolioData;
+
+      // Brand & Hero
+      const brandParts = (d.hero.brand || 'Nakul.dev').split('.');
+      document.getElementById('nav-brand').innerHTML = brandParts.length > 1
+        ? `${escapeHtml(brandParts[0])}<span class="text-sky-400">.${escapeHtml(brandParts.slice(1).join('.'))}</span>`
+        : escapeHtml(d.hero.brand);
+
+      document.getElementById('hero-badge').textContent = d.hero.badge;
+      document.getElementById('hero-name').textContent = d.hero.name;
+      document.getElementById('hero-role').textContent = d.hero.role;
+      document.getElementById('hero-tagline').textContent = d.hero.tagline;
+      document.getElementById('hero-github').href = d.hero.githubUrl || '#';
+      document.getElementById('hero-linkedin').href = d.hero.linkedinUrl || '#';
+      document.title = `${d.hero.name} | ${d.hero.role}`;
+
+      // About & Education
+      document.getElementById('about-bio').textContent = d.about.bio;
+      document.getElementById('about-location').textContent = d.about.location;
+      document.getElementById('about-cgpa').textContent = d.about.cgpa;
+      document.getElementById('about-focus').textContent = d.about.focus;
+      document.getElementById('edu-degree').textContent = d.about.degree;
+      document.getElementById('edu-institution').textContent = d.about.institution;
+      document.getElementById('edu-period').textContent = d.about.period;
+      document.getElementById('edu-details').textContent = d.about.eduDetails;
+
+      // Skills
+      document.getElementById('skills-grid').innerHTML = (d.skills || []).map(group => `
+        <div class="glass rounded-2xl p-5 hover:border-sky-500/30 transition">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-9 h-9 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center">
+              <i class="fa-solid ${escapeHtml(group.icon || 'fa-code')}"></i>
+            </div>
+            <h3 class="font-semibold text-white text-sm">${escapeHtml(group.category)}</h3>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            ${(group.items || []).map(item => `
+              <span class="px-2.5 py-1 rounded-lg bg-slate-800/80 border border-slate-700/70 text-xs text-slate-300 font-mono">
+                ${escapeHtml(item)}
+              </span>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
+
+      // Projects (with Live Project Link + GitHub Link)
+      document.getElementById('projects-grid').innerHTML = (d.projects || []).map(p => {
+        const hasLive = p.liveUrl && p.liveUrl.trim() !== '';
+        const hasGithub = p.githubUrl && p.githubUrl.trim() !== '';
+        return `
+          <article class="glass rounded-2xl p-6 flex flex-col justify-between hover:border-sky-500/40 hover:-translate-y-1 transition duration-300">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <div class="w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-500/20 text-sky-400 flex items-center justify-center">
+                  <i class="fa-regular fa-folder-open"></i>
+                </div>
+                ${hasLive ? `<span class="px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-mono">LIVE</span>` : ''}
               </div>
-              <p class="text-[10px] sm:text-xs text-brand-300 code-font mb-3 sm:mb-4 border-l-2 border-brand-500 pl-2">${proj.tech}</p>
-              <p class="text-gray-400 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-6">${proj.desc}</p>
+              <h3 class="text-lg font-bold text-white leading-snug mb-2">${escapeHtml(p.title)}</h3>
+              <p class="text-sm text-slate-400 leading-relaxed mb-5">${escapeHtml(p.description)}</p>
             </div>
-            <div class="relative z-10 flex flex-wrap items-center gap-3 sm:gap-4 pt-4 border-t border-gray-800/80 text-xs sm:text-sm">
-              ${proj.github ? `<a href="${proj.github}" target="_blank" class="text-gray-300 hover:text-white font-medium"><i class="fa-brands fa-github mr-1"></i> Source</a>` : ''}
-              ${proj.live ? `<a href="${proj.live}" target="_blank" class="text-brand-400 hover:text-brand-300 font-medium"><i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> Demo</a>` : ''}
+
+            <div>
+              <div class="flex flex-wrap gap-1.5 mb-5">
+                ${(p.tech || []).map(t => `
+                  <span class="px-2 py-0.5 rounded-md bg-slate-900 border border-slate-800 text-[11px] font-mono text-sky-300">
+                    ${escapeHtml(t)}
+                  </span>
+                `).join('')}
+              </div>
+
+              <div class="flex items-center gap-2.5 pt-4 border-t border-slate-800/80">
+                ${hasLive ? `
+                  <a href="${escapeHtml(p.liveUrl)}" target="_blank" rel="noopener" class="flex-1 py-2 px-3 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 text-white text-xs font-semibold hover:opacity-90 transition flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[11px]"></i>
+                    <span>Live Project</span>
+                  </a>
+                ` : ''}
+                ${hasGithub ? `
+                  <a href="${escapeHtml(p.githubUrl)}" target="_blank" rel="noopener" class="${hasLive ? 'flex-1' : 'w-full'} py-2 px-3 rounded-xl bg-slate-800/90 border border-slate-700 text-slate-200 text-xs font-semibold hover:border-sky-500/40 hover:text-white transition flex items-center justify-center gap-1.5">
+                    <i class="fa-brands fa-github text-sm"></i>
+                    <span>GitHub</span>
+                  </a>
+                ` : ''}
+              </div>
             </div>
+          </article>
+        `;
+      }).join('');
+
+      // Experience
+      document.getElementById('experience-list').innerHTML = (d.experience || []).map(exp => `
+        <div class="relative pl-10 md:pl-14">
+          <span class="absolute left-2.5 md:left-4.5 top-2 w-3 h-3 rounded-full bg-sky-400 ring-4 ring-dark-950"></span>
+          <div class="glass rounded-2xl p-5 hover:border-sky-500/30 transition">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
+              <h3 class="text-base font-bold text-white">${escapeHtml(exp.role)}</h3>
+              <span class="text-xs font-mono text-sky-400 bg-sky-500/10 px-2.5 py-0.5 rounded-full w-fit">${escapeHtml(exp.period)}</span>
+            </div>
+            <p class="text-sm font-medium text-indigo-300 mb-2">${escapeHtml(exp.organization)}</p>
+            <p class="text-sm text-slate-400 leading-relaxed">${escapeHtml(exp.description)}</p>
           </div>
-        `).join('');
-      }
+        </div>
+      `).join('');
 
-      document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+      // Certifications
+      document.getElementById('certifications-grid').innerHTML = (d.certifications || []).map(c => `
+        <div class="glass rounded-2xl p-5 hover:border-sky-500/30 transition flex items-start gap-3.5">
+          <div class="w-9 h-9 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center shrink-0 mt-0.5">
+            <i class="fa-solid fa-certificate"></i>
+          </div>
+          <div>
+            <h3 class="text-sm font-semibold text-white leading-snug">${escapeHtml(c.title)}</h3>
+            <p class="text-xs text-slate-400 mt-1">${escapeHtml(c.issuer)}</p>
+            <span class="inline-block text-[11px] font-mono text-sky-400 mt-2">${escapeHtml(c.date)}</span>
+          </div>
+        </div>
+      `).join('');
 
-      document.getElementById('edit-name').value = state.name || "";
-      document.getElementById('edit-roles').value = (state.roles || []).join(', ');
-      document.getElementById('edit-bio').value = state.bio || "";
-      document.getElementById('edit-email').value = state.email || "";
-      document.getElementById('edit-github').value = state.github || "";
-      document.getElementById('edit-resume').value = state.resume || "";
-      if(document.getElementById('edit-linkedin')) document.getElementById('edit-linkedin').value = state.linkedin || "";
-
-      renderAdminProjectList();
-      renderAdminSkillsList();
+      // Contact & Footer
+      document.getElementById('contact-subtitle').textContent = d.contact.subtitle;
+      document.getElementById('contact-email-text').textContent = d.contact.email;
+      document.getElementById('contact-email-link').href = `mailto:${d.contact.email}`;
+      document.getElementById('contact-github-card').href = d.hero.githubUrl || '#';
+      document.getElementById('contact-github-text').textContent = (d.hero.githubUrl || '').replace(/^https?:\/\//, '');
+      document.getElementById('contact-linkedin-card').href = d.hero.linkedinUrl || '#';
+      document.getElementById('contact-linkedin-text').textContent = (d.hero.linkedinUrl || '').replace(/^https?:\/\//, '');
+      document.getElementById('footer-name').textContent = d.hero.name;
+      document.getElementById('footer-year').textContent = new Date().getFullYear();
     }
 
-    // -------------------------------------------------------------
-    // 4. TYPEWRITER EFFECT
-    // -------------------------------------------------------------
-    let roleIndex = 0; let charIndex = 0; let isDeleting = false;
-    function typeEffect() {
-      const roles = (state.roles && state.roles.length > 0) ? state.roles : ["Developer"];
-      const currentRole = roles[roleIndex] || roles[0];
-      const typewriterEl = document.getElementById('typewriter');
-      if (!typewriterEl) return;
-
-      if (isDeleting) {
-        typewriterEl.innerText = currentRole.substring(0, charIndex - 1);
-        charIndex--;
-      } else {
-        typewriterEl.innerText = currentRole.substring(0, charIndex + 1);
-        charIndex++;
-      }
-
-      let typingSpeed = isDeleting ? 30 : 80;
-      if (!isDeleting && charIndex === currentRole.length) { 
-        typingSpeed = 2000; 
-        isDeleting = true; 
-      } else if (isDeleting && charIndex === 0) { 
-        isDeleting = false; 
-        roleIndex = (roleIndex + 1) % roles.length; 
-        typingSpeed = 400; 
-      }
-      setTimeout(typeEffect, typingSpeed);
-    }
-
-    // -------------------------------------------------------------
-    // 5. DASHBOARD & AUTHENTICATION LOGIC
-    // -------------------------------------------------------------
-    function openLoginModal() { document.getElementById('login-modal').classList.remove('hidden'); }
-    function closeLoginModal() { document.getElementById('login-modal').classList.add('hidden'); document.getElementById('login-error').classList.add('hidden'); }
-    function handleLogin(e) {
-      e.preventDefault();
-      if (document.getElementById('admin-password-input').value === MASTER_PASS) {
-        closeLoginModal(); document.getElementById('dashboard-modal').classList.remove('hidden');
-      } else { document.getElementById('login-error').classList.remove('hidden'); }
-    }
-    function closeDashboardModal() { document.getElementById('dashboard-modal').classList.add('hidden'); }
-    function switchTab(tab) {
-      ['profile', 'projects', 'skills'].forEach(t => {
-        document.getElementById(`tab-${t}`).classList.add('hidden');
-        document.getElementById(`tab-${t}-btn`).classList.remove('text-brand-400', 'border-b-2', 'border-brand-400');
+    // Admin Editor Rendering
+    function renderAdminTab() {
+      const container = document.getElementById('admin-content');
+      document.querySelectorAll('.admin-tab').forEach(btn => {
+        const isActive = btn.dataset.tab === activeTab;
+        btn.className = isActive
+          ? 'admin-tab px-3.5 py-2 rounded-lg whitespace-nowrap bg-sky-500/15 text-sky-400'
+          : 'admin-tab px-3.5 py-2 rounded-lg whitespace-nowrap text-slate-400 hover:text-white';
       });
-      document.getElementById(`tab-${tab}`).classList.remove('hidden');
-      document.getElementById(`tab-${tab}-btn`).classList.add('text-brand-400', 'border-b-2', 'border-brand-400');
-    }
-    
-    function saveProfile() {
-      state.name = document.getElementById('edit-name').value.trim();
-      state.roles = document.getElementById('edit-roles').value.split(',').map(r => r.trim()).filter(Boolean);
-      if (state.roles.length === 0) state.roles = ["AI/ML Engineer"]; 
-      state.bio = document.getElementById('edit-bio').value.trim();
-      state.email = document.getElementById('edit-email').value.trim();
-      state.github = document.getElementById('edit-github').value.trim();
-      if(document.getElementById('edit-linkedin')) state.linkedin = document.getElementById('edit-linkedin').value.trim();
-      state.resume = document.getElementById('edit-resume').value.trim();
-      saveState(); alert('Profile updated successfully! Note: You may need to refresh the page to see changes in the typewriter.');
-    }
 
-    function renderAdminProjectList() {
-      if (!state.projects || !Array.isArray(state.projects)) return;
-      document.getElementById('admin-projects-list').innerHTML = state.projects.map((p) => `
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between p-3 rounded-lg bg-gray-950 border border-gray-800 text-sm gap-2">
-          <div><span class="font-bold text-white">${p.title}</span><span class="text-[10px] sm:text-xs text-gray-500 ml-2 code-font">(${p.tech})</span></div>
-          <button onclick="deleteProject(${p.id})" class="text-red-400 hover:text-red-300 text-left sm:text-right text-xs"><i class="fa-solid fa-trash"></i> Drop</button>
-        </div>`).join('');
-    }
+      const inputCls = 'w-full px-3 py-2 rounded-lg bg-slate-950/80 border border-slate-700 text-sm text-white focus:outline-none focus:border-sky-500';
+      const labelCls = 'block text-xs font-medium text-slate-400 mb-1';
 
-    function addProject() {
-      const title = document.getElementById('new-proj-title').value.trim();
-      const desc = document.getElementById('new-proj-desc').value.trim();
-      if (!title || !desc) { alert('Title and Description required.'); return; }
-      if (!state.projects) state.projects = [];
-      state.projects.unshift({ id: Date.now(), title, tech: document.getElementById('new-proj-tech').value.trim() || 'Python, ML', desc, github: document.getElementById('new-proj-github').value.trim(), live: document.getElementById('new-proj-live').value.trim() });
-      ['title','tech','desc','github','live'].forEach(id => document.getElementById(`new-proj-${id}`).value = '');
-      saveState();
-    }
+      if (activeTab === 'hero') {
+        const h = draftData.hero;
+        container.innerHTML = `
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div><label class="${labelCls}">Brand Logo Text</label><input data-path="hero.brand" value="${escapeHtml(h.brand)}" class="${inputCls}"></div>
+            <div><label class="${labelCls}">Status Badge</label><input data-path="hero.badge" value="${escapeHtml(h.badge)}" class="${inputCls}"></div>
+            <div><label class="${labelCls}">Full Name</label><input data-path="hero.name" value="${escapeHtml(h.name)}" class="${inputCls}"></div>
+            <div><label class="${labelCls}">Headline Role</label><input data-path="hero.role" value="${escapeHtml(h.role)}" class="${inputCls}"></div>
+            <div class="sm:col-span-2"><label class="${labelCls}">Tagline</label><textarea data-path="hero.tagline" rows="3" class="${inputCls}">${escapeHtml(h.tagline)}</textarea></div>
+            <div><label class="${labelCls}">GitHub URL</label><input data-path="hero.githubUrl" value="${escapeHtml(h.githubUrl)}" class="${inputCls}"></div>
+            <div><label class="${labelCls}">LinkedIn URL</label><input data-path="hero.linkedinUrl" value="${escapeHtml(h.linkedinUrl)}" class="${inputCls}"></div>
+          </div>`;
+      } else if (activeTab === 'about') {
+        const a = draftData.about;
+        container.innerHTML = `
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div class="sm:col-span-2"><label class="${labelCls}">Bio</label><textarea data-path="about.bio" rows="4" class="${inputCls}">${escapeHtml(a.bio)}</textarea></div>
+            <div><label class="${labelCls}">Location</label><input data-path="about.location" value="${escapeHtml(a.location)}" class="${inputCls}"></div>
+            <div><label class="${labelCls}">CGPA</label><input data-path="about.cgpa" value="${escapeHtml(a.cgpa)}" class="${inputCls}"></div>
+            <div><label class="${labelCls}">Core Focus</label><input data-path="about.focus" value="${escapeHtml(a.focus)}" class="${inputCls}"></div>
+            <div><label class="${labelCls}">Education Period</label><input data-path="about.period" value="${escapeHtml(a.period)}" class="${inputCls}"></div>
+            <div class="sm:col-span-2"><label class="${labelCls}">Degree</label><input data-path="about.degree" value="${escapeHtml(a.degree)}" class="${inputCls}"></div>
+            <div class="sm:col-span-2"><label class="${labelCls}">Institution</label><input data-path="about.institution" value="${escapeHtml(a.institution)}" class="${inputCls}"></div>
+            <div class="sm:col-span-2"><label class="${labelCls}">Coursework / Details</label><textarea data-path="about.eduDetails" rows="2" class="${inputCls}">${escapeHtml(a.eduDetails)}</textarea></div>
+          </div>`;
+      } else if (activeTab === 'skills') {
+        container.innerHTML = `
+          <div class="flex justify-between items-center">
+            <h4 class="text-sm font-semibold text-white">Skill Categories</h4>
+            <button id="add-skill-btn" class="px-3 py-1.5 rounded-lg bg-sky-500/15 text-sky-400 text-xs font-semibold hover:bg-sky-500 hover:text-slate-950 transition">+ Add Category</button>
+          </div>
+          <div class="space-y-4">
+            ${draftData.skills.map((s, idx) => `
+              <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800 space-y-3">
+                <div class="flex items-center justify-between gap-3">
+                  <div class="grid sm:grid-cols-2 gap-3 flex-1">
+                    <div><label class="${labelCls}">Category Name</label><input data-arr="skills" data-idx="${idx}" data-key="category" value="${escapeHtml(s.category)}" class="${inputCls}"></div>
+                    <div><label class="${labelCls}">FontAwesome Icon (e.g. fa-code)</label><input data-arr="skills" data-idx="${idx}" data-key="icon" value="${escapeHtml(s.icon)}" class="${inputCls}"></div>
+                  </div>
+                  <button data-del-arr="skills" data-idx="${idx}" class="mt-5 p-2 rounded-lg text-rose-400 hover:bg-rose-500/10"><i class="fa-solid fa-trash"></i></button>
+                </div>
+                <div>
+                  <label class="${labelCls}">Skills (comma-separated)</label>
+                  <input data-arr="skills" data-idx="${idx}" data-key="items" data-csv="true" value="${escapeHtml((s.items || []).join(', '))}" class="${inputCls}">
+                </div>
+              </div>
+            `).join('')}
+          </div>`;
+      } else if (activeTab === 'projects') {
+        container.innerHTML = `
+          <div class="flex justify-between items-center">
+            <h4 class="text-sm font-semibold text-white">Projects (${draftData.projects.length})</h4>
+            <button id="add-project-btn" class="px-3 py-1.5 rounded-lg bg-sky-500/15 text-sky-400 text-xs font-semibold hover:bg-sky-500 hover:text-slate-950 transition">+ Add Project</button>
+          </div>
+          <div class="space-y-4">
+            ${draftData.projects.map((p, idx) => `
+              <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800 space-y-3">
+                <div class="flex items-center justify-between gap-3">
+                  <div class="flex-1"><label class="${labelCls}">Project Title</label><input data-arr="projects" data-idx="${idx}" data-key="title" value="${escapeHtml(p.title)}" class="${inputCls}"></div>
+                  <button data-del-arr="projects" data-idx="${idx}" class="mt-5 p-2 rounded-lg text-rose-400 hover:bg-rose-500/10"><i class="fa-solid fa-trash"></i></button>
+                </div>
+                <div><label class="${labelCls}">Description</label><textarea data-arr="projects" data-idx="${idx}" data-key="description" rows="2" class="${inputCls}">${escapeHtml(p.description)}</textarea></div>
+                <div><label class="${labelCls}">Tech Stack (comma-separated)</label><input data-arr="projects" data-idx="${idx}" data-key="tech" data-csv="true" value="${escapeHtml((p.tech || []).join(', '))}" class="${inputCls}"></div>
+                <div class="grid sm:grid-cols-2 gap-3">
+                  <div><label class="${labelCls}">Live Project URL (leave blank to hide button)</label><input data-arr="projects" data-idx="${idx}" data-key="liveUrl" placeholder="https://..." value="${escapeHtml(p.liveUrl || '')}" class="${inputCls}"></div>
+                  <div><label class="${labelCls}">GitHub Repo URL</label><input data-arr="projects" data-idx="${idx}" data-key="githubUrl" placeholder="https://github.com/..." value="${escapeHtml(p.githubUrl || '')}" class="${inputCls}"></div>
+                </div>
+              </div>
+            `).join('')}
+          </div>`;
+      } else if (activeTab === 'experience') {
+        container.innerHTML = `
+          <div class="flex justify-between items-center">
+            <h4 class="text-sm font-semibold text-white">Experience & Achievements</h4>
+            <button id="add-exp-btn" class="px-3 py-1.5 rounded-lg bg-sky-500/15 text-sky-400 text-xs font-semibold hover:bg-sky-500 hover:text-slate-950 transition">+ Add Entry</button>
+          </div>
+          <div class="space-y-4">
+            ${draftData.experience.map((e, idx) => `
+              <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800 space-y-3">
+                <div class="flex items-center justify-between gap-3">
+                  <div class="grid sm:grid-cols-3 gap-3 flex-1">
+                    <div><label class="${labelCls}">Role / Title</label><input data-arr="experience" data-idx="${idx}" data-key="role" value="${escapeHtml(e.role)}" class="${inputCls}"></div>
+                    <div><label class="${labelCls}">Organization</label><input data-arr="experience" data-idx="${idx}" data-key="organization" value="${escapeHtml(e.organization)}" class="${inputCls}"></div>
+                    <div><label class="${labelCls}">Period</label><input data-arr="experience" data-idx="${idx}" data-key="period" value="${escapeHtml(e.period)}" class="${inputCls}"></div>
+                  </div>
+                  <button data-del-arr="experience" data-idx="${idx}" class="mt-5 p-2 rounded-lg text-rose-400 hover:bg-rose-500/10"><i class="fa-solid fa-trash"></i></button>
+                </div>
+                <div><label class="${labelCls}">Description</label><textarea data-arr="experience" data-idx="${idx}" data-key="description" rows="2" class="${inputCls}">${escapeHtml(e.description)}</textarea></div>
+              </div>
+            `).join('')}
+          </div>`;
+      } else if (activeTab === 'certifications') {
+        container.innerHTML = `
+          <div class="flex justify-between items-center">
+            <h4 class="text-sm font-semibold text-white">Certifications</h4>
+            <button id="add-cert-btn" class="px-3 py-1.5 rounded-lg bg-sky-500/15 text-sky-400 text-xs font-semibold hover:bg-sky-500 hover:text-slate-950 transition">+ Add Certification</button>
+          </div>
+          <div class="space-y-3">
+            ${draftData.certifications.map((c, idx) => `
+              <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800 flex items-center gap-3">
+                <div class="grid sm:grid-cols-3 gap-3 flex-1">
+                  <div><label class="${labelCls}">Title</label><input data-arr="certifications" data-idx="${idx}" data-key="title" value="${escapeHtml(c.title)}" class="${inputCls}"></div>
+                  <div><label class="${labelCls}">Issuer</label><input data-arr="certifications" data-idx="${idx}" data-key="issuer" value="${escapeHtml(c.issuer)}" class="${inputCls}"></div>
+                  <div><label class="${labelCls}">Date</label><input data-arr="certifications" data-idx="${idx}" data-key="date" value="${escapeHtml(c.date)}" class="${inputCls}"></div>
+                </div>
+                <button data-del-arr="certifications" data-idx="${idx}" class="mt-5 p-2 rounded-lg text-rose-400 hover:bg-rose-500/10"><i class="fa-solid fa-trash"></i></button>
+              </div>
+            `).join('')}
+          </div>`;
+      } else if (activeTab === 'settings') {
+        container.innerHTML = `
+          <div class="space-y-6">
+            <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800 space-y-4">
+              <h4 class="text-sm font-semibold text-white">Contact Section</h4>
+              <div><label class="${labelCls}">Email Address</label><input data-path="contact.email" value="${escapeHtml(draftData.contact.email)}" class="${inputCls}"></div>
+              <div><label class="${labelCls}">Contact Subtitle</label><textarea data-path="contact.subtitle" rows="2" class="${inputCls}">${escapeHtml(draftData.contact.subtitle)}</textarea></div>
+            </div>
 
-    function deleteProject(id) { if (confirm('Drop this deployment?')) { state.projects = state.projects.filter(p => p.id !== id); saveState(); } }
-    
-    function renderAdminSkillsList() {
-      if (!state.skills || !Array.isArray(state.skills)) return;
-      document.getElementById('admin-skills-list').innerHTML = state.skills.map((group, gIdx) => `
-        <div class="p-3 bg-gray-950 rounded-lg border border-gray-800"><h5 class="text-xs font-bold text-brand-400 mb-2">${group.category}</h5>
-        <div class="flex flex-wrap gap-2">${(group.items || []).map((item, iIdx) => `<span class="px-2 py-1 rounded bg-gray-900 text-[10px] sm:text-xs text-gray-300 border border-gray-700">${item} <button onclick="removeSkill(${gIdx}, ${iIdx})" class="text-gray-500 hover:text-red-400 ml-1">×</button></span>`).join('')}</div></div>`).join('');
-    }
+            <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800 space-y-3">
+              <h4 class="text-sm font-semibold text-white">Update Secret Key (Stored as SHA-256 Hash)</h4>
+              <div class="flex flex-col sm:flex-row gap-3">
+                <input id="new-secret-key" type="password" placeholder="Enter new secret key..." class="${inputCls} flex-1">
+                <button id="update-key-btn" class="px-4 py-2 rounded-lg bg-indigo-500 text-white text-xs font-semibold hover:bg-indigo-400 transition whitespace-nowrap">Update Key</button>
+              </div>
+            </div>
 
-    function addSkill() {
-      const cat = document.getElementById('skill-category-select').value; const name = document.getElementById('new-skill-name').value.trim();
-      if (!name) return; 
-      if (!state.skills) state.skills = [];
-      let group = state.skills.find(g => g.category === cat);
-      if (group) { if (!group.items.includes(name)) group.items.push(name); } else { state.skills.push({ category: cat, items: [name] }); }
-      document.getElementById('new-skill-name').value = ''; saveState();
-    }
-
-    function removeSkill(gIdx, iIdx) { state.skills[gIdx].items.splice(iIdx, 1); saveState(); }
-    
-    function exportData() {
-      const a = document.createElement('a'); a.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state, null, 2));
-      a.download = "portfolio_backup.json"; document.body.appendChild(a); a.click(); a.remove();
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      if (!state || typeof state !== 'object' || !state.name || !Array.isArray(state.roles) || state.roles.length === 0) {
-        localStorage.removeItem('portfolio_data'); state = DEFAULT_DATA;
+            <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800 flex flex-wrap items-center gap-3">
+              <button id="export-json-btn" class="px-4 py-2 rounded-lg bg-slate-800 text-slate-200 text-xs font-semibold hover:bg-slate-700 transition">
+                <i class="fa-solid fa-download mr-1.5"></i> Export JSON Backup
+              </button>
+              <label class="px-4 py-2 rounded-lg bg-slate-800 text-slate-200 text-xs font-semibold hover:bg-slate-700 transition cursor-pointer">
+                <i class="fa-solid fa-upload mr-1.5"></i> Import JSON
+                <input id="import-json-input" type="file" accept="application/json" class="hidden">
+              </label>
+              <button id="reset-defaults-btn" class="px-4 py-2 rounded-lg bg-rose-500/15 text-rose-400 text-xs font-semibold hover:bg-rose-500 hover:text-white transition ml-auto">
+                <i class="fa-solid fa-rotate-left mr-1.5"></i> Reset to Defaults
+              </button>
+            </div>
+          </div>`;
       }
-      setTimeout(() => { document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el)); }, 100);
-      renderApp(); typeEffect();
+
+      bindAdminInputs();
+    }
+
+    function bindAdminInputs() {
+      const container = document.getElementById('admin-content');
+
+      container.querySelectorAll('[data-path]').forEach(el => {
+        el.addEventListener('input', (e) => {
+          const [sec, key] = e.target.dataset.path.split('.');
+          draftData[sec][key] = e.target.value;
+        });
+      });
+
+      container.querySelectorAll('[data-arr]').forEach(el => {
+        el.addEventListener('input', (e) => {
+          const arr = e.target.dataset.arr;
+          const idx = Number(e.target.dataset.idx);
+          const key = e.target.dataset.key;
+          const isCsv = e.target.dataset.csv === 'true';
+          draftData[arr][idx][key] = isCsv
+            ? e.target.value.split(',').map(v => v.trim()).filter(Boolean)
+            : e.target.value;
+        });
+      });
+
+      container.querySelectorAll('[data-del-arr]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const arr = btn.dataset.delArr;
+          const idx = Number(btn.dataset.idx);
+          draftData[arr].splice(idx, 1);
+          renderAdminTab();
+        });
+      });
+
+      const addSkill = document.getElementById('add-skill-btn');
+      if (addSkill) addSkill.onclick = () => {
+        draftData.skills.push({ category: 'New Category', icon: 'fa-code', items: ['Skill 1'] });
+        renderAdminTab();
+      };
+
+      const addProject = document.getElementById('add-project-btn');
+      if (addProject) addProject.onclick = () => {
+        draftData.projects.unshift({
+          title: 'New Project',
+          description: 'Describe what this project solves and its architecture.',
+          tech: ['Python', 'FastAPI'],
+          liveUrl: '',
+          githubUrl: draftData.hero.githubUrl || ''
+        });
+        renderAdminTab();
+      };
+
+      const addExp = document.getElementById('add-exp-btn');
+      if (addExp) addExp.onclick = () => {
+        draftData.experience.unshift({
+          role: 'Role / Achievement',
+          organization: 'Organization',
+          period: '2026',
+          description: 'Key contributions and impact.'
+        });
+        renderAdminTab();
+      };
+
+      const addCert = document.getElementById('add-cert-btn');
+      if (addCert) addCert.onclick = () => {
+        draftData.certifications.unshift({
+          title: 'Certification Name',
+          issuer: 'Platform / Organization',
+          date: '2026'
+        });
+        renderAdminTab();
+      };
+
+      const updateKeyBtn = document.getElementById('update-key-btn');
+      if (updateKeyBtn) updateKeyBtn.onclick = async () => {
+        const val = document.getElementById('new-secret-key').value.trim();
+        if (val.length < 4) return showToast('Secret key must be at least 4 characters', true);
+        draftData.security.passwordHash = await sha256(val);
+        document.getElementById('new-secret-key').value = '';
+        showToast('Secret key updated. Click Save Changes to apply.');
+      };
+
+      const exportBtn = document.getElementById('export-json-btn');
+      if (exportBtn) exportBtn.onclick = () => {
+        const blob = new Blob([JSON.stringify(draftData, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'nakul-portfolio-backup.json';
+        a.click();
+        URL.revokeObjectURL(url);
+      };
+
+      const importInput = document.getElementById('import-json-input');
+      if (importInput) importInput.onchange = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+          try {
+            draftData = normalizeData(JSON.parse(reader.result));
+            renderAdminTab();
+            showToast('Backup imported! Click Save Changes to apply.');
+          } catch (_) {
+            showToast('Invalid JSON file', true);
+          }
+        };
+        reader.readAsText(file);
+      };
+
+      const resetBtn = document.getElementById('reset-defaults-btn');
+      if (resetBtn) resetBtn.onclick = () => {
+        if (!confirm('Reset all sections back to default portfolio data?')) return;
+        draftData = structuredClone(DEFAULT_DATA);
+        renderAdminTab();
+        showToast('Defaults restored. Click Save Changes to apply.');
+      };
+    }
+
+    // Event Listeners
+    document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
     });
+    document.querySelectorAll('#mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => document.getElementById('mobile-menu').classList.add('hidden'));
+    });
+
+    document.getElementById('copy-email-btn').addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(portfolioData.contact.email);
+        showToast('Email copied to clipboard!');
+      } catch (_) {
+        showToast('Could not copy email', true);
+      }
+    });
+
+    // Auth Modal Controls
+    const authModal = document.getElementById('auth-modal');
+    const adminModal = document.getElementById('admin-modal');
+    const keyInput = document.getElementById('secret-key-input');
+    const authError = document.getElementById('auth-error');
+
+    document.getElementById('admin-lock-btn').addEventListener('click', () => {
+      keyInput.value = '';
+      authError.classList.add('hidden');
+      authModal.classList.remove('hidden');
+      authModal.classList.add('flex');
+      setTimeout(() => keyInput.focus(), 50);
+    });
+
+    document.getElementById('close-auth-btn').addEventListener('click', () => {
+      authModal.classList.add('hidden');
+      authModal.classList.remove('flex');
+    });
+
+    document.getElementById('auth-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const enteredHash = await sha256(keyInput.value);
+      const expectedHash = portfolioData.security.passwordHash || await sha256(DEFAULT_SECRET);
+      if (enteredHash === expectedHash) {
+        authModal.classList.add('hidden');
+        authModal.classList.remove('flex');
+        draftData = structuredClone(portfolioData);
+        activeTab = 'hero';
+        renderAdminTab();
+        adminModal.classList.remove('hidden');
+        adminModal.classList.add('flex');
+      } else {
+        authError.classList.remove('hidden');
+      }
+    });
+
+    document.getElementById('close-admin-btn').addEventListener('click', () => {
+      adminModal.classList.add('hidden');
+      adminModal.classList.remove('flex');
+    });
+
+    document.getElementById('admin-tabs').addEventListener('click', (e) => {
+      const btn = e.target.closest('.admin-tab');
+      if (!btn) return;
+      activeTab = btn.dataset.tab;
+      renderAdminTab();
+    });
+
+    document.getElementById('admin-save-btn').addEventListener('click', async () => {
+      try {
+        await persistData(draftData);
+        adminModal.classList.add('hidden');
+        adminModal.classList.remove('flex');
+        showToast(cloudEnabled ? 'Saved & synced to cloud!' : 'Saved locally!');
+      } catch (err) {
+        console.error(err);
+        showToast('Failed to save changes', true);
+      }
+    });
+
+    initStorage();
   </script>
 </body>
 </html>
