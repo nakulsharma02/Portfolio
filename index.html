@@ -2,7 +2,7 @@
 <html lang="en" class="scroll-smooth dark">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
   <title>Nakul Sharma | AI/ML & Python Backend Developer</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
@@ -12,10 +12,10 @@
       theme: {
         extend: {
           colors: {
-            dark: {
-              950: '#050816',
-              900: '#0b1120',
-              800: '#111827',
+            neural: {
+              950: '#030712',
+              900: '#070d1f',
+              800: '#0f172a',
               700: '#1e293b'
             }
           },
@@ -28,302 +28,397 @@
     };
   </script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
-    body {
-      background-color: #050816;
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+    html, body {
+      background-color: #030712;
       color: #e2e8f0;
       font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      max-width: 100vw;
     }
-    .glass {
-      background: rgba(15, 23, 42, 0.7);
+
+    /* Interactive Neural Network Canvas */
+    #neural-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .site-content {
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Glassmorphism Neural Cards */
+    .neural-glass {
+      background: rgba(7, 13, 31, 0.72);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(56, 189, 248, 0.14);
+      box-shadow: 0 8px 32px rgba(2, 6, 23, 0.45);
+    }
+
+    .neural-card {
+      background: rgba(10, 18, 40, 0.68);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(148, 163, 184, 0.12);
+      border: 1px solid rgba(129, 140, 248, 0.16);
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     }
-    .gradient-text {
-      background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
+
+    .neural-card:hover {
+      border-color: rgba(56, 189, 248, 0.45);
+      box-shadow: 0 0 28px rgba(56, 189, 248, 0.14), 0 12px 32px rgba(2, 6, 23, 0.6);
+      transform: translateY(-4px);
+    }
+
+    /* Animated Gradient Shimmer Text */
+    .shimmer-text {
+      background: linear-gradient(90deg, #38bdf8, #818cf8, #c084fc, #38bdf8);
+      background-size: 250% auto;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      animation: shimmer 5s linear infinite;
     }
-    .hero-glow {
-      background: radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.15) 0%, rgba(129, 140, 248, 0.08) 35%, transparent 70%);
+
+    @keyframes shimmer {
+      0% { background-position: 0% center; }
+      100% { background-position: 250% center; }
     }
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: #050816; }
+
+    /* Auto-Writing Typewriter Cursor */
+    .type-cursor {
+      display: inline-block;
+      width: 3px;
+      height: 0.92em;
+      background: linear-gradient(180deg, #38bdf8, #c084fc);
+      margin-left: 4px;
+      vertical-align: -0.08em;
+      border-radius: 2px;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.9);
+      animation: blink-cursor 0.85s steps(2, start) infinite;
+    }
+
+    @keyframes blink-cursor {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* Scroll Reveal Animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Subtle Hero Glow */
+    .hero-neural-glow {
+      background: radial-gradient(circle at 50% 10%, rgba(56, 189, 248, 0.16) 0%, rgba(129, 140, 248, 0.08) 38%, transparent 72%);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #030712; }
     ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #334155; }
+    ::-webkit-scrollbar-thumb:hover { background: #38bdf8; }
+
+    /* Mobile Drawer Transition */
+    #mobile-menu {
+      transition: max-height 0.3s ease, opacity 0.3s ease;
+    }
   </style>
 </head>
 <body class="antialiased selection:bg-sky-500/30 selection:text-sky-200">
 
+  <!-- Interactive Neural Network Background Canvas -->
+  <canvas id="neural-canvas" aria-hidden="true"></canvas>
+
   <!-- Toast Notification -->
-  <div id="toast" class="fixed top-5 right-5 z-[100] hidden items-center gap-3 px-4 py-3 rounded-xl glass border border-sky-500/30 text-sm font-medium text-slate-100 shadow-2xl transition-all duration-300">
+  <div id="toast" class="fixed top-5 right-5 z-[100] hidden items-center gap-3 px-4 py-3 rounded-xl neural-glass border border-sky-400/40 text-sm font-medium text-slate-100 shadow-2xl">
     <i id="toast-icon" class="fa-solid fa-circle-check text-sky-400"></i>
     <span id="toast-msg">Saved successfully</span>
   </div>
 
-  <!-- Navbar -->
-  <header class="fixed top-0 inset-x-0 z-40 glass border-b border-slate-800/80">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <a href="#home" class="text-lg font-bold tracking-tight flex items-center gap-2">
-        <span class="w-8 h-8 rounded-lg bg-gradient-to-br from-sky-500 to-indigo-600 flex items-center justify-center text-white text-sm font-mono font-bold"></></span>
-        <span id="nav-brand" class="text-slate-100">Nakul<span class="text-sky-400">.dev</span></span>
-      </a>
-
-      <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-slate-300">
-        <a href="#about" class="hover:text-sky-400 transition">About</a>
-        <a href="#skills" class="hover:text-sky-400 transition">Skills</a>
-        <a href="#projects" class="hover:text-sky-400 transition">Projects</a>
-        <a href="#experience" class="hover:text-sky-400 transition">Experience</a>
-        <a href="#certifications" class="hover:text-sky-400 transition">Certifications</a>
-        <a href="#contact" class="px-4 py-2 rounded-lg bg-sky-500/10 text-sky-400 border border-sky-500/30 hover:bg-sky-500 hover:text-slate-950 transition">Contact</a>
-      </nav>
-
-      <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-slate-300 hover:bg-slate-800" aria-label="Toggle Menu">
-        <i class="fa-solid fa-bars text-lg"></i>
-      </button>
-    </div>
-
-    <!-- Mobile Nav -->
-    <div id="mobile-menu" class="hidden md:hidden border-t border-slate-800 bg-dark-900/95 px-4 py-4 space-y-2 text-sm font-medium">
-      <a href="#about" class="block px-3 py-2 rounded-lg hover:bg-slate-800 text-slate-300">About</a>
-      <a href="#skills" class="block px-3 py-2 rounded-lg hover:bg-slate-800 text-slate-300">Skills</a>
-      <a href="#projects" class="block px-3 py-2 rounded-lg hover:bg-slate-800 text-slate-300">Projects</a>
-      <a href="#experience" class="block px-3 py-2 rounded-lg hover:bg-slate-800 text-slate-300">Experience</a>
-      <a href="#certifications" class="block px-3 py-2 rounded-lg hover:bg-slate-800 text-slate-300">Certifications</a>
-      <a href="#contact" class="block px-3 py-2 rounded-lg bg-sky-500/10 text-sky-400">Contact</a>
-    </div>
-  </header>
-
-  <!-- Hero Section -->
-  <section id="home" class="relative pt-32 pb-20 md:pt-44 md:pb-28 hero-glow overflow-hidden">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="max-w-3xl">
-        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-mono mb-6">
-          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span id="hero-badge">Open to AI/ML & Backend Opportunities</span>
-        </div>
-
-        <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-tight mb-4">
-          Hi, I'm <span id="hero-name" class="gradient-text">Nakul Sharma</span>
-        </h1>
-        <h2 id="hero-role" class="text-xl sm:text-2xl font-semibold text-slate-300 mb-6">
-          AI/ML Engineer & Python Backend Developer
-        </h2>
-        <p id="hero-tagline" class="text-base sm:text-lg text-slate-400 leading-relaxed mb-8 max-w-2xl">
-          Building intelligent NLP systems, scalable FastAPI & Django backends, and production-ready Machine Learning applications.
-        </p>
-
-        <div class="flex flex-wrap items-center gap-4">
-          <a href="#projects" class="px-6 py-3 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 text-white font-semibold text-sm hover:opacity-90 transition shadow-lg shadow-sky-500/20 flex items-center gap-2">
-            <span>View Projects</span>
-            <i class="fa-solid fa-arrow-right text-xs"></i>
-          </a>
-          <a id="hero-resume-btn" href="#contact" class="px-6 py-3 rounded-xl glass text-slate-200 font-semibold text-sm hover:border-sky-500/40 hover:text-sky-400 transition flex items-center gap-2">
-            <i class="fa-regular fa-paper-plane text-xs"></i>
-            <span>Get in Touch</span>
-          </a>
-          <div class="flex items-center gap-3 ml-1">
-            <a id="hero-github" href="https://github.com/nakulsharma02" target="_blank" rel="noopener" class="w-11 h-11 rounded-xl glass flex items-center justify-center text-slate-300 hover:text-white hover:border-sky-500/40 transition" title="GitHub">
-              <i class="fa-brands fa-github text-lg"></i>
-            </a>
-            <a id="hero-linkedin" href="https://linkedin.com/in/nakul-sharma-782576356" target="_blank" rel="noopener" class="w-11 h-11 rounded-xl glass flex items-center justify-center text-slate-300 hover:text-sky-400 hover:border-sky-500/40 transition" title="LinkedIn">
-              <i class="fa-brands fa-linkedin-in text-lg"></i>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- About & Education -->
-  <section id="about" class="py-20 border-t border-slate-800/60">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center gap-3 mb-10">
-        <span class="text-sky-400 font-mono text-sm">01.</span>
-        <h2 class="text-2xl sm:text-3xl font-bold text-white">About & Education</h2>
-        <div class="h-px bg-slate-800 flex-1 ml-4"></div>
-      </div>
-
-      <div class="grid md:grid-cols-12 gap-8 items-start">
-        <div class="md:col-span-7 space-y-4">
-          <p id="about-bio" class="text-slate-300 leading-relaxed text-base"></p>
-          <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-4">
-            <div class="glass rounded-xl p-4">
-              <div id="about-location" class="text-sm font-semibold text-white">Ghaziabad, India</div>
-              <div class="text-xs text-slate-400 mt-1">Location</div>
-            </div>
-            <div class="glass rounded-xl p-4">
-              <div id="about-cgpa" class="text-sm font-semibold text-sky-400">7.21 / 10</div>
-              <div class="text-xs text-slate-400 mt-1">Current CGPA</div>
-            </div>
-            <div class="glass rounded-xl p-4 col-span-2 sm:col-span-1">
-              <div id="about-focus" class="text-sm font-semibold text-indigo-400">AI/ML & Backend</div>
-              <div class="text-xs text-slate-400 mt-1">Core Focus</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="md:col-span-5 glass rounded-2xl p-6 border border-slate-800">
-          <div class="flex items-center gap-3 mb-4">
-            <div class="w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-sky-400">
-              <i class="fa-solid fa-graduation-cap"></i>
-            </div>
-            <div>
-              <h3 class="text-sm font-mono uppercase tracking-wider text-sky-400">Education</h3>
-              <p id="edu-period" class="text-xs text-slate-400">2023 – 2027</p>
-            </div>
-          </div>
-          <h4 id="edu-degree" class="text-lg font-bold text-white leading-snug">B.Tech in Computer Science & Engineering (AI)</h4>
-          <p id="edu-institution" class="text-sm text-slate-300 mt-2">ABES Institute of Technology, Ghaziabad</p>
-          <p id="edu-details" class="text-xs text-slate-400 mt-3 leading-relaxed"></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Skills Section -->
-  <section id="skills" class="py-20 border-t border-slate-800/60">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center gap-3 mb-10">
-        <span class="text-sky-400 font-mono text-sm">02.</span>
-        <h2 class="text-2xl sm:text-3xl font-bold text-white">Technical Skills</h2>
-        <div class="h-px bg-slate-800 flex-1 ml-4"></div>
-      </div>
-
-      <div id="skills-grid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
-    </div>
-  </section>
-
-  <!-- Projects Section -->
-  <section id="projects" class="py-20 border-t border-slate-800/60">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center gap-3 mb-10">
-        <span class="text-sky-400 font-mono text-sm">03.</span>
-        <h2 class="text-2xl sm:text-3xl font-bold text-white">Featured Projects</h2>
-        <div class="h-px bg-slate-800 flex-1 ml-4"></div>
-      </div>
-
-      <div id="projects-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-    </div>
-  </section>
-
-  <!-- Experience & Achievements -->
-  <section id="experience" class="py-20 border-t border-slate-800/60">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center gap-3 mb-10">
-        <span class="text-sky-400 font-mono text-sm">04.</span>
-        <h2 class="text-2xl sm:text-3xl font-bold text-white">Experience & Achievements</h2>
-        <div class="h-px bg-slate-800 flex-1 ml-4"></div>
-      </div>
-
-      <div id="experience-list" class="space-y-6 relative before:absolute before:left-4 md:before:left-6 before:top-2 before:bottom-2 before:w-px before:bg-slate-800"></div>
-    </div>
-  </section>
-
-  <!-- Certifications -->
-  <section id="certifications" class="py-20 border-t border-slate-800/60">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center gap-3 mb-10">
-        <span class="text-sky-400 font-mono text-sm">05.</span>
-        <h2 class="text-2xl sm:text-3xl font-bold text-white">Certifications</h2>
-        <div class="h-px bg-slate-800 flex-1 ml-4"></div>
-      </div>
-
-      <div id="certifications-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
-    </div>
-  </section>
-
-  <!-- Contact Section -->
-  <section id="contact" class="py-20 border-t border-slate-800/60">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <span class="text-sky-400 font-mono text-sm">06. What's Next?</span>
-      <h2 class="text-3xl sm:text-4xl font-bold text-white mt-2 mb-4">Get In Touch</h2>
-      <p id="contact-subtitle" class="text-slate-400 max-w-xl mx-auto mb-10">
-        I'm actively seeking entry-level AI/ML Engineer, Data Science, and Python Backend Developer roles. Feel free to reach out!
-      </p>
-
-      <div class="grid sm:grid-cols-3 gap-5 text-left">
-        <div class="glass rounded-2xl p-5 flex flex-col justify-between hover:border-sky-500/40 transition">
-          <div>
-            <div class="w-10 h-10 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center mb-4">
-              <i class="fa-solid fa-envelope"></i>
-            </div>
-            <h3 class="text-sm font-semibold text-white">Email</h3>
-            <p id="contact-email-text" class="text-xs text-slate-400 mt-1 break-all">nakulsharmavats123@gmail.com</p>
-          </div>
-          <div class="flex items-center gap-2 mt-4">
-            <button id="copy-email-btn" class="flex-1 py-2 px-3 rounded-lg bg-sky-500/10 text-sky-400 text-xs font-semibold hover:bg-sky-500 hover:text-slate-950 transition">
-              <i class="fa-regular fa-copy mr-1"></i> Copy
-            </button>
-            <a id="contact-email-link" href="mailto:nakulsharmavats123@gmail.com" class="py-2 px-3 rounded-lg bg-slate-800 text-slate-200 text-xs font-semibold hover:bg-slate-700 transition">
-              Mail
-            </a>
-          </div>
-        </div>
-
-        <a id="contact-github-card" href="https://github.com/nakulsharma02" target="_blank" rel="noopener" class="glass rounded-2xl p-5 flex flex-col justify-between hover:border-sky-500/40 transition group">
-          <div>
-            <div class="w-10 h-10 rounded-xl bg-slate-800 text-slate-200 group-hover:text-white flex items-center justify-center mb-4">
-              <i class="fa-brands fa-github text-lg"></i>
-            </div>
-            <h3 class="text-sm font-semibold text-white">GitHub</h3>
-            <p id="contact-github-text" class="text-xs text-slate-400 mt-1 break-all">github.com/nakulsharma02</p>
-          </div>
-          <span class="text-xs text-sky-400 font-medium mt-4 inline-flex items-center gap-1">
-            Explore Repos <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+  <div class="site-content">
+    <!-- Navbar -->
+    <header class="fixed top-0 inset-x-0 z-40 neural-glass border-b border-sky-500/15">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <a href="#home" class="text-base sm:text-lg font-bold tracking-tight flex items-center gap-2.5 min-h-[44px]">
+          <span class="w-9 h-9 rounded-xl bg-gradient-to-br from-sky-500 via-indigo-500 to-purple-600 flex items-center justify-center text-white text-xs font-mono font-bold shadow-lg shadow-sky-500/25">
+            <i class="fa-solid fa-diagram-project"></i>
           </span>
+          <span id="nav-brand" class="text-slate-100">Nakul<span class="text-sky-400">.dev</span></span>
         </a>
 
-        <a id="contact-linkedin-card" href="https://linkedin.com/in/nakul-sharma-782576356" target="_blank" rel="noopener" class="glass rounded-2xl p-5 flex flex-col justify-between hover:border-sky-500/40 transition group">
-          <div>
-            <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center mb-4">
-              <i class="fa-brands fa-linkedin-in text-lg"></i>
-            </div>
-            <h3 class="text-sm font-semibold text-white">LinkedIn</h3>
-            <p id="contact-linkedin-text" class="text-xs text-slate-400 mt-1 break-all">linkedin.com/in/nakul-sharma-782576356</p>
-          </div>
-          <span class="text-xs text-sky-400 font-medium mt-4 inline-flex items-center gap-1">
-            Connect <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-          </span>
-        </a>
-      </div>
-    </div>
-  </section>
+        <nav class="hidden md:flex items-center gap-6 lg:gap-7 text-sm font-medium text-slate-300">
+          <a href="#about" class="hover:text-sky-400 transition">About</a>
+          <a href="#skills" class="hover:text-sky-400 transition">Skills</a>
+          <a href="#projects" class="hover:text-sky-400 transition">Projects</a>
+          <a href="#experience" class="hover:text-sky-400 transition">Experience</a>
+          <a href="#certifications" class="hover:text-sky-400 transition">Certifications</a>
+          <a href="#contact" class="px-4 py-2 rounded-xl bg-sky-500/10 text-sky-400 border border-sky-400/30 hover:bg-sky-500 hover:text-slate-950 transition font-semibold">Contact</a>
+        </nav>
 
-  <!-- Footer with Discreet Secret Lock Icon -->
-  <footer class="border-t border-slate-800/80 py-8">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-      <div class="flex items-center gap-2">
-        <span>© <span id="footer-year">2026</span> <span id="footer-name">Nakul Sharma</span>. All rights reserved.</span>
-        <span id="sync-badge" class="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-900 border border-slate-800 text-[10px] text-slate-400">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-          <span id="sync-badge-text">Local Mode</span>
-        </span>
-      </div>
-      <div class="flex items-center gap-4">
-        <span class="font-mono text-slate-600">Built with Tailwind & Vanilla JS</span>
-        <button id="admin-lock-btn" title="Admin Editor" class="w-8 h-8 rounded-lg flex items-center justify-center text-slate-600 hover:text-sky-400 hover:bg-slate-800/70 transition" aria-label="Open Admin Panel">
-          <i class="fa-solid fa-lock text-xs"></i>
+        <button id="mobile-menu-btn" class="md:hidden w-11 h-11 rounded-xl flex items-center justify-center text-slate-200 hover:bg-slate-800/80 border border-slate-700/60" aria-label="Toggle Menu">
+          <i id="mobile-menu-icon" class="fa-solid fa-bars text-lg"></i>
         </button>
       </div>
-    </div>
-  </footer>
+
+      <!-- Mobile Nav Drawer -->
+      <div id="mobile-menu" class="hidden md:hidden border-t border-sky-500/15 bg-neural-950/95 backdrop-blur-xl px-4 py-4 space-y-1.5 text-sm font-medium">
+        <a href="#about" class="block px-4 py-3 rounded-xl hover:bg-sky-500/10 text-slate-200">About</a>
+        <a href="#skills" class="block px-4 py-3 rounded-xl hover:bg-sky-500/10 text-slate-200">Skills</a>
+        <a href="#projects" class="block px-4 py-3 rounded-xl hover:bg-sky-500/10 text-slate-200">Projects</a>
+        <a href="#experience" class="block px-4 py-3 rounded-xl hover:bg-sky-500/10 text-slate-200">Experience</a>
+        <a href="#certifications" class="block px-4 py-3 rounded-xl hover:bg-sky-500/10 text-slate-200">Certifications</a>
+        <a href="#contact" class="block px-4 py-3 rounded-xl bg-sky-500/15 text-sky-400 font-semibold">Contact</a>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative pt-28 pb-16 sm:pt-36 sm:pb-24 md:pt-44 md:pb-28 hero-neural-glow">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl reveal">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-500/10 border border-sky-400/30 text-sky-300 text-xs font-mono mb-6 shadow-lg shadow-sky-500/10">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <span id="hero-badge">Open to AI/ML & Python Backend Roles</span>
+          </div>
+
+          <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-[1.15] mb-4">
+            Hi, I'm
+            <span class="block sm:inline mt-1 sm:mt-0">
+              <span id="typed-name" class="shimmer-text">Nakul Sharma</span><span class="type-cursor" aria-hidden="true"></span>
+            </span>
+          </h1>
+
+          <h2 id="hero-role" class="text-lg sm:text-2xl font-semibold text-indigo-200 mb-5">
+            AI/ML Engineer & Python Backend Developer
+          </h2>
+
+          <p id="hero-tagline" class="text-sm sm:text-base md:text-lg text-slate-300/90 leading-relaxed mb-8 max-w-2xl">
+            Final-year B.Tech (CSE - AI) student passionate about building NLP pipelines, LangChain applications, and high-performance FastAPI & Django backends.
+          </p>
+
+          <div class="flex flex-wrap items-center gap-3 sm:gap-4">
+            <a href="#projects" class="min-h-[44px] px-6 py-3 rounded-xl bg-gradient-to-r from-sky-500 via-indigo-500 to-purple-600 text-white font-semibold text-sm hover:opacity-95 hover:scale-[1.02] transition shadow-lg shadow-sky-500/25 flex items-center gap-2">
+              <span>Explore Projects</span>
+              <i class="fa-solid fa-arrow-right text-xs"></i>
+            </a>
+            <a href="#contact" class="min-h-[44px] px-6 py-3 rounded-xl neural-glass text-slate-100 font-semibold text-sm hover:border-sky-400/50 hover:text-sky-300 transition flex items-center gap-2">
+              <i class="fa-regular fa-paper-plane text-xs"></i>
+              <span>Get in Touch</span>
+            </a>
+            <div class="flex items-center gap-2.5">
+              <a id="hero-github" href="https://github.com/nakulsharma02" target="_blank" rel="noopener" class="w-11 h-11 rounded-xl neural-glass flex items-center justify-center text-slate-300 hover:text-white hover:border-sky-400/50 transition" title="GitHub">
+                <i class="fa-brands fa-github text-lg"></i>
+              </a>
+              <a id="hero-linkedin" href="https://linkedin.com/in/nakul-sharma-782576356" target="_blank" rel="noopener" class="w-11 h-11 rounded-xl neural-glass flex items-center justify-center text-slate-300 hover:text-sky-400 hover:border-sky-400/50 transition" title="LinkedIn">
+                <i class="fa-brands fa-linkedin-in text-lg"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About & Education -->
+    <section id="about" class="py-16 sm:py-20 border-t border-sky-500/10">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center gap-3 mb-8 sm:mb-10 reveal">
+          <span class="text-sky-400 font-mono text-xs sm:text-sm">01 //</span>
+          <h2 class="text-2xl sm:text-3xl font-bold shimmer-text">About & Education</h2>
+          <div class="h-px bg-gradient-to-r from-sky-500/40 to-transparent flex-1 ml-2 sm:ml-4"></div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
+          <div class="lg:col-span-7 space-y-5 reveal">
+            <p id="about-bio" class="text-slate-300 leading-relaxed text-sm sm:text-base"></p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 pt-2">
+              <div class="neural-card rounded-xl p-4">
+                <div id="about-location" class="text-sm font-semibold text-white">Ghaziabad, UP, India</div>
+                <div class="text-xs text-slate-400 mt-1 font-mono">Location</div>
+              </div>
+              <div class="neural-card rounded-xl p-4">
+                <div id="about-cgpa" class="text-sm font-semibold text-sky-400">7.21 / 10</div>
+                <div class="text-xs text-slate-400 mt-1 font-mono">Current CGPA</div>
+              </div>
+              <div class="neural-card rounded-xl p-4">
+                <div id="about-focus" class="text-sm font-semibold text-purple-300">AI/ML & Backend</div>
+                <div class="text-xs text-slate-400 mt-1 font-mono">Core Focus</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-5 neural-card rounded-2xl p-5 sm:p-6 reveal">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 rounded-xl bg-sky-500/15 border border-sky-400/30 flex items-center justify-center text-sky-400">
+                <i class="fa-solid fa-graduation-cap"></i>
+              </div>
+              <div>
+                <h3 class="text-xs font-mono uppercase tracking-wider text-sky-400">Education</h3>
+                <p id="edu-period" class="text-xs text-slate-400">2023 – 2027 (4th Year)</p>
+              </div>
+            </div>
+            <h4 id="edu-degree" class="text-base sm:text-lg font-bold text-white leading-snug">B.Tech in Computer Science & Engineering (Artificial Intelligence)</h4>
+            <p id="edu-institution" class="text-sm text-indigo-200 mt-2">ABES Institute of Technology, Ghaziabad</p>
+            <p id="edu-details" class="text-xs text-slate-400 mt-3 leading-relaxed"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-16 sm:py-20 border-t border-sky-500/10">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center gap-3 mb-8 sm:mb-10 reveal">
+          <span class="text-sky-400 font-mono text-xs sm:text-sm">02 //</span>
+          <h2 class="text-2xl sm:text-3xl font-bold shimmer-text">Technical Skills</h2>
+          <div class="h-px bg-gradient-to-r from-sky-500/40 to-transparent flex-1 ml-2 sm:ml-4"></div>
+        </div>
+
+        <div id="skills-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6"></div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-16 sm:py-20 border-t border-sky-500/10">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center gap-3 mb-8 sm:mb-10 reveal">
+          <span class="text-sky-400 font-mono text-xs sm:text-sm">03 //</span>
+          <h2 class="text-2xl sm:text-3xl font-bold shimmer-text">Featured Projects</h2>
+          <div class="h-px bg-gradient-to-r from-sky-500/40 to-transparent flex-1 ml-2 sm:ml-4"></div>
+        </div>
+
+        <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6"></div>
+      </div>
+    </section>
+
+    <!-- Experience & Achievements -->
+    <section id="experience" class="py-16 sm:py-20 border-t border-sky-500/10">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center gap-3 mb-8 sm:mb-10 reveal">
+          <span class="text-sky-400 font-mono text-xs sm:text-sm">04 //</span>
+          <h2 class="text-2xl sm:text-3xl font-bold shimmer-text">Experience & Achievements</h2>
+          <div class="h-px bg-gradient-to-r from-sky-500/40 to-transparent flex-1 ml-2 sm:ml-4"></div>
+        </div>
+
+        <div id="experience-list" class="space-y-5 relative before:absolute before:left-3.5 sm:before:left-5 before:top-2 before:bottom-2 before:w-px before:bg-gradient-to-b before:from-sky-400/60 before:via-indigo-500/40 before:to-transparent"></div>
+      </div>
+    </section>
+
+    <!-- Certifications -->
+    <section id="certifications" class="py-16 sm:py-20 border-t border-sky-500/10">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center gap-3 mb-8 sm:mb-10 reveal">
+          <span class="text-sky-400 font-mono text-xs sm:text-sm">05 //</span>
+          <h2 class="text-2xl sm:text-3xl font-bold shimmer-text">Certifications</h2>
+          <div class="h-px bg-gradient-to-r from-sky-500/40 to-transparent flex-1 ml-2 sm:ml-4"></div>
+        </div>
+
+        <div id="certifications-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5"></div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 sm:py-20 border-t border-sky-500/10">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center reveal">
+        <span class="text-sky-400 font-mono text-xs sm:text-sm">06 // Initialize Connection</span>
+        <h2 class="text-3xl sm:text-4xl font-bold shimmer-text mt-2 mb-4">Get In Touch</h2>
+        <p id="contact-subtitle" class="text-sm sm:text-base text-slate-300/90 max-w-xl mx-auto mb-10">
+          I'm actively seeking entry-level AI/ML Engineer, Data Science, and Python Backend Developer roles. Feel free to reach out!
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 text-left">
+          <div class="neural-card rounded-2xl p-5 flex flex-col justify-between">
+            <div>
+              <div class="w-10 h-10 rounded-xl bg-sky-500/15 text-sky-400 flex items-center justify-center mb-4">
+                <i class="fa-solid fa-envelope"></i>
+              </div>
+              <h3 class="text-sm font-semibold text-white">Email</h3>
+              <p id="contact-email-text" class="text-xs text-slate-400 mt-1 break-all">nakulsharmavats123@gmail.com</p>
+            </div>
+            <div class="flex items-center gap-2 mt-4">
+              <button id="copy-email-btn" class="flex-1 min-h-[40px] py-2 px-3 rounded-xl bg-sky-500/15 text-sky-300 text-xs font-semibold hover:bg-sky-500 hover:text-slate-950 transition">
+                <i class="fa-regular fa-copy mr-1"></i> Copy
+              </button>
+              <a id="contact-email-link" href="mailto:nakulsharmavats123@gmail.com" class="min-h-[40px] py-2 px-3.5 rounded-xl bg-slate-800/90 text-slate-200 text-xs font-semibold hover:bg-slate-700 transition flex items-center">
+                Mail
+              </a>
+            </div>
+          </div>
+
+          <a id="contact-github-card" href="https://github.com/nakulsharma02" target="_blank" rel="noopener" class="neural-card rounded-2xl p-5 flex flex-col justify-between group">
+            <div>
+              <div class="w-10 h-10 rounded-xl bg-slate-800 text-slate-200 group-hover:text-white flex items-center justify-center mb-4">
+                <i class="fa-brands fa-github text-lg"></i>
+              </div>
+              <h3 class="text-sm font-semibold text-white">GitHub</h3>
+              <p id="contact-github-text" class="text-xs text-slate-400 mt-1 break-all">github.com/nakulsharma02</p>
+            </div>
+            <span class="text-xs text-sky-400 font-medium mt-4 inline-flex items-center gap-1.5">
+              Explore Repos <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+            </span>
+          </a>
+
+          <a id="contact-linkedin-card" href="https://linkedin.com/in/nakul-sharma-782576356" target="_blank" rel="noopener" class="neural-card rounded-2xl p-5 flex flex-col justify-between group">
+            <div>
+              <div class="w-10 h-10 rounded-xl bg-indigo-500/15 text-indigo-400 flex items-center justify-center mb-4">
+                <i class="fa-brands fa-linkedin-in text-lg"></i>
+              </div>
+              <h3 class="text-sm font-semibold text-white">LinkedIn</h3>
+              <p id="contact-linkedin-text" class="text-xs text-slate-400 mt-1 break-all">linkedin.com/in/nakul-sharma-782576356</p>
+            </div>
+            <span class="text-xs text-sky-400 font-medium mt-4 inline-flex items-center gap-1.5">
+              Connect <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer with Discreet Secret Lock Icon -->
+    <footer class="border-t border-sky-500/15 py-8 neural-glass">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+        <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
+          <span>© <span id="footer-year">2026</span> <span id="footer-name">Nakul Sharma</span>. All rights reserved.</span>
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-slate-900/90 border border-sky-500/20 text-[10px] text-slate-300 font-mono">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            <span id="sync-badge-text">Local Mode</span>
+          </span>
+        </div>
+        <div class="flex items-center gap-4">
+          <span class="font-mono text-slate-500">Neural Portfolio Architecture</span>
+          <button id="admin-lock-btn" title="Admin Editor" class="w-10 h-10 rounded-xl flex items-center justify-center text-slate-500 hover:text-sky-400 hover:bg-sky-500/10 border border-transparent hover:border-sky-500/30 transition" aria-label="Open Admin Panel">
+            <i class="fa-solid fa-lock text-xs"></i>
+          </button>
+        </div>
+      </div>
+    </footer>
+  </div>
 
   <!-- Secret Key Auth Modal -->
-  <div id="auth-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/75 backdrop-blur-sm p-4">
-    <div class="glass w-full max-w-md rounded-2xl p-6 border border-slate-700 shadow-2xl">
+  <div id="auth-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+    <div class="neural-glass w-full max-w-md rounded-2xl p-6 border border-sky-500/30 shadow-2xl">
       <div class="flex items-center justify-between mb-4">
         <div class="flex items-center gap-2.5">
-          <div class="w-9 h-9 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center">
+          <div class="w-10 h-10 rounded-xl bg-sky-500/15 text-sky-400 flex items-center justify-center">
             <i class="fa-solid fa-shield-halved"></i>
           </div>
           <div>
             <h3 class="text-base font-bold text-white">Portfolio Admin Access</h3>
-            <p class="text-xs text-slate-400">Enter your secret key to unlock the editor</p>
+            <p class="text-xs text-slate-400">Enter secret key to unlock editor</p>
           </div>
         </div>
-        <button id="close-auth-btn" class="text-slate-400 hover:text-white p-1">
+        <button id="close-auth-btn" class="w-9 h-9 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 flex items-center justify-center">
           <i class="fa-solid fa-xmark text-lg"></i>
         </button>
       </div>
@@ -331,67 +426,233 @@
       <form id="auth-form" class="space-y-4">
         <div>
           <label class="block text-xs font-medium text-slate-300 mb-1.5">Secret Key</label>
-          <input id="secret-key-input" type="password" required placeholder="Enter secret key..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900/90 border border-slate-700 text-sm text-white focus:outline-none focus:border-sky-500" />
+          <input id="secret-key-input" type="password" required placeholder="Enter secret key..." class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl bg-slate-950/90 border border-slate-700 text-sm text-white focus:outline-none focus:border-sky-400" />
           <p id="auth-error" class="hidden text-xs text-rose-400 mt-1.5">Incorrect secret key. Please try again.</p>
         </div>
-        <button type="submit" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 text-white font-semibold text-sm hover:opacity-90 transition">
+        <button type="submit" class="w-full min-h-[44px] py-2.5 rounded-xl bg-gradient-to-r from-sky-500 via-indigo-500 to-purple-600 text-white font-semibold text-sm hover:opacity-95 transition">
           Unlock Editor
         </button>
       </form>
     </div>
   </div>
 
-  <!-- Full 7-Tab Admin Editor Modal -->
-  <div id="admin-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-md p-3 sm:p-6">
-    <div class="glass w-full max-w-5xl max-h-[92vh] rounded-2xl border border-slate-700 shadow-2xl flex flex-col overflow-hidden">
-      <!-- Header -->
-      <div class="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-900/80">
-        <div class="flex items-center gap-3">
-          <span class="w-8 h-8 rounded-lg bg-sky-500/15 text-sky-400 flex items-center justify-center">
+  <!-- Full 7-Tab Responsive Admin Editor Modal -->
+  <div id="admin-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/85 backdrop-blur-md p-2 sm:p-5">
+    <div class="neural-glass w-full max-w-5xl max-h-[94vh] rounded-2xl border border-sky-500/30 shadow-2xl flex flex-col overflow-hidden">
+      <div class="px-4 sm:px-6 py-3.5 border-b border-slate-800 flex items-center justify-between gap-2 bg-slate-950/80">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <span class="w-9 h-9 rounded-xl bg-sky-500/15 text-sky-400 flex items-center justify-center shrink-0">
             <i class="fa-solid fa-sliders"></i>
           </span>
-          <div>
-            <h3 class="text-base font-bold text-white">Portfolio Admin Editor</h3>
-            <p class="text-xs text-slate-400">Edit any section and save changes in real time</p>
+          <div class="truncate">
+            <h3 class="text-sm sm:text-base font-bold text-white truncate">Portfolio Admin Editor</h3>
+            <p class="text-[11px] text-slate-400 truncate">Live updates across all sections</p>
           </div>
         </div>
-        <div class="flex items-center gap-2">
-          <button id="admin-save-btn" class="px-4 py-2 rounded-lg bg-sky-500 text-slate-950 font-semibold text-xs hover:bg-sky-400 transition flex items-center gap-1.5">
-            <i class="fa-solid fa-floppy-disk"></i> Save Changes
+        <div class="flex items-center gap-2 shrink-0">
+          <button id="admin-save-btn" class="min-h-[40px] px-3.5 sm:px-4 py-2 rounded-xl bg-sky-500 text-slate-950 font-semibold text-xs hover:bg-sky-400 transition flex items-center gap-1.5">
+            <i class="fa-solid fa-floppy-disk"></i> <span>Save</span>
           </button>
-          <button id="close-admin-btn" class="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800">
+          <button id="close-admin-btn" class="w-10 h-10 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 flex items-center justify-center">
             <i class="fa-solid fa-xmark text-lg"></i>
           </button>
         </div>
       </div>
 
-      <!-- Tabs -->
-      <div id="admin-tabs" class="px-4 py-2.5 border-b border-slate-800 bg-slate-950/60 flex items-center gap-1.5 overflow-x-auto text-xs font-medium">
-        <button data-tab="hero" class="admin-tab px-3.5 py-2 rounded-lg whitespace-nowrap bg-sky-500/15 text-sky-400">Hero</button>
-        <button data-tab="about" class="admin-tab px-3.5 py-2 rounded-lg whitespace-nowrap text-slate-400 hover:text-white">About & Edu</button>
-        <button data-tab="skills" class="admin-tab px-3.5 py-2 rounded-lg whitespace-nowrap text-slate-400 hover:text-white">Skills</button>
-        <button data-tab="projects" class="admin-tab px-3.5 py-2 rounded-lg whitespace-nowrap text-slate-400 hover:text-white">Projects</button>
-        <button data-tab="experience" class="admin-tab px-3.5 py-2 rounded-lg whitespace-nowrap text-slate-400 hover:text-white">Experience</button>
-        <button data-tab="certifications" class="admin-tab px-3.5 py-2 rounded-lg whitespace-nowrap text-slate-400 hover:text-white">Certifications</button>
-        <button data-tab="settings" class="admin-tab px-3.5 py-2 rounded-lg whitespace-nowrap text-slate-400 hover:text-white">Contact & Security</button>
+      <div id="admin-tabs" class="px-3 sm:px-4 py-2.5 border-b border-slate-800 bg-slate-950/70 flex items-center gap-1.5 overflow-x-auto text-xs font-medium">
+        <button data-tab="hero" class="admin-tab min-h-[36px] px-3.5 py-2 rounded-lg whitespace-nowrap bg-sky-500/15 text-sky-400">Hero</button>
+        <button data-tab="about" class="admin-tab min-h-[36px] px-3.5 py-2 rounded-lg whitespace-nowrap text-slate-400 hover:text-white">About & Edu</button>
+        <button data-tab="skills" class="admin-tab min-h-[36px] px-3.5 py-2 rounded-lg whitespace-nowrap text-slate-400 hover:text-white">Skills</button>
+        <button data-tab="projects" class="admin-tab min-h-[36px] px-3.5 py-2 rounded-lg whitespace-nowrap text-slate-400 hover:text-white">Projects</button>
+        <button data-tab="experience" class="admin-tab min-h-[36px] px-3.5 py-2 rounded-lg whitespace-nowrap text-slate-400 hover:text-white">Experience</button>
+        <button data-tab="certifications" class="admin-tab min-h-[36px] px-3.5 py-2 rounded-lg whitespace-nowrap text-slate-400 hover:text-white">Certifications</button>
+        <button data-tab="settings" class="admin-tab min-h-[36px] px-3.5 py-2 rounded-lg whitespace-nowrap text-slate-400 hover:text-white">Contact & Security</button>
       </div>
 
-      <!-- Tab Content -->
-      <div id="admin-content" class="flex-1 overflow-y-auto p-6 space-y-6 bg-slate-900/40"></div>
+      <div id="admin-content" class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5 bg-slate-950/40"></div>
     </div>
   </div>
 
-  <!-- Firebase SDK (Optional Global Real-Time Sync across all devices/browsers) -->
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
     import { getFirestore, doc, onSnapshot, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
     /* =========================================================================
-       GLOBAL CLOUD SYNC CONFIGURATION (FIREBASE FIRESTORE)
-       To sync edits globally across every device, browser, and visitor:
-       1. Create a free Firebase project -> Enable Firestore Database
-       2. Paste your firebaseConfig values below (replace empty strings)
-       3. Until configured, the portfolio automatically uses localStorage.
+       1. INTERACTIVE NEURAL NETWORK CANVAS ENGINE
+       ========================================================================= */
+    (function initNeuralCanvas() {
+      const canvas = document.getElementById('neural-canvas');
+      const ctx = canvas.getContext('2d');
+      let width = 0, height = 0, nodes = [], pulses = [];
+      const pointer = { x: null, y: null, radius: 150 };
+      const colors = ['#38bdf8', '#818cf8', '#c084fc'];
+
+      function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+        const isMobile = width < 768;
+        const count = isMobile ? Math.min(38, Math.floor((width * height) / 14000)) : Math.min(82, Math.floor((width * height) / 16000));
+        nodes = Array.from({ length: Math.max(24, count) }, () => ({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * (isMobile ? 0.35 : 0.45),
+          vy: (Math.random() - 0.5) * (isMobile ? 0.35 : 0.45),
+          r: Math.random() * 1.8 + 1.2,
+          color: colors[Math.floor(Math.random() * colors.length)]
+        }));
+      }
+
+      window.addEventListener('resize', resize);
+      window.addEventListener('mousemove', (e) => { pointer.x = e.clientX; pointer.y = e.clientY; });
+      window.addEventListener('mouseleave', () => { pointer.x = null; pointer.y = null; });
+      window.addEventListener('touchmove', (e) => {
+        if (e.touches.length) { pointer.x = e.touches[0].clientX; pointer.y = e.touches[0].clientY; }
+      }, { passive: true });
+      window.addEventListener('touchend', () => { pointer.x = null; pointer.y = null; });
+
+      resize();
+
+      function animate() {
+        ctx.clearRect(0, 0, width, height);
+        const maxDist = width < 768 ? 115 : 155;
+
+        for (let i = 0; i < nodes.length; i++) {
+          const n = nodes[i];
+          n.x += n.vx;
+          n.y += n.vy;
+
+          if (n.x < 0 || n.x > width) n.vx *= -1;
+          if (n.y < 0 || n.y > height) n.vy *= -1;
+
+          // Subtle pointer attraction/repulsion
+          if (pointer.x !== null) {
+            const dx = pointer.x - n.x;
+            const dy = pointer.y - n.y;
+            const dist = Math.hypot(dx, dy);
+            if (dist < pointer.radius && dist > 1) {
+              n.x -= (dx / dist) * 0.45;
+              n.y -= (dy / dist) * 0.45;
+            }
+          }
+
+          // Synaptic connections
+          for (let j = i + 1; j < nodes.length; j++) {
+            const m = nodes[j];
+            const dist = Math.hypot(n.x - m.x, n.y - m.y);
+            if (dist < maxDist) {
+              const alpha = (1 - dist / maxDist) * 0.28;
+              ctx.strokeStyle = `rgba(99, 179, 237, ${alpha.toFixed(3)})`;
+              ctx.lineWidth = 0.85;
+              ctx.beginPath();
+              ctx.moveTo(n.x, n.y);
+              ctx.lineTo(m.x, m.y);
+              ctx.stroke();
+
+              // Occasional synaptic light pulse
+              if (pulses.length < 12 && Math.random() < 0.00055) {
+                pulses.push({ a: n, b: m, t: 0, speed: 0.02 + Math.random() * 0.02, color: n.color });
+              }
+            }
+          }
+
+          // Draw neuron node
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+          ctx.fillStyle = n.color;
+          ctx.shadowBlur = 10;
+          ctx.shadowColor = n.color;
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        }
+
+        // Update and draw synaptic pulses
+        for (let i = pulses.length - 1; i >= 0; i--) {
+          const p = pulses[i];
+          p.t += p.speed;
+          if (p.t >= 1) {
+            pulses.splice(i, 1);
+            continue;
+          }
+          const px = p.a.x + (p.b.x - p.a.x) * p.t;
+          const py = p.a.y + (p.b.y - p.a.y) * p.t;
+          ctx.beginPath();
+          ctx.arc(px, py, 2.2, 0, Math.PI * 2);
+          ctx.fillStyle = '#e0f2fe';
+          ctx.shadowBlur = 12;
+          ctx.shadowColor = p.color;
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        }
+
+        requestAnimationFrame(animate);
+      }
+      animate();
+    })();
+
+    /* =========================================================================
+       2. AUTO-WRITING NAME TYPEWRITER ENGINE
+       ========================================================================= */
+    let typewriterTimer = null;
+    let currentTypedTarget = '';
+
+    function startNameTypewriter(name) {
+      const target = (name || 'Nakul Sharma').trim();
+      if (target === currentTypedTarget && typewriterTimer) return;
+      currentTypedTarget = target;
+      clearTimeout(typewriterTimer);
+
+      const el = document.getElementById('typed-name');
+      let charIdx = 0;
+      let deleting = false;
+
+      function tick() {
+        if (!deleting) {
+          charIdx++;
+          el.textContent = target.slice(0, charIdx);
+          if (charIdx === target.length) {
+            deleting = true;
+            typewriterTimer = setTimeout(tick, 2400);
+            return;
+          }
+          typewriterTimer = setTimeout(tick, 95 + Math.random() * 45);
+        } else {
+          charIdx--;
+          el.textContent = target.slice(0, charIdx);
+          if (charIdx === 0) {
+            deleting = false;
+            typewriterTimer = setTimeout(tick, 450);
+            return;
+          }
+          typewriterTimer = setTimeout(tick, 55);
+        }
+      }
+      el.textContent = '';
+      tick();
+    }
+
+    /* =========================================================================
+       3. SCROLL REVEAL OBSERVER
+       ========================================================================= */
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+
+    function observeReveals() {
+      document.querySelectorAll('.reveal').forEach((el, idx) => {
+        if (!el.classList.contains('visible')) {
+          el.style.transitionDelay = `${Math.min((idx % 6) * 65, 300)}ms`;
+          revealObserver.observe(el);
+        }
+      });
+    }
+
+    /* =========================================================================
+       4. PORTFOLIO DATA & GLOBAL CLOUD SYNC (FIREBASE + LOCALSTORAGE FALLBACK)
        ========================================================================= */
     const FIREBASE_CONFIG = {
       apiKey: "",
@@ -402,8 +663,8 @@
       appId: ""
     };
 
-    const FIRESTORE_DOC_PATH = ['portfolio_config', 'nakul_sharma_main'];
-    const STORAGE_KEY = 'nakul_portfolio_data_v2';
+    const FIRESTORE_DOC_PATH = ['portfolio_config', 'nakul_sharma_neural'];
+    const STORAGE_KEY = 'nakul_neural_portfolio_v3';
     const DEFAULT_SECRET = 'nakul2026';
 
     const DEFAULT_DATA = {
@@ -427,26 +688,10 @@
         eduDetails: 'Relevant Coursework: Machine Learning, Natural Language Processing, Data Structures & Algorithms, Database Management Systems, Operating Systems.'
       },
       skills: [
-        {
-          category: 'Languages',
-          icon: 'fa-code',
-          items: ['Python', 'C++', 'SQL', 'JavaScript', 'HTML5', 'CSS3']
-        },
-        {
-          category: 'AI / ML & NLP',
-          icon: 'fa-brain',
-          items: ['Scikit-Learn', 'XGBoost', 'PyTorch', 'LangChain', 'spaCy', 'NLTK', 'Pandas', 'NumPy', 'Seaborn']
-        },
-        {
-          category: 'Backend & Web',
-          icon: 'fa-server',
-          items: ['FastAPI', 'Django', 'Flask', 'Streamlit', 'Tailwind CSS', 'Pydantic', 'REST APIs']
-        },
-        {
-          category: 'Databases & Tools',
-          icon: 'fa-database',
-          items: ['MySQL', 'SQLAlchemy', 'MongoDB (PyMongo)', 'PostgreSQL', 'Git & GitHub', 'VS Code']
-        }
+        { category: 'Languages', icon: 'fa-code', items: ['Python', 'C++', 'SQL', 'JavaScript', 'HTML5', 'CSS3'] },
+        { category: 'AI / ML & NLP', icon: 'fa-brain', items: ['Scikit-Learn', 'XGBoost', 'PyTorch', 'LangChain', 'spaCy', 'NLTK', 'Pandas', 'NumPy', 'Seaborn'] },
+        { category: 'Backend & Web', icon: 'fa-server', items: ['FastAPI', 'Django', 'Flask', 'Streamlit', 'Tailwind CSS', 'Pydantic', 'REST APIs'] },
+        { category: 'Databases & Tools', icon: 'fa-database', items: ['MySQL', 'SQLAlchemy', 'MongoDB (PyMongo)', 'PostgreSQL', 'Git & GitHub', 'VS Code'] }
       ],
       projects: [
         {
@@ -486,76 +731,25 @@
         }
       ],
       experience: [
-        {
-          role: 'Data Science & Analytics Intern',
-          organization: 'Wheeltrix',
-          period: 'Jun 2026',
-          description: 'Worked on data exploration, feature engineering, and analytical reporting pipelines for real-world business datasets.'
-        },
-        {
-          role: 'Data Analytics Job Simulation',
-          organization: 'Deloitte Australia (Forage)',
-          period: 'Aug 2026',
-          description: 'Analyzed complex operational datasets and built interactive Tableau dashboards to uncover actionable insights.'
-        },
-        {
-          role: 'Research Paper Accepted (ICSACS 2026)',
-          organization: 'International Conference on Secure Automation, Cognitive Systems & Smart Technologies',
-          period: '2026',
-          description: 'Authored and got accepted a research paper focused on solar energy feasibility assessment.'
-        },
-        {
-          role: 'Smart India Hackathon (SIH) — Round 3 Qualifier',
-          organization: 'ABES Institute of Technology',
-          period: 'Aug 2026',
-          description: 'Qualified for Round 3 of the college-level SIH selection process, pitching an AI-driven software solution.'
-        },
-        {
-          role: 'Summer Analytics 2026 Participant',
-          organization: 'Consulting & Analytics Club, IIT Guwahati',
-          period: '2026',
-          description: 'Completed structured data science and machine learning modules and competitive assignments via HackerEarth.'
-        }
+        { role: 'Data Science & Analytics Intern', organization: 'Wheeltrix', period: 'Jun 2026', description: 'Worked on data exploration, feature engineering, and analytical reporting pipelines for real-world business datasets.' },
+        { role: 'Data Analytics Job Simulation', organization: 'Deloitte Australia (Forage)', period: 'Aug 2026', description: 'Analyzed complex operational datasets and built interactive Tableau dashboards to uncover actionable insights.' },
+        { role: 'Research Paper Accepted (ICSACS 2026)', organization: 'International Conference on Secure Automation, Cognitive Systems & Smart Technologies', period: '2026', description: 'Authored and got accepted a research paper focused on solar energy feasibility assessment.' },
+        { role: 'Smart India Hackathon (SIH) — Round 3 Qualifier', organization: 'ABES Institute of Technology', period: 'Aug 2026', description: 'Qualified for Round 3 of the college-level SIH selection process, pitching an AI-driven software solution.' },
+        { role: 'Summer Analytics 2026 Participant', organization: 'Consulting & Analytics Club, IIT Guwahati', period: '2026', description: 'Completed structured data science and machine learning modules and competitive assignments via HackerEarth.' }
       ],
       certifications: [
-        {
-          title: 'Programming Fundamentals Using Python (Parts 1 & 2)',
-          issuer: 'Infosys Springboard',
-          date: '2025 – 2026'
-        },
-        {
-          title: 'Introduction to Data Science',
-          issuer: 'Infosys Springboard',
-          date: '2026'
-        },
-        {
-          title: 'AI Agents for Beginners',
-          issuer: 'Simplilearn',
-          date: '2026'
-        },
-        {
-          title: 'Power BI Practical Course',
-          issuer: 'Udemy',
-          date: '2026'
-        },
-        {
-          title: 'Python (Basic) Certification',
-          issuer: 'HackerRank',
-          date: '2026'
-        },
-        {
-          title: 'Business Model Canvas Masterclass',
-          issuer: 'Udemy',
-          date: '2026'
-        }
+        { title: 'Programming Fundamentals Using Python (Parts 1 & 2)', issuer: 'Infosys Springboard', date: '2025 – 2026' },
+        { title: 'Introduction to Data Science', issuer: 'Infosys Springboard', date: '2026' },
+        { title: 'AI Agents for Beginners', issuer: 'Simplilearn', date: '2026' },
+        { title: 'Power BI Practical Course', issuer: 'Udemy', date: '2026' },
+        { title: 'Python (Basic) Certification', issuer: 'HackerRank', date: '2026' },
+        { title: 'Business Model Canvas Masterclass', issuer: 'Udemy', date: '2026' }
       ],
       contact: {
         email: 'nakulsharmavats123@gmail.com',
         subtitle: "I'm actively seeking entry-level AI/ML Engineer, Data Science, and Python Backend Developer roles. Feel free to reach out!"
       },
-      security: {
-        passwordHash: ''
-      }
+      security: { passwordHash: '' }
     };
 
     let portfolioData = structuredClone(DEFAULT_DATA);
@@ -564,29 +758,22 @@
     let db = null;
     let cloudEnabled = false;
 
-    // Helpers
     function escapeHtml(str = '') {
       return String(str)
-        .replace(/&/g, '&')
-        .replace(/</g, '<')
-        .replace(/>/g, '>')
-        .replace(/"/g, '"')
-        .replace(/'/g, ''');
+        .replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>')
+        .replace(/"/g, '"').replace(/'/g, ''');
     }
 
     async function sha256(message) {
       const msgBuffer = new TextEncoder().encode(message);
       const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-      const hashArray = Array.from(new Uint8Array(hashBuffer));
-      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
     }
 
     function showToast(msg, isError = false) {
       const toast = document.getElementById('toast');
-      const icon = document.getElementById('toast-icon');
-      const text = document.getElementById('toast-msg');
-      text.textContent = msg;
-      icon.className = isError
+      document.getElementById('toast-msg').textContent = msg;
+      document.getElementById('toast-icon').className = isError
         ? 'fa-solid fa-circle-exclamation text-rose-400'
         : 'fa-solid fa-circle-check text-sky-400';
       toast.classList.remove('hidden');
@@ -619,13 +806,10 @@
       return merged;
     }
 
-    // Persistence
     async function initStorage() {
       const localRaw = localStorage.getItem(STORAGE_KEY);
       if (localRaw) {
-        try {
-          portfolioData = normalizeData(JSON.parse(localRaw));
-        } catch (_) {}
+        try { portfolioData = normalizeData(JSON.parse(localRaw)); } catch (_) {}
       }
       renderPortfolio();
 
@@ -635,8 +819,7 @@
           db = getFirestore(app);
           cloudEnabled = true;
           document.getElementById('sync-badge-text').textContent = 'Cloud Synced';
-          const ref = doc(db, ...FIRESTORE_DOC_PATH);
-          onSnapshot(ref, (snap) => {
+          onSnapshot(doc(db, ...FIRESTORE_DOC_PATH), (snap) => {
             if (snap.exists()) {
               portfolioData = normalizeData(snap.data());
               localStorage.setItem(STORAGE_KEY, JSON.stringify(portfolioData));
@@ -644,7 +827,7 @@
             }
           });
         } catch (err) {
-          console.error('Firebase init failed, using localStorage:', err);
+          console.error('Firebase init failed:', err);
         }
       }
     }
@@ -654,30 +837,25 @@
       localStorage.setItem(STORAGE_KEY, JSON.stringify(portfolioData));
       renderPortfolio();
       if (cloudEnabled && db) {
-        const ref = doc(db, ...FIRESTORE_DOC_PATH);
-        await setDoc(ref, portfolioData, { merge: true });
+        await setDoc(doc(db, ...FIRESTORE_DOC_PATH), portfolioData, { merge: true });
       }
     }
 
-    // Render Portfolio UI
     function renderPortfolio() {
       const d = portfolioData;
-
-      // Brand & Hero
       const brandParts = (d.hero.brand || 'Nakul.dev').split('.');
       document.getElementById('nav-brand').innerHTML = brandParts.length > 1
         ? `${escapeHtml(brandParts[0])}<span class="text-sky-400">.${escapeHtml(brandParts.slice(1).join('.'))}</span>`
         : escapeHtml(d.hero.brand);
 
       document.getElementById('hero-badge').textContent = d.hero.badge;
-      document.getElementById('hero-name').textContent = d.hero.name;
+      startNameTypewriter(d.hero.name);
       document.getElementById('hero-role').textContent = d.hero.role;
       document.getElementById('hero-tagline').textContent = d.hero.tagline;
       document.getElementById('hero-github').href = d.hero.githubUrl || '#';
       document.getElementById('hero-linkedin').href = d.hero.linkedinUrl || '#';
       document.title = `${d.hero.name} | ${d.hero.role}`;
 
-      // About & Education
       document.getElementById('about-bio').textContent = d.about.bio;
       document.getElementById('about-location').textContent = d.about.location;
       document.getElementById('about-cgpa').textContent = d.about.cgpa;
@@ -687,18 +865,17 @@
       document.getElementById('edu-period').textContent = d.about.period;
       document.getElementById('edu-details').textContent = d.about.eduDetails;
 
-      // Skills
       document.getElementById('skills-grid').innerHTML = (d.skills || []).map(group => `
-        <div class="glass rounded-2xl p-5 hover:border-sky-500/30 transition">
+        <div class="neural-card rounded-2xl p-5 reveal">
           <div class="flex items-center gap-3 mb-4">
-            <div class="w-9 h-9 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center">
+            <div class="w-9 h-9 rounded-xl bg-sky-500/15 text-sky-400 flex items-center justify-center">
               <i class="fa-solid ${escapeHtml(group.icon || 'fa-code')}"></i>
             </div>
             <h3 class="font-semibold text-white text-sm">${escapeHtml(group.category)}</h3>
           </div>
           <div class="flex flex-wrap gap-2">
             ${(group.items || []).map(item => `
-              <span class="px-2.5 py-1 rounded-lg bg-slate-800/80 border border-slate-700/70 text-xs text-slate-300 font-mono">
+              <span class="px-2.5 py-1 rounded-lg bg-slate-900/90 border border-sky-500/20 text-xs text-slate-200 font-mono hover:border-sky-400/60 hover:text-sky-300 transition">
                 ${escapeHtml(item)}
               </span>
             `).join('')}
@@ -706,41 +883,38 @@
         </div>
       `).join('');
 
-      // Projects (with Live Project Link + GitHub Link)
       document.getElementById('projects-grid').innerHTML = (d.projects || []).map(p => {
         const hasLive = p.liveUrl && p.liveUrl.trim() !== '';
         const hasGithub = p.githubUrl && p.githubUrl.trim() !== '';
         return `
-          <article class="glass rounded-2xl p-6 flex flex-col justify-between hover:border-sky-500/40 hover:-translate-y-1 transition duration-300">
+          <article class="neural-card rounded-2xl p-5 sm:p-6 flex flex-col justify-between reveal">
             <div>
               <div class="flex items-center justify-between mb-4">
-                <div class="w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-500/20 text-sky-400 flex items-center justify-center">
-                  <i class="fa-regular fa-folder-open"></i>
+                <div class="w-10 h-10 rounded-xl bg-sky-500/15 border border-sky-400/25 text-sky-400 flex items-center justify-center">
+                  <i class="fa-solid fa-microchip"></i>
                 </div>
-                ${hasLive ? `<span class="px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-mono">LIVE</span>` : ''}
+                ${hasLive ? `<span class="px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-400/30 text-emerald-300 text-[10px] font-mono">LIVE NODE</span>` : ''}
               </div>
-              <h3 class="text-lg font-bold text-white leading-snug mb-2">${escapeHtml(p.title)}</h3>
-              <p class="text-sm text-slate-400 leading-relaxed mb-5">${escapeHtml(p.description)}</p>
+              <h3 class="text-base sm:text-lg font-bold text-white leading-snug mb-2">${escapeHtml(p.title)}</h3>
+              <p class="text-xs sm:text-sm text-slate-300/90 leading-relaxed mb-5">${escapeHtml(p.description)}</p>
             </div>
-
             <div>
               <div class="flex flex-wrap gap-1.5 mb-5">
                 ${(p.tech || []).map(t => `
-                  <span class="px-2 py-0.5 rounded-md bg-slate-900 border border-slate-800 text-[11px] font-mono text-sky-300">
+                  <span class="px-2 py-0.5 rounded-md bg-slate-950/80 border border-indigo-500/25 text-[11px] font-mono text-sky-300">
                     ${escapeHtml(t)}
                   </span>
                 `).join('')}
               </div>
-
               <div class="flex items-center gap-2.5 pt-4 border-t border-slate-800/80">
                 ${hasLive ? `
-                  <a href="${escapeHtml(p.liveUrl)}" target="_blank" rel="noopener" class="flex-1 py-2 px-3 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 text-white text-xs font-semibold hover:opacity-90 transition flex items-center justify-center gap-1.5">
+                  <a href="${escapeHtml(p.liveUrl)}" target="_blank" rel="noopener" class="flex-1 min-h-[40px] py-2 px-3 rounded-xl bg-gradient-to-r from-sky-500 via-indigo-500 to-purple-600 text-white text-xs font-semibold hover:opacity-95 transition flex items-center justify-center gap-1.5">
                     <i class="fa-solid fa-arrow-up-right-from-square text-[11px]"></i>
                     <span>Live Project</span>
                   </a>
                 ` : ''}
                 ${hasGithub ? `
-                  <a href="${escapeHtml(p.githubUrl)}" target="_blank" rel="noopener" class="${hasLive ? 'flex-1' : 'w-full'} py-2 px-3 rounded-xl bg-slate-800/90 border border-slate-700 text-slate-200 text-xs font-semibold hover:border-sky-500/40 hover:text-white transition flex items-center justify-center gap-1.5">
+                  <a href="${escapeHtml(p.githubUrl)}" target="_blank" rel="noopener" class="${hasLive ? 'flex-1' : 'w-full'} min-h-[40px] py-2 px-3 rounded-xl bg-slate-900/90 border border-slate-700 text-slate-200 text-xs font-semibold hover:border-sky-400/50 hover:text-white transition flex items-center justify-center gap-1.5">
                     <i class="fa-brands fa-github text-sm"></i>
                     <span>GitHub</span>
                   </a>
@@ -751,25 +925,23 @@
         `;
       }).join('');
 
-      // Experience
       document.getElementById('experience-list').innerHTML = (d.experience || []).map(exp => `
-        <div class="relative pl-10 md:pl-14">
-          <span class="absolute left-2.5 md:left-4.5 top-2 w-3 h-3 rounded-full bg-sky-400 ring-4 ring-dark-950"></span>
-          <div class="glass rounded-2xl p-5 hover:border-sky-500/30 transition">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
-              <h3 class="text-base font-bold text-white">${escapeHtml(exp.role)}</h3>
-              <span class="text-xs font-mono text-sky-400 bg-sky-500/10 px-2.5 py-0.5 rounded-full w-fit">${escapeHtml(exp.period)}</span>
+        <div class="relative pl-9 sm:pl-12 reveal">
+          <span class="absolute left-2 sm:left-3.5 top-2.5 w-3 h-3 rounded-full bg-sky-400 ring-4 ring-neural-950 shadow-lg shadow-sky-400/60"></span>
+          <div class="neural-card rounded-2xl p-4 sm:p-5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 mb-2">
+              <h3 class="text-sm sm:text-base font-bold text-white">${escapeHtml(exp.role)}</h3>
+              <span class="text-xs font-mono text-sky-300 bg-sky-500/10 border border-sky-400/20 px-2.5 py-0.5 rounded-full w-fit">${escapeHtml(exp.period)}</span>
             </div>
-            <p class="text-sm font-medium text-indigo-300 mb-2">${escapeHtml(exp.organization)}</p>
-            <p class="text-sm text-slate-400 leading-relaxed">${escapeHtml(exp.description)}</p>
+            <p class="text-xs sm:text-sm font-medium text-indigo-300 mb-2">${escapeHtml(exp.organization)}</p>
+            <p class="text-xs sm:text-sm text-slate-300/90 leading-relaxed">${escapeHtml(exp.description)}</p>
           </div>
         </div>
       `).join('');
 
-      // Certifications
       document.getElementById('certifications-grid').innerHTML = (d.certifications || []).map(c => `
-        <div class="glass rounded-2xl p-5 hover:border-sky-500/30 transition flex items-start gap-3.5">
-          <div class="w-9 h-9 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center shrink-0 mt-0.5">
+        <div class="neural-card rounded-2xl p-4 sm:p-5 flex items-start gap-3.5 reveal">
+          <div class="w-9 h-9 rounded-xl bg-purple-500/15 text-purple-300 flex items-center justify-center shrink-0 mt-0.5">
             <i class="fa-solid fa-certificate"></i>
           </div>
           <div>
@@ -780,7 +952,6 @@
         </div>
       `).join('');
 
-      // Contact & Footer
       document.getElementById('contact-subtitle').textContent = d.contact.subtitle;
       document.getElementById('contact-email-text').textContent = d.contact.email;
       document.getElementById('contact-email-link').href = `mailto:${d.contact.email}`;
@@ -790,28 +961,31 @@
       document.getElementById('contact-linkedin-text').textContent = (d.hero.linkedinUrl || '').replace(/^https?:\/\//, '');
       document.getElementById('footer-name').textContent = d.hero.name;
       document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+      observeReveals();
     }
 
-    // Admin Editor Rendering
+    /* =========================================================================
+       5. ADMIN EDITOR
+       ========================================================================= */
     function renderAdminTab() {
       const container = document.getElementById('admin-content');
       document.querySelectorAll('.admin-tab').forEach(btn => {
-        const isActive = btn.dataset.tab === activeTab;
-        btn.className = isActive
-          ? 'admin-tab px-3.5 py-2 rounded-lg whitespace-nowrap bg-sky-500/15 text-sky-400'
-          : 'admin-tab px-3.5 py-2 rounded-lg whitespace-nowrap text-slate-400 hover:text-white';
+        btn.className = btn.dataset.tab === activeTab
+          ? 'admin-tab min-h-[36px] px-3.5 py-2 rounded-lg whitespace-nowrap bg-sky-500/15 text-sky-400'
+          : 'admin-tab min-h-[36px] px-3.5 py-2 rounded-lg whitespace-nowrap text-slate-400 hover:text-white';
       });
 
-      const inputCls = 'w-full px-3 py-2 rounded-lg bg-slate-950/80 border border-slate-700 text-sm text-white focus:outline-none focus:border-sky-500';
+      const inputCls = 'w-full min-h-[40px] px-3 py-2 rounded-xl bg-slate-950/90 border border-slate-700 text-sm text-white focus:outline-none focus:border-sky-400';
       const labelCls = 'block text-xs font-medium text-slate-400 mb-1';
 
       if (activeTab === 'hero') {
         const h = draftData.hero;
         container.innerHTML = `
-          <div class="grid sm:grid-cols-2 gap-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div><label class="${labelCls}">Brand Logo Text</label><input data-path="hero.brand" value="${escapeHtml(h.brand)}" class="${inputCls}"></div>
             <div><label class="${labelCls}">Status Badge</label><input data-path="hero.badge" value="${escapeHtml(h.badge)}" class="${inputCls}"></div>
-            <div><label class="${labelCls}">Full Name</label><input data-path="hero.name" value="${escapeHtml(h.name)}" class="${inputCls}"></div>
+            <div><label class="${labelCls}">Full Name (Auto-Typing)</label><input data-path="hero.name" value="${escapeHtml(h.name)}" class="${inputCls}"></div>
             <div><label class="${labelCls}">Headline Role</label><input data-path="hero.role" value="${escapeHtml(h.role)}" class="${inputCls}"></div>
             <div class="sm:col-span-2"><label class="${labelCls}">Tagline</label><textarea data-path="hero.tagline" rows="3" class="${inputCls}">${escapeHtml(h.tagline)}</textarea></div>
             <div><label class="${labelCls}">GitHub URL</label><input data-path="hero.githubUrl" value="${escapeHtml(h.githubUrl)}" class="${inputCls}"></div>
@@ -820,7 +994,7 @@
       } else if (activeTab === 'about') {
         const a = draftData.about;
         container.innerHTML = `
-          <div class="grid sm:grid-cols-2 gap-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div class="sm:col-span-2"><label class="${labelCls}">Bio</label><textarea data-path="about.bio" rows="4" class="${inputCls}">${escapeHtml(a.bio)}</textarea></div>
             <div><label class="${labelCls}">Location</label><input data-path="about.location" value="${escapeHtml(a.location)}" class="${inputCls}"></div>
             <div><label class="${labelCls}">CGPA</label><input data-path="about.cgpa" value="${escapeHtml(a.cgpa)}" class="${inputCls}"></div>
@@ -834,22 +1008,19 @@
         container.innerHTML = `
           <div class="flex justify-between items-center">
             <h4 class="text-sm font-semibold text-white">Skill Categories</h4>
-            <button id="add-skill-btn" class="px-3 py-1.5 rounded-lg bg-sky-500/15 text-sky-400 text-xs font-semibold hover:bg-sky-500 hover:text-slate-950 transition">+ Add Category</button>
+            <button id="add-skill-btn" class="min-h-[36px] px-3 py-1.5 rounded-lg bg-sky-500/15 text-sky-400 text-xs font-semibold hover:bg-sky-500 hover:text-slate-950 transition">+ Add Category</button>
           </div>
           <div class="space-y-4">
             ${draftData.skills.map((s, idx) => `
-              <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800 space-y-3">
-                <div class="flex items-center justify-between gap-3">
-                  <div class="grid sm:grid-cols-2 gap-3 flex-1">
+              <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-3">
+                <div class="flex items-start justify-between gap-3">
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 flex-1">
                     <div><label class="${labelCls}">Category Name</label><input data-arr="skills" data-idx="${idx}" data-key="category" value="${escapeHtml(s.category)}" class="${inputCls}"></div>
-                    <div><label class="${labelCls}">FontAwesome Icon (e.g. fa-code)</label><input data-arr="skills" data-idx="${idx}" data-key="icon" value="${escapeHtml(s.icon)}" class="${inputCls}"></div>
+                    <div><label class="${labelCls}">FontAwesome Icon</label><input data-arr="skills" data-idx="${idx}" data-key="icon" value="${escapeHtml(s.icon)}" class="${inputCls}"></div>
                   </div>
-                  <button data-del-arr="skills" data-idx="${idx}" class="mt-5 p-2 rounded-lg text-rose-400 hover:bg-rose-500/10"><i class="fa-solid fa-trash"></i></button>
+                  <button data-del-arr="skills" data-idx="${idx}" class="mt-5 w-10 h-10 rounded-lg text-rose-400 hover:bg-rose-500/10 flex items-center justify-center"><i class="fa-solid fa-trash"></i></button>
                 </div>
-                <div>
-                  <label class="${labelCls}">Skills (comma-separated)</label>
-                  <input data-arr="skills" data-idx="${idx}" data-key="items" data-csv="true" value="${escapeHtml((s.items || []).join(', '))}" class="${inputCls}">
-                </div>
+                <div><label class="${labelCls}">Skills (comma-separated)</label><input data-arr="skills" data-idx="${idx}" data-key="items" data-csv="true" value="${escapeHtml((s.items || []).join(', '))}" class="${inputCls}"></div>
               </div>
             `).join('')}
           </div>`;
@@ -857,19 +1028,19 @@
         container.innerHTML = `
           <div class="flex justify-between items-center">
             <h4 class="text-sm font-semibold text-white">Projects (${draftData.projects.length})</h4>
-            <button id="add-project-btn" class="px-3 py-1.5 rounded-lg bg-sky-500/15 text-sky-400 text-xs font-semibold hover:bg-sky-500 hover:text-slate-950 transition">+ Add Project</button>
+            <button id="add-project-btn" class="min-h-[36px] px-3 py-1.5 rounded-lg bg-sky-500/15 text-sky-400 text-xs font-semibold hover:bg-sky-500 hover:text-slate-950 transition">+ Add Project</button>
           </div>
           <div class="space-y-4">
             ${draftData.projects.map((p, idx) => `
-              <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800 space-y-3">
-                <div class="flex items-center justify-between gap-3">
+              <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-3">
+                <div class="flex items-start justify-between gap-3">
                   <div class="flex-1"><label class="${labelCls}">Project Title</label><input data-arr="projects" data-idx="${idx}" data-key="title" value="${escapeHtml(p.title)}" class="${inputCls}"></div>
-                  <button data-del-arr="projects" data-idx="${idx}" class="mt-5 p-2 rounded-lg text-rose-400 hover:bg-rose-500/10"><i class="fa-solid fa-trash"></i></button>
+                  <button data-del-arr="projects" data-idx="${idx}" class="mt-5 w-10 h-10 rounded-lg text-rose-400 hover:bg-rose-500/10 flex items-center justify-center"><i class="fa-solid fa-trash"></i></button>
                 </div>
                 <div><label class="${labelCls}">Description</label><textarea data-arr="projects" data-idx="${idx}" data-key="description" rows="2" class="${inputCls}">${escapeHtml(p.description)}</textarea></div>
                 <div><label class="${labelCls}">Tech Stack (comma-separated)</label><input data-arr="projects" data-idx="${idx}" data-key="tech" data-csv="true" value="${escapeHtml((p.tech || []).join(', '))}" class="${inputCls}"></div>
-                <div class="grid sm:grid-cols-2 gap-3">
-                  <div><label class="${labelCls}">Live Project URL (leave blank to hide button)</label><input data-arr="projects" data-idx="${idx}" data-key="liveUrl" placeholder="https://..." value="${escapeHtml(p.liveUrl || '')}" class="${inputCls}"></div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div><label class="${labelCls}">Live Project URL (blank hides button)</label><input data-arr="projects" data-idx="${idx}" data-key="liveUrl" placeholder="https://..." value="${escapeHtml(p.liveUrl || '')}" class="${inputCls}"></div>
                   <div><label class="${labelCls}">GitHub Repo URL</label><input data-arr="projects" data-idx="${idx}" data-key="githubUrl" placeholder="https://github.com/..." value="${escapeHtml(p.githubUrl || '')}" class="${inputCls}"></div>
                 </div>
               </div>
@@ -879,18 +1050,18 @@
         container.innerHTML = `
           <div class="flex justify-between items-center">
             <h4 class="text-sm font-semibold text-white">Experience & Achievements</h4>
-            <button id="add-exp-btn" class="px-3 py-1.5 rounded-lg bg-sky-500/15 text-sky-400 text-xs font-semibold hover:bg-sky-500 hover:text-slate-950 transition">+ Add Entry</button>
+            <button id="add-exp-btn" class="min-h-[36px] px-3 py-1.5 rounded-lg bg-sky-500/15 text-sky-400 text-xs font-semibold hover:bg-sky-500 hover:text-slate-950 transition">+ Add Entry</button>
           </div>
           <div class="space-y-4">
             ${draftData.experience.map((e, idx) => `
-              <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800 space-y-3">
-                <div class="flex items-center justify-between gap-3">
-                  <div class="grid sm:grid-cols-3 gap-3 flex-1">
+              <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-3">
+                <div class="flex items-start justify-between gap-3">
+                  <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 flex-1">
                     <div><label class="${labelCls}">Role / Title</label><input data-arr="experience" data-idx="${idx}" data-key="role" value="${escapeHtml(e.role)}" class="${inputCls}"></div>
                     <div><label class="${labelCls}">Organization</label><input data-arr="experience" data-idx="${idx}" data-key="organization" value="${escapeHtml(e.organization)}" class="${inputCls}"></div>
                     <div><label class="${labelCls}">Period</label><input data-arr="experience" data-idx="${idx}" data-key="period" value="${escapeHtml(e.period)}" class="${inputCls}"></div>
                   </div>
-                  <button data-del-arr="experience" data-idx="${idx}" class="mt-5 p-2 rounded-lg text-rose-400 hover:bg-rose-500/10"><i class="fa-solid fa-trash"></i></button>
+                  <button data-del-arr="experience" data-idx="${idx}" class="mt-5 w-10 h-10 rounded-lg text-rose-400 hover:bg-rose-500/10 flex items-center justify-center"><i class="fa-solid fa-trash"></i></button>
                 </div>
                 <div><label class="${labelCls}">Description</label><textarea data-arr="experience" data-idx="${idx}" data-key="description" rows="2" class="${inputCls}">${escapeHtml(e.description)}</textarea></div>
               </div>
@@ -900,48 +1071,42 @@
         container.innerHTML = `
           <div class="flex justify-between items-center">
             <h4 class="text-sm font-semibold text-white">Certifications</h4>
-            <button id="add-cert-btn" class="px-3 py-1.5 rounded-lg bg-sky-500/15 text-sky-400 text-xs font-semibold hover:bg-sky-500 hover:text-slate-950 transition">+ Add Certification</button>
+            <button id="add-cert-btn" class="min-h-[36px] px-3 py-1.5 rounded-lg bg-sky-500/15 text-sky-400 text-xs font-semibold hover:bg-sky-500 hover:text-slate-950 transition">+ Add Certification</button>
           </div>
           <div class="space-y-3">
             ${draftData.certifications.map((c, idx) => `
-              <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800 flex items-center gap-3">
-                <div class="grid sm:grid-cols-3 gap-3 flex-1">
+              <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 flex items-start gap-3">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 flex-1">
                   <div><label class="${labelCls}">Title</label><input data-arr="certifications" data-idx="${idx}" data-key="title" value="${escapeHtml(c.title)}" class="${inputCls}"></div>
                   <div><label class="${labelCls}">Issuer</label><input data-arr="certifications" data-idx="${idx}" data-key="issuer" value="${escapeHtml(c.issuer)}" class="${inputCls}"></div>
                   <div><label class="${labelCls}">Date</label><input data-arr="certifications" data-idx="${idx}" data-key="date" value="${escapeHtml(c.date)}" class="${inputCls}"></div>
                 </div>
-                <button data-del-arr="certifications" data-idx="${idx}" class="mt-5 p-2 rounded-lg text-rose-400 hover:bg-rose-500/10"><i class="fa-solid fa-trash"></i></button>
+                <button data-del-arr="certifications" data-idx="${idx}" class="mt-5 w-10 h-10 rounded-lg text-rose-400 hover:bg-rose-500/10 flex items-center justify-center"><i class="fa-solid fa-trash"></i></button>
               </div>
             `).join('')}
           </div>`;
       } else if (activeTab === 'settings') {
         container.innerHTML = `
-          <div class="space-y-6">
-            <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800 space-y-4">
+          <div class="space-y-5">
+            <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-4">
               <h4 class="text-sm font-semibold text-white">Contact Section</h4>
               <div><label class="${labelCls}">Email Address</label><input data-path="contact.email" value="${escapeHtml(draftData.contact.email)}" class="${inputCls}"></div>
               <div><label class="${labelCls}">Contact Subtitle</label><textarea data-path="contact.subtitle" rows="2" class="${inputCls}">${escapeHtml(draftData.contact.subtitle)}</textarea></div>
             </div>
-
-            <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800 space-y-3">
-              <h4 class="text-sm font-semibold text-white">Update Secret Key (Stored as SHA-256 Hash)</h4>
+            <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-3">
+              <h4 class="text-sm font-semibold text-white">Update Secret Key (SHA-256 Hashed)</h4>
               <div class="flex flex-col sm:flex-row gap-3">
                 <input id="new-secret-key" type="password" placeholder="Enter new secret key..." class="${inputCls} flex-1">
-                <button id="update-key-btn" class="px-4 py-2 rounded-lg bg-indigo-500 text-white text-xs font-semibold hover:bg-indigo-400 transition whitespace-nowrap">Update Key</button>
+                <button id="update-key-btn" class="min-h-[40px] px-4 py-2 rounded-xl bg-indigo-500 text-white text-xs font-semibold hover:bg-indigo-400 transition whitespace-nowrap">Update Key</button>
               </div>
             </div>
-
-            <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800 flex flex-wrap items-center gap-3">
-              <button id="export-json-btn" class="px-4 py-2 rounded-lg bg-slate-800 text-slate-200 text-xs font-semibold hover:bg-slate-700 transition">
-                <i class="fa-solid fa-download mr-1.5"></i> Export JSON Backup
-              </button>
-              <label class="px-4 py-2 rounded-lg bg-slate-800 text-slate-200 text-xs font-semibold hover:bg-slate-700 transition cursor-pointer">
+            <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 flex flex-wrap items-center gap-3">
+              <button id="export-json-btn" class="min-h-[40px] px-4 py-2 rounded-xl bg-slate-800 text-slate-200 text-xs font-semibold hover:bg-slate-700 transition"><i class="fa-solid fa-download mr-1.5"></i> Export JSON</button>
+              <label class="min-h-[40px] px-4 py-2 rounded-xl bg-slate-800 text-slate-200 text-xs font-semibold hover:bg-slate-700 transition cursor-pointer flex items-center">
                 <i class="fa-solid fa-upload mr-1.5"></i> Import JSON
                 <input id="import-json-input" type="file" accept="application/json" class="hidden">
               </label>
-              <button id="reset-defaults-btn" class="px-4 py-2 rounded-lg bg-rose-500/15 text-rose-400 text-xs font-semibold hover:bg-rose-500 hover:text-white transition ml-auto">
-                <i class="fa-solid fa-rotate-left mr-1.5"></i> Reset to Defaults
-              </button>
+              <button id="reset-defaults-btn" class="min-h-[40px] px-4 py-2 rounded-xl bg-rose-500/15 text-rose-400 text-xs font-semibold hover:bg-rose-500 hover:text-white transition sm:ml-auto"><i class="fa-solid fa-rotate-left mr-1.5"></i> Reset Defaults</button>
             </div>
           </div>`;
       }
@@ -951,73 +1116,38 @@
 
     function bindAdminInputs() {
       const container = document.getElementById('admin-content');
-
       container.querySelectorAll('[data-path]').forEach(el => {
         el.addEventListener('input', (e) => {
           const [sec, key] = e.target.dataset.path.split('.');
           draftData[sec][key] = e.target.value;
         });
       });
-
       container.querySelectorAll('[data-arr]').forEach(el => {
         el.addEventListener('input', (e) => {
-          const arr = e.target.dataset.arr;
-          const idx = Number(e.target.dataset.idx);
-          const key = e.target.dataset.key;
-          const isCsv = e.target.dataset.csv === 'true';
-          draftData[arr][idx][key] = isCsv
+          const { arr, idx, key, csv } = e.target.dataset;
+          draftData[arr][Number(idx)][key] = csv === 'true'
             ? e.target.value.split(',').map(v => v.trim()).filter(Boolean)
             : e.target.value;
         });
       });
-
       container.querySelectorAll('[data-del-arr]').forEach(btn => {
         btn.addEventListener('click', () => {
-          const arr = btn.dataset.delArr;
-          const idx = Number(btn.dataset.idx);
-          draftData[arr].splice(idx, 1);
+          draftData[btn.dataset.delArr].splice(Number(btn.dataset.idx), 1);
           renderAdminTab();
         });
       });
 
       const addSkill = document.getElementById('add-skill-btn');
-      if (addSkill) addSkill.onclick = () => {
-        draftData.skills.push({ category: 'New Category', icon: 'fa-code', items: ['Skill 1'] });
-        renderAdminTab();
-      };
-
+      if (addSkill) addSkill.onclick = () => { draftData.skills.push({ category: 'New Category', icon: 'fa-code', items: ['Skill 1'] }); renderAdminTab(); };
       const addProject = document.getElementById('add-project-btn');
       if (addProject) addProject.onclick = () => {
-        draftData.projects.unshift({
-          title: 'New Project',
-          description: 'Describe what this project solves and its architecture.',
-          tech: ['Python', 'FastAPI'],
-          liveUrl: '',
-          githubUrl: draftData.hero.githubUrl || ''
-        });
+        draftData.projects.unshift({ title: 'New Project', description: 'Describe this project.', tech: ['Python', 'FastAPI'], liveUrl: '', githubUrl: draftData.hero.githubUrl || '' });
         renderAdminTab();
       };
-
       const addExp = document.getElementById('add-exp-btn');
-      if (addExp) addExp.onclick = () => {
-        draftData.experience.unshift({
-          role: 'Role / Achievement',
-          organization: 'Organization',
-          period: '2026',
-          description: 'Key contributions and impact.'
-        });
-        renderAdminTab();
-      };
-
+      if (addExp) addExp.onclick = () => { draftData.experience.unshift({ role: 'Role / Achievement', organization: 'Organization', period: '2026', description: 'Key impact.' }); renderAdminTab(); };
       const addCert = document.getElementById('add-cert-btn');
-      if (addCert) addCert.onclick = () => {
-        draftData.certifications.unshift({
-          title: 'Certification Name',
-          issuer: 'Platform / Organization',
-          date: '2026'
-        });
-        renderAdminTab();
-      };
+      if (addCert) addCert.onclick = () => { draftData.certifications.unshift({ title: 'Certification Name', issuer: 'Platform', date: '2026' }); renderAdminTab(); };
 
       const updateKeyBtn = document.getElementById('update-key-btn');
       if (updateKeyBtn) updateKeyBtn.onclick = async () => {
@@ -1025,7 +1155,7 @@
         if (val.length < 4) return showToast('Secret key must be at least 4 characters', true);
         draftData.security.passwordHash = await sha256(val);
         document.getElementById('new-secret-key').value = '';
-        showToast('Secret key updated. Click Save Changes to apply.');
+        showToast('Secret key updated. Click Save to apply.');
       };
 
       const exportBtn = document.getElementById('export-json-btn');
@@ -1033,9 +1163,7 @@
         const blob = new Blob([JSON.stringify(draftData, null, 2)], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
-        a.href = url;
-        a.download = 'nakul-portfolio-backup.json';
-        a.click();
+        a.href = url; a.download = 'nakul-neural-portfolio-backup.json'; a.click();
         URL.revokeObjectURL(url);
       };
 
@@ -1045,44 +1173,42 @@
         if (!file) return;
         const reader = new FileReader();
         reader.onload = () => {
-          try {
-            draftData = normalizeData(JSON.parse(reader.result));
-            renderAdminTab();
-            showToast('Backup imported! Click Save Changes to apply.');
-          } catch (_) {
-            showToast('Invalid JSON file', true);
-          }
+          try { draftData = normalizeData(JSON.parse(reader.result)); renderAdminTab(); showToast('Backup imported! Click Save.'); }
+          catch (_) { showToast('Invalid JSON file', true); }
         };
         reader.readAsText(file);
       };
 
       const resetBtn = document.getElementById('reset-defaults-btn');
       if (resetBtn) resetBtn.onclick = () => {
-        if (!confirm('Reset all sections back to default portfolio data?')) return;
+        if (!confirm('Reset all sections to default portfolio data?')) return;
         draftData = structuredClone(DEFAULT_DATA);
         renderAdminTab();
-        showToast('Defaults restored. Click Save Changes to apply.');
+        showToast('Defaults restored. Click Save to apply.');
       };
     }
 
-    // Event Listeners
+    // Mobile Menu Controls
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileIcon = document.getElementById('mobile-menu-icon');
     document.getElementById('mobile-menu-btn').addEventListener('click', () => {
-      document.getElementById('mobile-menu').classList.toggle('hidden');
+      const hidden = mobileMenu.classList.toggle('hidden');
+      mobileIcon.className = hidden ? 'fa-solid fa-bars text-lg' : 'fa-solid fa-xmark text-lg';
     });
     document.querySelectorAll('#mobile-menu a').forEach(link => {
-      link.addEventListener('click', () => document.getElementById('mobile-menu').classList.add('hidden'));
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        mobileIcon.className = 'fa-solid fa-bars text-lg';
+      });
     });
 
+    // Copy Email
     document.getElementById('copy-email-btn').addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(portfolioData.contact.email);
-        showToast('Email copied to clipboard!');
-      } catch (_) {
-        showToast('Could not copy email', true);
-      }
+      try { await navigator.clipboard.writeText(portfolioData.contact.email); showToast('Email copied to clipboard!'); }
+      catch (_) { showToast('Could not copy email', true); }
     });
 
-    // Auth Modal Controls
+    // Auth & Admin Modals
     const authModal = document.getElementById('auth-modal');
     const adminModal = document.getElementById('admin-modal');
     const keyInput = document.getElementById('secret-key-input');
