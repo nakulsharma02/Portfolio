@@ -94,7 +94,7 @@ textarea{min-height:80px;resize:vertical}
 {"title":"B.Tech, CSE (Artificial Intelligence)","detail":"ABES Institute of Technology, Ghaziabad | 2023 - 2027 | CGPA 7.35/10 through third year"},
 {"title":"Data Analytics Job Simulation","detail":"Deloitte Australia (Forage) | Tableau dashboards"}
 ],
-"email":"","github":"","linkedin":""
+"email":"","github":"","linkedin":"","resume":"resume.pdf"
 }</script>
 <script id="vault" type="application/json">null</script>
 
@@ -102,6 +102,7 @@ textarea{min-height:80px;resize:vertical}
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const safeUrl=u=>/^https?:\/\//i.test(u)?u:"";
+const resumeUrl=u=>/^https?:\/\//i.test(u)||/^[\w\-. \/]+\.pdf$/i.test(u)?u:"";
 let data=JSON.parse($('#data').textContent),
     vault=JSON.parse($('#vault').textContent);
 try{const p=localStorage.getItem('pf_public'),v=localStorage.getItem('pf_vault');if(p){const L=JSON.parse(p);if((L._v||0)>=(data._v||0)){data=L;if(v)vault=JSON.parse(v)}}else if(!vault&&v)vault=JSON.parse(v)}catch(e){}
@@ -129,13 +130,15 @@ function render(){
   document.title=d.name+" | Portfolio";
   $('#brand').textContent=d.name;
   $('#foot').textContent="© "+new Date().getFullYear()+" "+d.name;
-  const links=[["Email",d.email&&"mailto:"+d.email],["GitHub",safeUrl(d.github)],["LinkedIn",safeUrl(d.linkedin)]].filter(x=>x[1]);
+  const rl=resumeUrl(d.resume??"resume.pdf");
+  const links=[["Resume",rl],["Email",d.email&&"mailto:"+d.email],["GitHub",safeUrl(d.github)],["LinkedIn",safeUrl(d.linkedin)]].filter(x=>x[1]);
   $('#app').innerHTML=`
   <section id="home"><div class="wrap">
     <div class="hi">Hello, I'm</div><h1>${esc(d.name)}</h1>
     <div class="type"><b id="typed"></b><span class="cursor"></span></div>
     <p class="lead">${esc(d.intro)}</p>
     <a class="btn" href="#projects">View Projects</a> <a class="btn ghost" href="#contact">Contact Me</a>
+    ${rl?`<a class="btn ghost" href="${esc(rl)}" target="_blank" rel="noopener">View Resume</a>`:""}
   </div></section>
   <section id="about"><div class="wrap"><h2>About</h2><p style="max-width:720px;color:var(--mute)">${esc(d.about)}</p></div></section>
   <section id="skills"><div class="wrap"><h2>Skills</h2><div class="tags">${d.skills.map(s=>`<span class="tag">${esc(s)}</span>`).join("")}</div></div></section>
@@ -209,7 +212,7 @@ function editor(d){
   <h3>Skills</h3>${fld('Skills (separate with commas)','skills',d.skills.join(', '))}
   <h3>Projects</h3><div id="pl">${d.projects.map(projRow).join('')}</div><div class="bar"><button class="btn ghost" id="ap" type="button">+ Add project</button></div>
   <h3>Education</h3><div id="el">${d.education.map(eduRow).join('')}</div><div class="bar"><button class="btn ghost" id="ae" type="button">+ Add entry</button></div>
-  <h3>Contact</h3>${fld('Email','email',d.email)}${fld('GitHub URL','cgithub',d.github)}${fld('LinkedIn URL','linkedin',d.linkedin)}
+  <h3>Contact</h3>${fld('Email','email',d.email)}${fld('GitHub URL','cgithub',d.github)}${fld('LinkedIn URL','linkedin',d.linkedin)}${fld('Resume link (resume.pdf in your repo, or a https:// link; empty hides the button)','resume',d.resume??'resume.pdf')}
   <h3>Publish to your live website</h3>
   <p class="note" style="margin-top:0">Saves your changes into your GitHub repo so every visitor sees them (takes a few minutes). Use a fine-grained token limited to this one repo with Contents: Read and write.</p>
   ${fld('GitHub username','gu','')}${fld('Repository name','gr','')}${fld('Branch','gb','main')}
@@ -225,7 +228,7 @@ function editor(d){
     name:q(ov,'name')||'Your Name',roles:list(q(ov,'roles')),intro:q(ov,'intro'),about:q(ov,'about'),skills:list(q(ov,'skills')),
     projects:[...ov.querySelectorAll('[data-g=projects]')].map(r=>({title:q(r,'title'),tech:q(r,'tech'),github:q(r,'github'),link:q(r,'link'),desc:q(r,'desc')})),
     education:[...ov.querySelectorAll('[data-g=education]')].map(r=>({title:q(r,'title'),detail:q(r,'detail')})),
-    email:q(ov,'email'),github:q(ov,'cgithub'),linkedin:q(ov,'linkedin')
+    email:q(ov,'email'),github:q(ov,'cgithub'),linkedin:q(ov,'linkedin'),resume:q(ov,'resume')
   });
   const say=(t,ok)=>{const m=$('#em');m.textContent=t;m.className='msg'+(ok?' ok':'')};
   ov.onclick=e=>{if(e.target.classList.contains('rm'))e.target.closest('.row').remove()};
