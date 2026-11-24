@@ -1,1274 +1,254 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth dark">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-  <title>Nakul Sharma | AI/ML & Python Backend Developer</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            neural: {
-              950: '#030712',
-              900: '#070d1f',
-              800: '#0f172a',
-              700: '#1e293b'
-            }
-          },
-          fontFamily: {
-            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-            mono: ['JetBrains Mono', 'Fira Code', 'monospace']
-          }
-        }
-      }
-    };
-  </script>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
-
-    html, body {
-      background-color: #030712;
-      color: #e2e8f0;
-      font-family: 'Inter', sans-serif;
-      overflow-x: hidden;
-      max-width: 100vw;
-    }
-
-    /* Interactive Neural Network Canvas */
-    #neural-canvas {
-      position: fixed;
-      inset: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    .site-content {
-      position: relative;
-      z-index: 10;
-    }
-
-    /* Glassmorphism Neural Cards */
-    .neural-glass {
-      background: rgba(7, 13, 31, 0.72);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(56, 189, 248, 0.14);
-      box-shadow: 0 8px 32px rgba(2, 6, 23, 0.45);
-    }
-
-    .neural-card {
-      background: rgba(10, 18, 40, 0.68);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(129, 140, 248, 0.16);
-      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .neural-card:hover {
-      border-color: rgba(56, 189, 248, 0.45);
-      box-shadow: 0 0 28px rgba(56, 189, 248, 0.14), 0 12px 32px rgba(2, 6, 23, 0.6);
-      transform: translateY(-4px);
-    }
-
-    /* Animated Gradient Shimmer Text */
-    .shimmer-text {
-      background: linear-gradient(90deg, #38bdf8, #818cf8, #c084fc, #38bdf8);
-      background-size: 250% auto;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: shimmer 5s linear infinite;
-    }
-
-    @keyframes shimmer {
-      0% { background-position: 0% center; }
-      100% { background-position: 250% center; }
-    }
-
-    /* Auto-Writing Typewriter Cursor */
-    .type-cursor {
-      display: inline-block;
-      width: 3px;
-      height: 0.92em;
-      background: linear-gradient(180deg, #38bdf8, #c084fc);
-      margin-left: 4px;
-      vertical-align: -0.08em;
-      border-radius: 2px;
-      box-shadow: 0 0 12px rgba(56, 189, 248, 0.9);
-      animation: blink-cursor 0.85s steps(2, start) infinite;
-    }
-
-    @keyframes blink-cursor {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
-    }
-
-    /* Scroll Reveal Animations */
-    .reveal {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Subtle Hero Glow */
-    .hero-neural-glow {
-      background: radial-gradient(circle at 50% 10%, rgba(56, 189, 248, 0.16) 0%, rgba(129, 140, 248, 0.08) 38%, transparent 72%);
-    }
-
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-track { background: #030712; }
-    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #38bdf8; }
-
-    /* Mobile Drawer Transition */
-    #mobile-menu {
-      transition: max-height 0.3s ease, opacity 0.3s ease;
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<title>Portfolio</title>
+<style>
+:root{--navy:#14213D;--cream:#F4EDE0;--coral:#FF6858;--ink:#F4EDE0;--mute:rgba(244,237,224,.72);--card:rgba(255,255,255,.06);--line:rgba(244,237,224,.25);--serif:"Cormorant Garamond","Playfair Display",Georgia,"Times New Roman",serif;--sans:"Inter","Helvetica Neue",Arial,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--navy);color:var(--ink);font:300 16px/1.8 var(--sans);letter-spacing:.01em}
+a{color:var(--cream);text-decoration:none}
+.wrap{max-width:1000px;margin:0 auto;padding:0 28px}
+.nav{position:sticky;top:0;z-index:10;background:rgba(20,33,61,.94);backdrop-filter:blur(8px);border-bottom:1px solid rgba(244,237,224,.12)}
+.nav .wrap{display:flex;justify-content:space-between;align-items:center;height:72px}
+.brand{font:italic 400 26px var(--serif);color:var(--cream);letter-spacing:.02em}
+.nav nav a{color:var(--cream);margin-left:28px;font-size:11px;text-transform:uppercase;letter-spacing:.22em;opacity:.8;transition:.25s}
+.nav nav a:hover{color:var(--coral);opacity:1}
+section{padding:110px 0;border-top:1px solid rgba(244,237,224,.1)}
+h2{font:400 clamp(30px,4.5vw,42px)/1.15 var(--serif);margin-bottom:40px;letter-spacing:.01em}
+h2::after{content:"";display:block;width:46px;height:1px;background:var(--coral);margin-top:16px}
+#home{min-height:92vh;display:flex;align-items:center;border-top:0;background:radial-gradient(circle at 85% 15%,rgba(255,104,88,.13),transparent 45%)}
+.hi{color:var(--coral);font-size:12px;text-transform:uppercase;letter-spacing:.35em}
+h1{font:400 clamp(52px,9vw,96px)/1.02 var(--serif);margin:14px 0 14px;letter-spacing:-.01em}
+.type{font:italic 400 clamp(22px,3.6vw,32px) var(--serif);min-height:1.5em;color:var(--mute)}
+.type b{color:var(--cream);font-weight:400}
+.cursor{display:inline-block;width:1px;height:1em;background:var(--coral);margin-left:4px;vertical-align:-3px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.lead{max-width:540px;margin:26px 0 38px;color:var(--mute)}
+.btn{display:inline-block;padding:14px 32px;border:1px solid var(--coral);background:transparent;color:var(--coral);cursor:pointer;font:400 11px var(--sans);text-transform:uppercase;letter-spacing:.22em;transition:.3s;margin:0 8px 8px 0}
+.btn:hover{background:var(--coral);color:var(--navy)}
+.btn.ghost{border-color:rgba(244,237,224,.45);color:var(--cream)}
+.btn.ghost:hover{border-color:var(--cream);background:var(--cream);color:var(--navy)}
+.tags{display:flex;flex-wrap:wrap;gap:12px}
+.tag{padding:8px 18px;border:1px solid var(--line);color:var(--cream);font-size:12px;text-transform:uppercase;letter-spacing:.14em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,290px),1fr));gap:26px}
+.card{background:transparent;border:1px solid var(--line);padding:32px 28px;transition:.3s}
+.card:hover{border-color:var(--coral);background:rgba(244,237,224,.03)}
+.card h3{font:400 24px/1.2 var(--serif);margin-bottom:12px}
+.card p{color:var(--mute);font-size:15px}
+.plinks{margin-top:16px;display:flex;gap:22px;font-size:11px;text-transform:uppercase;letter-spacing:.16em}.plinks a{border-bottom:1px solid var(--coral);padding-bottom:2px}
+.tech{margin-top:16px;color:var(--coral);font-size:11px;text-transform:uppercase;letter-spacing:.16em}
+.edu{border-left:1px solid var(--coral);padding:2px 0 2px 24px;margin-bottom:28px}
+.edu strong{font:400 22px var(--serif)}
+.edu small{color:var(--mute);font-size:14px}
+footer{border-top:1px solid rgba(244,237,224,.12);padding:32px 0;color:var(--mute);font-size:12px;text-transform:uppercase;letter-spacing:.2em}
+footer .wrap{display:flex;justify-content:space-between;align-items:center}
+#lock{background:none;border:0;cursor:pointer;opacity:.18;padding:6px;transition:.2s}
+#lock:hover,#lock:focus{opacity:.9}
+#lock svg{width:18px;height:18px;stroke:var(--cream);fill:none;stroke-width:1.5}
+/* hidden editor */
+#ov{display:none;position:fixed;inset:0;z-index:50;background:var(--navy);overflow:auto}
+#ov.on{display:block}
+.panel{max-width:760px;margin:0 auto;padding:34px 22px 80px}
+.panel h2{margin-bottom:20px}
+.panel h3{margin:34px 0 10px;color:var(--cream);font:400 22px var(--serif)}
+label{display:block;font-size:13px;color:var(--mute);margin:10px 0 0}
+input,textarea{width:100%;margin-top:4px;padding:10px 12px;background:rgba(255,255,255,.07);border:1px solid var(--line);border-radius:0;color:var(--ink);font:inherit}
+input:focus,textarea:focus{outline:2px solid var(--cream)}
+textarea{min-height:80px;resize:vertical}
+.row{border:1px solid var(--line);border-radius:0;padding:12px 14px;margin-top:12px}
+.bar{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+.msg{margin-top:12px;font-size:14px;color:var(--coral);min-height:20px}
+.msg.ok{color:var(--cream)}
+.gate{max-width:380px;margin:18vh auto 0;padding:0 22px}
+.note{color:var(--mute);font-size:13px;margin-top:14px}
+@media(max-width:600px){.nav .wrap{height:auto;padding-top:12px;padding-bottom:12px;flex-direction:column;gap:4px}.nav nav{display:flex;flex-wrap:wrap;justify-content:center}.nav nav a{margin:0 9px;font-size:10px;letter-spacing:.14em}section{padding:72px 0}.wrap{padding:0 20px}footer{letter-spacing:.1em}.plinks{flex-wrap:wrap}}
+</style>
 </head>
-<body class="antialiased selection:bg-sky-500/30 selection:text-sky-200">
+<body>
+<div class="nav"><div class="wrap"><a class="brand" href="#home" id="brand"></a>
+<nav><a href="#about">About</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#education">Education</a><a href="#contact">Contact</a></nav></div></div>
+<main id="app"></main>
+<footer><div class="wrap"><span id="foot"></span>
+<button id="lock" aria-label="Open editor" title=""><svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></button></div></footer>
+<div id="ov"></div>
 
-  <!-- Interactive Neural Network Background Canvas -->
-  <canvas id="neural-canvas" aria-hidden="true"></canvas>
+<script id="data" type="application/json">{
+"name":"Nakul",
+"roles":["AI / ML Enthusiast","Data Science Learner","Data Analytics Aspirant"],
+"intro":"Final-year B.Tech student building practical machine learning projects end to end. Looking for fresher and internship roles in AI/ML, Data Science and Data Analytics.",
+"about":"I am a final-year Computer Science and Engineering (Artificial Intelligence) student at ABES Institute of Technology, Ghaziabad. I learn by building: I like taking a problem, working through the data, training and testing models, and putting the result behind a simple app or API.",
+"skills":["Python","scikit-learn","TensorFlow","Keras","spaCy","NLTK","XGBoost","LangChain","FastAPI","Flask","PostgreSQL","Tableau"],
+"projects":[
+{"title":"Fake News / Clickbait Detection","tech":"Python, spaCy, NLTK, scikit-learn","link":"","desc":"NLP project on news articles using lemmatization, TF-IDF and POS features with Logistic Regression and LinearSVC, with ablation tests to check for data leakage."},
+{"title":"Credit Card Fraud Detection","tech":"Random Forest, XGBoost, SMOTE","link":"","desc":"Compares Random Forest and XGBoost on a heavily imbalanced dataset, using SMOTE and judging results with ROC-AUC and precision-recall."},
+{"title":"Loan Defaulter Prediction","tech":"Python, FastAPI, HTML/CSS/JS","link":"","desc":"Credit risk prediction on a synthetic dataset with several models tested, served through a FastAPI backend and a dark-theme web UI."},
+{"title":"Solar AI (Final-Year Project)","tech":"SAM / U-Net, NASA POWER API, XGBoost","link":"","desc":"Group project that assesses rooftop solar potential using image segmentation, irradiance data and a savings prediction model."},
+{"title":"CreditStore","tech":"Flask, PostgreSQL","link":"","desc":"E-commerce store where every user gets 2,000 credit points to spend."}
+],
+"education":[
+{"title":"B.Tech, CSE (Artificial Intelligence)","detail":"ABES Institute of Technology, Ghaziabad | 2023 - 2027 | CGPA 7.35/10 through third year"},
+{"title":"Data Analytics Job Simulation","detail":"Deloitte Australia (Forage) | Tableau dashboards"}
+],
+"email":"","github":"","linkedin":""
+}</script>
+<script id="vault" type="application/json">null</script>
 
-  <!-- Toast Notification -->
-  <div id="toast" class="fixed top-5 right-5 z-[100] hidden items-center gap-3 px-4 py-3 rounded-xl neural-glass border border-sky-400/40 text-sm font-medium text-slate-100 shadow-2xl">
-    <i id="toast-icon" class="fa-solid fa-circle-check text-sky-400"></i>
-    <span id="toast-msg">Saved successfully</span>
-  </div>
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const safeUrl=u=>/^https?:\/\//i.test(u)?u:"";
+let data=JSON.parse($('#data').textContent),
+    vault=JSON.parse($('#vault').textContent);
+try{const p=localStorage.getItem('pf_public'),v=localStorage.getItem('pf_vault');if(p){const L=JSON.parse(p);if((L._v||0)>=(data._v||0)){data=L;if(v)vault=JSON.parse(v)}}else if(!vault&&v)vault=JSON.parse(v)}catch(e){}
 
-  <div class="site-content">
-    <!-- Navbar -->
-    <header class="fixed top-0 inset-x-0 z-40 neural-glass border-b border-sky-500/15">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        <a href="#home" class="text-base sm:text-lg font-bold tracking-tight flex items-center gap-2.5 min-h-[44px]">
-          <span class="w-9 h-9 rounded-xl bg-gradient-to-br from-sky-500 via-indigo-500 to-purple-600 flex items-center justify-center text-white text-xs font-mono font-bold shadow-lg shadow-sky-500/25">
-            <i class="fa-solid fa-diagram-project"></i>
-          </span>
-          <span id="nav-brand" class="text-slate-100">Nakul<span class="text-sky-400">.dev</span></span>
-        </a>
+/* ---------- typing animation ---------- */
+let typeTimer;
+function startTyping(roles){
+  clearTimeout(typeTimer);
+  const el=$('#typed');if(!el||!roles.length)return;
+  let r=0,i=0,del=false;
+  (function tick(){
+    const w=roles[r];
+    el.textContent=w.slice(0,i);
+    let d=del?35:85;
+    if(!del&&i===w.length){del=true;d=1400}
+    else if(del&&i===0){del=false;r=(r+1)%roles.length;d=350}
+    else i+=del?-1:1;
+    typeTimer=setTimeout(tick,d);
+  })();
+}
 
-        <nav class="hidden md:flex items-center gap-6 lg:gap-7 text-sm font-medium text-slate-300">
-          <a href="#about" class="hover:text-sky-400 transition">About</a>
-          <a href="#skills" class="hover:text-sky-400 transition">Skills</a>
-          <a href="#projects" class="hover:text-sky-400 transition">Projects</a>
-          <a href="#experience" class="hover:text-sky-400 transition">Experience</a>
-          <a href="#certifications" class="hover:text-sky-400 transition">Certifications</a>
-          <a href="#contact" class="px-4 py-2 rounded-xl bg-sky-500/10 text-sky-400 border border-sky-400/30 hover:bg-sky-500 hover:text-slate-950 transition font-semibold">Contact</a>
-        </nav>
+/* ---------- render public site ---------- */
+function render(){
+  const d=data;
+  document.title=d.name+" | Portfolio";
+  $('#brand').textContent=d.name;
+  $('#foot').textContent="© "+new Date().getFullYear()+" "+d.name;
+  const links=[["Email",d.email&&"mailto:"+d.email],["GitHub",safeUrl(d.github)],["LinkedIn",safeUrl(d.linkedin)]].filter(x=>x[1]);
+  $('#app').innerHTML=`
+  <section id="home"><div class="wrap">
+    <div class="hi">Hello, I'm</div><h1>${esc(d.name)}</h1>
+    <div class="type"><b id="typed"></b><span class="cursor"></span></div>
+    <p class="lead">${esc(d.intro)}</p>
+    <a class="btn" href="#projects">View Projects</a> <a class="btn ghost" href="#contact">Contact Me</a>
+  </div></section>
+  <section id="about"><div class="wrap"><h2>About</h2><p style="max-width:720px;color:var(--mute)">${esc(d.about)}</p></div></section>
+  <section id="skills"><div class="wrap"><h2>Skills</h2><div class="tags">${d.skills.map(s=>`<span class="tag">${esc(s)}</span>`).join("")}</div></div></section>
+  <section id="projects"><div class="wrap"><h2>Projects</h2><div class="grid">${d.projects.map(p=>`
+    <div class="card"><h3>${esc(p.title)}</h3><p>${esc(p.desc)}</p><div class="tech">${esc(p.tech)}</div>
+    ${(safeUrl(p.github)||safeUrl(p.link))?`<p class="plinks">${safeUrl(p.github)?`<a href="${esc(safeUrl(p.github))}" target="_blank" rel="noopener">GitHub &rarr;</a>`:""}${safeUrl(p.link)?`<a href="${esc(safeUrl(p.link))}" target="_blank" rel="noopener">Live demo &rarr;</a>`:""}</p>`:""}</div>`).join("")}</div></div></section>
+  <section id="education"><div class="wrap"><h2>Education</h2>${d.education.map(e=>`<div class="edu"><strong>${esc(e.title)}</strong><br><small>${esc(e.detail)}</small></div>`).join("")}</div></section>
+  <section id="contact"><div class="wrap"><h2>Contact</h2>
+    ${links.length?`<div class="tags">${links.map(l=>`<a class="btn ghost" href="${esc(l[1])}" target="_blank" rel="noopener">${l[0]}</a>`).join("")}</div>`:`<p style="color:var(--mute)">Contact details are not added yet.</p>`}
+  </div></section>`;
+  startTyping(d.roles);
+}
 
-        <button id="mobile-menu-btn" class="md:hidden w-11 h-11 rounded-xl flex items-center justify-center text-slate-200 hover:bg-slate-800/80 border border-slate-700/60" aria-label="Toggle Menu">
-          <i id="mobile-menu-icon" class="fa-solid fa-bars text-lg"></i>
-        </button>
-      </div>
+/* ---------- crypto (PBKDF2 + AES-GCM) ---------- */
+const TE=new TextEncoder(),TD=new TextDecoder();
+const b64=b=>btoa(String.fromCharCode(...new Uint8Array(b)));
+const unb=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+async function deriveKey(code,salt){
+  const k=await crypto.subtle.importKey('raw',TE.encode(code),'PBKDF2',false,['deriveKey']);
+  return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:250000,hash:'SHA-256'},k,{name:'AES-GCM',length:256},false,['encrypt','decrypt']);
+}
+async function seal(obj,code){
+  const salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12));
+  const ct=await crypto.subtle.encrypt({name:'AES-GCM',iv},await deriveKey(code,salt),TE.encode(JSON.stringify(obj)));
+  return {s:b64(salt),i:b64(iv),c:b64(ct)};
+}
+async function unseal(v,code){
+  const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:unb(v.i)},await deriveKey(code,unb(v.s)),unb(v.c));
+  return JSON.parse(TD.decode(pt));
+}
 
-      <!-- Mobile Nav Drawer -->
-      <div id="mobile-menu" class="hidden md:hidden border-t border-sky-500/15 bg-neural-950/95 backdrop-blur-xl px-4 py-4 space-y-1.5 text-sm font-medium">
-        <a href="#about" class="block px-4 py-3 rounded-xl hover:bg-sky-500/10 text-slate-200">About</a>
-        <a href="#skills" class="block px-4 py-3 rounded-xl hover:bg-sky-500/10 text-slate-200">Skills</a>
-        <a href="#projects" class="block px-4 py-3 rounded-xl hover:bg-sky-500/10 text-slate-200">Projects</a>
-        <a href="#experience" class="block px-4 py-3 rounded-xl hover:bg-sky-500/10 text-slate-200">Experience</a>
-        <a href="#certifications" class="block px-4 py-3 rounded-xl hover:bg-sky-500/10 text-slate-200">Certifications</a>
-        <a href="#contact" class="block px-4 py-3 rounded-xl bg-sky-500/15 text-sky-400 font-semibold">Contact</a>
-      </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section id="home" class="relative pt-28 pb-16 sm:pt-36 sm:pb-24 md:pt-44 md:pb-28 hero-neural-glow">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="max-w-3xl reveal">
-          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-500/10 border border-sky-400/30 text-sky-300 text-xs font-mono mb-6 shadow-lg shadow-sky-500/10">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-            <span id="hero-badge">Open to AI/ML & Python Backend Roles</span>
-          </div>
-
-          <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-[1.15] mb-4">
-            Hi, I'm
-            <span class="block sm:inline mt-1 sm:mt-0">
-              <span id="typed-name" class="shimmer-text">Nakul Sharma</span><span class="type-cursor" aria-hidden="true"></span>
-            </span>
-          </h1>
-
-          <h2 id="hero-role" class="text-lg sm:text-2xl font-semibold text-indigo-200 mb-5">
-            AI/ML Engineer & Python Backend Developer
-          </h2>
-
-          <p id="hero-tagline" class="text-sm sm:text-base md:text-lg text-slate-300/90 leading-relaxed mb-8 max-w-2xl">
-            Final-year B.Tech (CSE - AI) student passionate about building NLP pipelines, LangChain applications, and high-performance FastAPI & Django backends.
-          </p>
-
-          <div class="flex flex-wrap items-center gap-3 sm:gap-4">
-            <a href="#projects" class="min-h-[44px] px-6 py-3 rounded-xl bg-gradient-to-r from-sky-500 via-indigo-500 to-purple-600 text-white font-semibold text-sm hover:opacity-95 hover:scale-[1.02] transition shadow-lg shadow-sky-500/25 flex items-center gap-2">
-              <span>Explore Projects</span>
-              <i class="fa-solid fa-arrow-right text-xs"></i>
-            </a>
-            <a href="#contact" class="min-h-[44px] px-6 py-3 rounded-xl neural-glass text-slate-100 font-semibold text-sm hover:border-sky-400/50 hover:text-sky-300 transition flex items-center gap-2">
-              <i class="fa-regular fa-paper-plane text-xs"></i>
-              <span>Get in Touch</span>
-            </a>
-            <div class="flex items-center gap-2.5">
-              <a id="hero-github" href="https://github.com/nakulsharma02" target="_blank" rel="noopener" class="w-11 h-11 rounded-xl neural-glass flex items-center justify-center text-slate-300 hover:text-white hover:border-sky-400/50 transition" title="GitHub">
-                <i class="fa-brands fa-github text-lg"></i>
-              </a>
-              <a id="hero-linkedin" href="https://linkedin.com/in/nakul-sharma-782576356" target="_blank" rel="noopener" class="w-11 h-11 rounded-xl neural-glass flex items-center justify-center text-slate-300 hover:text-sky-400 hover:border-sky-400/50 transition" title="LinkedIn">
-                <i class="fa-brands fa-linkedin-in text-lg"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- About & Education -->
-    <section id="about" class="py-16 sm:py-20 border-t border-sky-500/10">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center gap-3 mb-8 sm:mb-10 reveal">
-          <span class="text-sky-400 font-mono text-xs sm:text-sm">01 //</span>
-          <h2 class="text-2xl sm:text-3xl font-bold shimmer-text">About & Education</h2>
-          <div class="h-px bg-gradient-to-r from-sky-500/40 to-transparent flex-1 ml-2 sm:ml-4"></div>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
-          <div class="lg:col-span-7 space-y-5 reveal">
-            <p id="about-bio" class="text-slate-300 leading-relaxed text-sm sm:text-base"></p>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 pt-2">
-              <div class="neural-card rounded-xl p-4">
-                <div id="about-location" class="text-sm font-semibold text-white">Ghaziabad, UP, India</div>
-                <div class="text-xs text-slate-400 mt-1 font-mono">Location</div>
-              </div>
-              <div class="neural-card rounded-xl p-4">
-                <div id="about-cgpa" class="text-sm font-semibold text-sky-400">7.21 / 10</div>
-                <div class="text-xs text-slate-400 mt-1 font-mono">Current CGPA</div>
-              </div>
-              <div class="neural-card rounded-xl p-4">
-                <div id="about-focus" class="text-sm font-semibold text-purple-300">AI/ML & Backend</div>
-                <div class="text-xs text-slate-400 mt-1 font-mono">Core Focus</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="lg:col-span-5 neural-card rounded-2xl p-5 sm:p-6 reveal">
-            <div class="flex items-center gap-3 mb-4">
-              <div class="w-10 h-10 rounded-xl bg-sky-500/15 border border-sky-400/30 flex items-center justify-center text-sky-400">
-                <i class="fa-solid fa-graduation-cap"></i>
-              </div>
-              <div>
-                <h3 class="text-xs font-mono uppercase tracking-wider text-sky-400">Education</h3>
-                <p id="edu-period" class="text-xs text-slate-400">2023 – 2027 (4th Year)</p>
-              </div>
-            </div>
-            <h4 id="edu-degree" class="text-base sm:text-lg font-bold text-white leading-snug">B.Tech in Computer Science & Engineering (Artificial Intelligence)</h4>
-            <p id="edu-institution" class="text-sm text-indigo-200 mt-2">ABES Institute of Technology, Ghaziabad</p>
-            <p id="edu-details" class="text-xs text-slate-400 mt-3 leading-relaxed"></p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="py-16 sm:py-20 border-t border-sky-500/10">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center gap-3 mb-8 sm:mb-10 reveal">
-          <span class="text-sky-400 font-mono text-xs sm:text-sm">02 //</span>
-          <h2 class="text-2xl sm:text-3xl font-bold shimmer-text">Technical Skills</h2>
-          <div class="h-px bg-gradient-to-r from-sky-500/40 to-transparent flex-1 ml-2 sm:ml-4"></div>
-        </div>
-
-        <div id="skills-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6"></div>
-      </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="py-16 sm:py-20 border-t border-sky-500/10">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center gap-3 mb-8 sm:mb-10 reveal">
-          <span class="text-sky-400 font-mono text-xs sm:text-sm">03 //</span>
-          <h2 class="text-2xl sm:text-3xl font-bold shimmer-text">Featured Projects</h2>
-          <div class="h-px bg-gradient-to-r from-sky-500/40 to-transparent flex-1 ml-2 sm:ml-4"></div>
-        </div>
-
-        <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6"></div>
-      </div>
-    </section>
-
-    <!-- Experience & Achievements -->
-    <section id="experience" class="py-16 sm:py-20 border-t border-sky-500/10">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center gap-3 mb-8 sm:mb-10 reveal">
-          <span class="text-sky-400 font-mono text-xs sm:text-sm">04 //</span>
-          <h2 class="text-2xl sm:text-3xl font-bold shimmer-text">Experience & Achievements</h2>
-          <div class="h-px bg-gradient-to-r from-sky-500/40 to-transparent flex-1 ml-2 sm:ml-4"></div>
-        </div>
-
-        <div id="experience-list" class="space-y-5 relative before:absolute before:left-3.5 sm:before:left-5 before:top-2 before:bottom-2 before:w-px before:bg-gradient-to-b before:from-sky-400/60 before:via-indigo-500/40 before:to-transparent"></div>
-      </div>
-    </section>
-
-    <!-- Certifications -->
-    <section id="certifications" class="py-16 sm:py-20 border-t border-sky-500/10">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center gap-3 mb-8 sm:mb-10 reveal">
-          <span class="text-sky-400 font-mono text-xs sm:text-sm">05 //</span>
-          <h2 class="text-2xl sm:text-3xl font-bold shimmer-text">Certifications</h2>
-          <div class="h-px bg-gradient-to-r from-sky-500/40 to-transparent flex-1 ml-2 sm:ml-4"></div>
-        </div>
-
-        <div id="certifications-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5"></div>
-      </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-16 sm:py-20 border-t border-sky-500/10">
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center reveal">
-        <span class="text-sky-400 font-mono text-xs sm:text-sm">06 // Initialize Connection</span>
-        <h2 class="text-3xl sm:text-4xl font-bold shimmer-text mt-2 mb-4">Get In Touch</h2>
-        <p id="contact-subtitle" class="text-sm sm:text-base text-slate-300/90 max-w-xl mx-auto mb-10">
-          I'm actively seeking entry-level AI/ML Engineer, Data Science, and Python Backend Developer roles. Feel free to reach out!
-        </p>
-
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 text-left">
-          <div class="neural-card rounded-2xl p-5 flex flex-col justify-between">
-            <div>
-              <div class="w-10 h-10 rounded-xl bg-sky-500/15 text-sky-400 flex items-center justify-center mb-4">
-                <i class="fa-solid fa-envelope"></i>
-              </div>
-              <h3 class="text-sm font-semibold text-white">Email</h3>
-              <p id="contact-email-text" class="text-xs text-slate-400 mt-1 break-all">nakulsharmavats123@gmail.com</p>
-            </div>
-            <div class="flex items-center gap-2 mt-4">
-              <button id="copy-email-btn" class="flex-1 min-h-[40px] py-2 px-3 rounded-xl bg-sky-500/15 text-sky-300 text-xs font-semibold hover:bg-sky-500 hover:text-slate-950 transition">
-                <i class="fa-regular fa-copy mr-1"></i> Copy
-              </button>
-              <a id="contact-email-link" href="mailto:nakulsharmavats123@gmail.com" class="min-h-[40px] py-2 px-3.5 rounded-xl bg-slate-800/90 text-slate-200 text-xs font-semibold hover:bg-slate-700 transition flex items-center">
-                Mail
-              </a>
-            </div>
-          </div>
-
-          <a id="contact-github-card" href="https://github.com/nakulsharma02" target="_blank" rel="noopener" class="neural-card rounded-2xl p-5 flex flex-col justify-between group">
-            <div>
-              <div class="w-10 h-10 rounded-xl bg-slate-800 text-slate-200 group-hover:text-white flex items-center justify-center mb-4">
-                <i class="fa-brands fa-github text-lg"></i>
-              </div>
-              <h3 class="text-sm font-semibold text-white">GitHub</h3>
-              <p id="contact-github-text" class="text-xs text-slate-400 mt-1 break-all">github.com/nakulsharma02</p>
-            </div>
-            <span class="text-xs text-sky-400 font-medium mt-4 inline-flex items-center gap-1.5">
-              Explore Repos <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-            </span>
-          </a>
-
-          <a id="contact-linkedin-card" href="https://linkedin.com/in/nakul-sharma-782576356" target="_blank" rel="noopener" class="neural-card rounded-2xl p-5 flex flex-col justify-between group">
-            <div>
-              <div class="w-10 h-10 rounded-xl bg-indigo-500/15 text-indigo-400 flex items-center justify-center mb-4">
-                <i class="fa-brands fa-linkedin-in text-lg"></i>
-              </div>
-              <h3 class="text-sm font-semibold text-white">LinkedIn</h3>
-              <p id="contact-linkedin-text" class="text-xs text-slate-400 mt-1 break-all">linkedin.com/in/nakul-sharma-782576356</p>
-            </div>
-            <span class="text-xs text-sky-400 font-medium mt-4 inline-flex items-center gap-1.5">
-              Connect <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-            </span>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Footer with Discreet Secret Lock Icon -->
-    <footer class="border-t border-sky-500/15 py-8 neural-glass">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
-        <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
-          <span>© <span id="footer-year">2026</span> <span id="footer-name">Nakul Sharma</span>. All rights reserved.</span>
-          <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-slate-900/90 border border-sky-500/20 text-[10px] text-slate-300 font-mono">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-            <span id="sync-badge-text">Local Mode</span>
-          </span>
-        </div>
-        <div class="flex items-center gap-4">
-          <span class="font-mono text-slate-500">Neural Portfolio Architecture</span>
-          <button id="admin-lock-btn" title="Admin Editor" class="w-10 h-10 rounded-xl flex items-center justify-center text-slate-500 hover:text-sky-400 hover:bg-sky-500/10 border border-transparent hover:border-sky-500/30 transition" aria-label="Open Admin Panel">
-            <i class="fa-solid fa-lock text-xs"></i>
-          </button>
-        </div>
-      </div>
-    </footer>
-  </div>
-
-  <!-- Secret Key Auth Modal -->
-  <div id="auth-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-    <div class="neural-glass w-full max-w-md rounded-2xl p-6 border border-sky-500/30 shadow-2xl">
-      <div class="flex items-center justify-between mb-4">
-        <div class="flex items-center gap-2.5">
-          <div class="w-10 h-10 rounded-xl bg-sky-500/15 text-sky-400 flex items-center justify-center">
-            <i class="fa-solid fa-shield-halved"></i>
-          </div>
-          <div>
-            <h3 class="text-base font-bold text-white">Portfolio Admin Access</h3>
-            <p class="text-xs text-slate-400">Enter secret key to unlock editor</p>
-          </div>
-        </div>
-        <button id="close-auth-btn" class="w-9 h-9 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 flex items-center justify-center">
-          <i class="fa-solid fa-xmark text-lg"></i>
-        </button>
-      </div>
-
-      <form id="auth-form" class="space-y-4">
-        <div>
-          <label class="block text-xs font-medium text-slate-300 mb-1.5">Secret Key</label>
-          <input id="secret-key-input" type="password" required placeholder="Enter secret key..." class="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl bg-slate-950/90 border border-slate-700 text-sm text-white focus:outline-none focus:border-sky-400" />
-          <p id="auth-error" class="hidden text-xs text-rose-400 mt-1.5">Incorrect secret key. Please try again.</p>
-        </div>
-        <button type="submit" class="w-full min-h-[44px] py-2.5 rounded-xl bg-gradient-to-r from-sky-500 via-indigo-500 to-purple-600 text-white font-semibold text-sm hover:opacity-95 transition">
-          Unlock Editor
-        </button>
-      </form>
-    </div>
-  </div>
-
-  <!-- Full 7-Tab Responsive Admin Editor Modal -->
-  <div id="admin-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/85 backdrop-blur-md p-2 sm:p-5">
-    <div class="neural-glass w-full max-w-5xl max-h-[94vh] rounded-2xl border border-sky-500/30 shadow-2xl flex flex-col overflow-hidden">
-      <div class="px-4 sm:px-6 py-3.5 border-b border-slate-800 flex items-center justify-between gap-2 bg-slate-950/80">
-        <div class="flex items-center gap-2.5 min-w-0">
-          <span class="w-9 h-9 rounded-xl bg-sky-500/15 text-sky-400 flex items-center justify-center shrink-0">
-            <i class="fa-solid fa-sliders"></i>
-          </span>
-          <div class="truncate">
-            <h3 class="text-sm sm:text-base font-bold text-white truncate">Portfolio Admin Editor</h3>
-            <p class="text-[11px] text-slate-400 truncate">Live updates across all sections</p>
-          </div>
-        </div>
-        <div class="flex items-center gap-2 shrink-0">
-          <button id="admin-save-btn" class="min-h-[40px] px-3.5 sm:px-4 py-2 rounded-xl bg-sky-500 text-slate-950 font-semibold text-xs hover:bg-sky-400 transition flex items-center gap-1.5">
-            <i class="fa-solid fa-floppy-disk"></i> <span>Save</span>
-          </button>
-          <button id="close-admin-btn" class="w-10 h-10 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 flex items-center justify-center">
-            <i class="fa-solid fa-xmark text-lg"></i>
-          </button>
-        </div>
-      </div>
-
-      <div id="admin-tabs" class="px-3 sm:px-4 py-2.5 border-b border-slate-800 bg-slate-950/70 flex items-center gap-1.5 overflow-x-auto text-xs font-medium">
-        <button data-tab="hero" class="admin-tab min-h-[36px] px-3.5 py-2 rounded-lg whitespace-nowrap bg-sky-500/15 text-sky-400">Hero</button>
-        <button data-tab="about" class="admin-tab min-h-[36px] px-3.5 py-2 rounded-lg whitespace-nowrap text-slate-400 hover:text-white">About & Edu</button>
-        <button data-tab="skills" class="admin-tab min-h-[36px] px-3.5 py-2 rounded-lg whitespace-nowrap text-slate-400 hover:text-white">Skills</button>
-        <button data-tab="projects" class="admin-tab min-h-[36px] px-3.5 py-2 rounded-lg whitespace-nowrap text-slate-400 hover:text-white">Projects</button>
-        <button data-tab="experience" class="admin-tab min-h-[36px] px-3.5 py-2 rounded-lg whitespace-nowrap text-slate-400 hover:text-white">Experience</button>
-        <button data-tab="certifications" class="admin-tab min-h-[36px] px-3.5 py-2 rounded-lg whitespace-nowrap text-slate-400 hover:text-white">Certifications</button>
-        <button data-tab="settings" class="admin-tab min-h-[36px] px-3.5 py-2 rounded-lg whitespace-nowrap text-slate-400 hover:text-white">Contact & Security</button>
-      </div>
-
-      <div id="admin-content" class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5 bg-slate-950/40"></div>
-    </div>
-  </div>
-
-  <script type="module">
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
-    import { getFirestore, doc, onSnapshot, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
-
-    /* =========================================================================
-       1. INTERACTIVE NEURAL NETWORK CANVAS ENGINE
-       ========================================================================= */
-    (function initNeuralCanvas() {
-      const canvas = document.getElementById('neural-canvas');
-      const ctx = canvas.getContext('2d');
-      let width = 0, height = 0, nodes = [], pulses = [];
-      const pointer = { x: null, y: null, radius: 150 };
-      const colors = ['#38bdf8', '#818cf8', '#c084fc'];
-
-      function resize() {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
-        const isMobile = width < 768;
-        const count = isMobile ? Math.min(38, Math.floor((width * height) / 14000)) : Math.min(82, Math.floor((width * height) / 16000));
-        nodes = Array.from({ length: Math.max(24, count) }, () => ({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          vx: (Math.random() - 0.5) * (isMobile ? 0.35 : 0.45),
-          vy: (Math.random() - 0.5) * (isMobile ? 0.35 : 0.45),
-          r: Math.random() * 1.8 + 1.2,
-          color: colors[Math.floor(Math.random() * colors.length)]
-        }));
+/* ---------- hidden editor ---------- */
+const ov=$('#ov');let secret=null;
+$('#lock').onclick=()=>{ov.classList.add('on');gate()};
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeOv()});
+function closeOv(){ov.classList.remove('on');ov.innerHTML='';secret=null}
+function gate(){
+  const first=!vault;
+  ov.innerHTML=`<div class="gate"><h2>${first?'Create secret code':'Enter secret code'}</h2>
+  <label>Secret code<input id="c1" type="password" autocomplete="off"></label>
+  ${first?'<label>Confirm code<input id="c2" type="password" autocomplete="off"></label><p class="note">At least 6 characters. If you forget it, the saved editor data cannot be recovered.</p>':''}
+  <div class="msg" id="gm"></div>
+  <div class="bar"><button class="btn" id="go">${first?'Create':'Unlock'}</button><button class="btn ghost" id="x">Close</button></div></div>`;
+  $('#x').onclick=closeOv;
+  const go=async()=>{
+    const m=$('#gm'),c=$('#c1').value;
+    if(!(window.crypto&&crypto.subtle)){m.textContent="Encryption needs a secure context (https or a local file in a modern browser).";return}
+    try{
+      if(first){
+        if(c.length<6){m.textContent="Use at least 6 characters.";return}
+        if(c!==$('#c2').value){m.textContent="Codes do not match.";return}
+        vault=await seal(data,c);localStorage.setItem('pf_vault',JSON.stringify(vault));
+        secret=c;editor(data);
+      }else{
+        m.textContent="Unlocking...";
+        const d=await unseal(vault,c);secret=c;editor(d);
       }
-
-      window.addEventListener('resize', resize);
-      window.addEventListener('mousemove', (e) => { pointer.x = e.clientX; pointer.y = e.clientY; });
-      window.addEventListener('mouseleave', () => { pointer.x = null; pointer.y = null; });
-      window.addEventListener('touchmove', (e) => {
-        if (e.touches.length) { pointer.x = e.touches[0].clientX; pointer.y = e.touches[0].clientY; }
-      }, { passive: true });
-      window.addEventListener('touchend', () => { pointer.x = null; pointer.y = null; });
-
-      resize();
-
-      function animate() {
-        ctx.clearRect(0, 0, width, height);
-        const maxDist = width < 768 ? 115 : 155;
-
-        for (let i = 0; i < nodes.length; i++) {
-          const n = nodes[i];
-          n.x += n.vx;
-          n.y += n.vy;
-
-          if (n.x < 0 || n.x > width) n.vx *= -1;
-          if (n.y < 0 || n.y > height) n.vy *= -1;
-
-          // Subtle pointer attraction/repulsion
-          if (pointer.x !== null) {
-            const dx = pointer.x - n.x;
-            const dy = pointer.y - n.y;
-            const dist = Math.hypot(dx, dy);
-            if (dist < pointer.radius && dist > 1) {
-              n.x -= (dx / dist) * 0.45;
-              n.y -= (dy / dist) * 0.45;
-            }
-          }
-
-          // Synaptic connections
-          for (let j = i + 1; j < nodes.length; j++) {
-            const m = nodes[j];
-            const dist = Math.hypot(n.x - m.x, n.y - m.y);
-            if (dist < maxDist) {
-              const alpha = (1 - dist / maxDist) * 0.28;
-              ctx.strokeStyle = `rgba(99, 179, 237, ${alpha.toFixed(3)})`;
-              ctx.lineWidth = 0.85;
-              ctx.beginPath();
-              ctx.moveTo(n.x, n.y);
-              ctx.lineTo(m.x, m.y);
-              ctx.stroke();
-
-              // Occasional synaptic light pulse
-              if (pulses.length < 12 && Math.random() < 0.00055) {
-                pulses.push({ a: n, b: m, t: 0, speed: 0.02 + Math.random() * 0.02, color: n.color });
-              }
-            }
-          }
-
-          // Draw neuron node
-          ctx.beginPath();
-          ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-          ctx.fillStyle = n.color;
-          ctx.shadowBlur = 10;
-          ctx.shadowColor = n.color;
-          ctx.fill();
-          ctx.shadowBlur = 0;
-        }
-
-        // Update and draw synaptic pulses
-        for (let i = pulses.length - 1; i >= 0; i--) {
-          const p = pulses[i];
-          p.t += p.speed;
-          if (p.t >= 1) {
-            pulses.splice(i, 1);
-            continue;
-          }
-          const px = p.a.x + (p.b.x - p.a.x) * p.t;
-          const py = p.a.y + (p.b.y - p.a.y) * p.t;
-          ctx.beginPath();
-          ctx.arc(px, py, 2.2, 0, Math.PI * 2);
-          ctx.fillStyle = '#e0f2fe';
-          ctx.shadowBlur = 12;
-          ctx.shadowColor = p.color;
-          ctx.fill();
-          ctx.shadowBlur = 0;
-        }
-
-        requestAnimationFrame(animate);
-      }
-      animate();
-    })();
-
-    /* =========================================================================
-       2. AUTO-WRITING NAME TYPEWRITER ENGINE
-       ========================================================================= */
-    let typewriterTimer = null;
-    let currentTypedTarget = '';
-
-    function startNameTypewriter(name) {
-      const target = (name || 'Nakul Sharma').trim();
-      if (target === currentTypedTarget && typewriterTimer) return;
-      currentTypedTarget = target;
-      clearTimeout(typewriterTimer);
-
-      const el = document.getElementById('typed-name');
-      let charIdx = 0;
-      let deleting = false;
-
-      function tick() {
-        if (!deleting) {
-          charIdx++;
-          el.textContent = target.slice(0, charIdx);
-          if (charIdx === target.length) {
-            deleting = true;
-            typewriterTimer = setTimeout(tick, 2400);
-            return;
-          }
-          typewriterTimer = setTimeout(tick, 95 + Math.random() * 45);
-        } else {
-          charIdx--;
-          el.textContent = target.slice(0, charIdx);
-          if (charIdx === 0) {
-            deleting = false;
-            typewriterTimer = setTimeout(tick, 450);
-            return;
-          }
-          typewriterTimer = setTimeout(tick, 55);
-        }
-      }
-      el.textContent = '';
-      tick();
-    }
-
-    /* =========================================================================
-       3. SCROLL REVEAL OBSERVER
-       ========================================================================= */
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.08 });
-
-    function observeReveals() {
-      document.querySelectorAll('.reveal').forEach((el, idx) => {
-        if (!el.classList.contains('visible')) {
-          el.style.transitionDelay = `${Math.min((idx % 6) * 65, 300)}ms`;
-          revealObserver.observe(el);
-        }
-      });
-    }
-
-    /* =========================================================================
-       4. PORTFOLIO DATA & GLOBAL CLOUD SYNC (FIREBASE + LOCALSTORAGE FALLBACK)
-       ========================================================================= */
-    const FIREBASE_CONFIG = {
-      apiKey: "",
-      authDomain: "",
-      projectId: "",
-      storageBucket: "",
-      messagingSenderId: "",
-      appId: ""
-    };
-
-    const FIRESTORE_DOC_PATH = ['portfolio_config', 'nakul_sharma_neural'];
-    const STORAGE_KEY = 'nakul_neural_portfolio_v3';
-    const DEFAULT_SECRET = 'nakul2026';
-
-    const DEFAULT_DATA = {
-      hero: {
-        brand: 'Nakul.dev',
-        badge: 'Open to AI/ML & Python Backend Roles',
-        name: 'Nakul Sharma',
-        role: 'AI/ML Engineer & Python Backend Developer',
-        tagline: 'Final-year B.Tech (CSE - AI) student passionate about building NLP pipelines, LangChain applications, and high-performance FastAPI & Django backends.',
-        githubUrl: 'https://github.com/nakulsharma02',
-        linkedinUrl: 'https://linkedin.com/in/nakul-sharma-782576356'
-      },
-      about: {
-        bio: 'I am a Computer Science & Engineering (Artificial Intelligence) undergraduate at ABES Institute of Technology, Ghaziabad. I specialize in end-to-end Machine Learning systems, NLP classification pipelines, and scalable backend architectures using Python, FastAPI, Django, SQL, and MongoDB. I actively practice DSA in C++ and enjoy shipping practical AI products.',
-        location: 'Ghaziabad, UP, India',
-        cgpa: '7.21 / 10',
-        focus: 'AI/ML & Backend',
-        degree: 'B.Tech in Computer Science & Engineering (Artificial Intelligence)',
-        institution: 'ABES Institute of Technology, Ghaziabad',
-        period: '2023 – 2027 (4th Year)',
-        eduDetails: 'Relevant Coursework: Machine Learning, Natural Language Processing, Data Structures & Algorithms, Database Management Systems, Operating Systems.'
-      },
-      skills: [
-        { category: 'Languages', icon: 'fa-code', items: ['Python', 'C++', 'SQL', 'JavaScript', 'HTML5', 'CSS3'] },
-        { category: 'AI / ML & NLP', icon: 'fa-brain', items: ['Scikit-Learn', 'XGBoost', 'PyTorch', 'LangChain', 'spaCy', 'NLTK', 'Pandas', 'NumPy', 'Seaborn'] },
-        { category: 'Backend & Web', icon: 'fa-server', items: ['FastAPI', 'Django', 'Flask', 'Streamlit', 'Tailwind CSS', 'Pydantic', 'REST APIs'] },
-        { category: 'Databases & Tools', icon: 'fa-database', items: ['MySQL', 'SQLAlchemy', 'MongoDB (PyMongo)', 'PostgreSQL', 'Git & GitHub', 'VS Code'] }
-      ],
-      projects: [
-        {
-          title: 'Dual-Scorer Clickbait & Fake News Detection System',
-          description: 'End-to-end NLP web application pairing a fine-tuned XGBoost model (TF-IDF + spaCy POS features on ISOT & Kaggle datasets) with LangChain and Grok API reasoning via FastAPI and Streamlit.',
-          tech: ['Python', 'FastAPI', 'Streamlit', 'LangChain', 'XGBoost', 'spaCy'],
-          liveUrl: 'https://clickbait-fakenews-detector.streamlit.app',
-          githubUrl: 'https://github.com/nakulsharma02'
-        },
-        {
-          title: 'BankX Asynchronous Digital Banking Portal',
-          description: 'High-concurrency digital banking backend built with asynchronous FastAPI endpoints, strict Pydantic payload validation, and a responsive JavaScript frontend.',
-          tech: ['Python', 'FastAPI', 'Pydantic', 'JavaScript', 'HTML/CSS'],
-          liveUrl: 'https://bankx-portal-demo.onrender.com',
-          githubUrl: 'https://github.com/nakulsharma02'
-        },
-        {
-          title: 'CreditStore E-Commerce Web Platform',
-          description: 'Full-stack e-commerce web platform featuring transactional credit-point deduction schemas, secure user workflows, and relational persistence in PostgreSQL.',
-          tech: ['Python', 'Flask', 'PostgreSQL', 'HTML/CSS'],
-          liveUrl: 'https://creditstore-demo.onrender.com',
-          githubUrl: 'https://github.com/nakulsharma02'
-        },
-        {
-          title: 'Credit Card Fraud Detection System',
-          description: 'Machine learning fraud classifier engineered with Scikit-Learn, XGBoost, and SMOTE oversampling to handle severe class imbalance on financial transaction datasets.',
-          tech: ['Python', 'Scikit-Learn', 'XGBoost', 'SMOTE', 'Pandas'],
-          liveUrl: 'https://fraud-detection-ml-demo.streamlit.app',
-          githubUrl: 'https://github.com/nakulsharma02'
-        },
-        {
-          title: 'House Price Prediction Engine',
-          description: 'Predictive regression pipeline utilizing Random Forest and GridSearchCV hyperparameter tuning, achieving an R² evaluation score of 0.78 on real estate housing data.',
-          tech: ['Python', 'Scikit-Learn', 'Random Forest', 'GridSearchCV', 'NumPy'],
-          liveUrl: 'https://house-price-engine.streamlit.app',
-          githubUrl: 'https://github.com/nakulsharma02'
-        }
-      ],
-      experience: [
-        { role: 'Data Science & Analytics Intern', organization: 'Wheeltrix', period: 'Jun 2026', description: 'Worked on data exploration, feature engineering, and analytical reporting pipelines for real-world business datasets.' },
-        { role: 'Data Analytics Job Simulation', organization: 'Deloitte Australia (Forage)', period: 'Aug 2026', description: 'Analyzed complex operational datasets and built interactive Tableau dashboards to uncover actionable insights.' },
-        { role: 'Research Paper Accepted (ICSACS 2026)', organization: 'International Conference on Secure Automation, Cognitive Systems & Smart Technologies', period: '2026', description: 'Authored and got accepted a research paper focused on solar energy feasibility assessment.' },
-        { role: 'Smart India Hackathon (SIH) — Round 3 Qualifier', organization: 'ABES Institute of Technology', period: 'Aug 2026', description: 'Qualified for Round 3 of the college-level SIH selection process, pitching an AI-driven software solution.' },
-        { role: 'Summer Analytics 2026 Participant', organization: 'Consulting & Analytics Club, IIT Guwahati', period: '2026', description: 'Completed structured data science and machine learning modules and competitive assignments via HackerEarth.' }
-      ],
-      certifications: [
-        { title: 'Programming Fundamentals Using Python (Parts 1 & 2)', issuer: 'Infosys Springboard', date: '2025 – 2026' },
-        { title: 'Introduction to Data Science', issuer: 'Infosys Springboard', date: '2026' },
-        { title: 'AI Agents for Beginners', issuer: 'Simplilearn', date: '2026' },
-        { title: 'Power BI Practical Course', issuer: 'Udemy', date: '2026' },
-        { title: 'Python (Basic) Certification', issuer: 'HackerRank', date: '2026' },
-        { title: 'Business Model Canvas Masterclass', issuer: 'Udemy', date: '2026' }
-      ],
-      contact: {
-        email: 'nakulsharmavats123@gmail.com',
-        subtitle: "I'm actively seeking entry-level AI/ML Engineer, Data Science, and Python Backend Developer roles. Feel free to reach out!"
-      },
-      security: { passwordHash: '' }
-    };
-
-    let portfolioData = structuredClone(DEFAULT_DATA);
-    let draftData = null;
-    let activeTab = 'hero';
-    let db = null;
-    let cloudEnabled = false;
-
-    function escapeHtml(str = '') {
-      return String(str)
-        .replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>')
-        .replace(/"/g, '"').replace(/'/g, ''');
-    }
-
-    async function sha256(message) {
-      const msgBuffer = new TextEncoder().encode(message);
-      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-      return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
-    }
-
-    function showToast(msg, isError = false) {
-      const toast = document.getElementById('toast');
-      document.getElementById('toast-msg').textContent = msg;
-      document.getElementById('toast-icon').className = isError
-        ? 'fa-solid fa-circle-exclamation text-rose-400'
-        : 'fa-solid fa-circle-check text-sky-400';
-      toast.classList.remove('hidden');
-      toast.classList.add('flex');
-      clearTimeout(window.__toastTimer);
-      window.__toastTimer = setTimeout(() => {
-        toast.classList.add('hidden');
-        toast.classList.remove('flex');
-      }, 3000);
-    }
-
-    function normalizeData(raw) {
-      const merged = {
-        ...structuredClone(DEFAULT_DATA),
-        ...(raw || {}),
-        hero: { ...DEFAULT_DATA.hero, ...(raw?.hero || {}) },
-        about: { ...DEFAULT_DATA.about, ...(raw?.about || {}) },
-        contact: { ...DEFAULT_DATA.contact, ...(raw?.contact || {}) },
-        security: { ...DEFAULT_DATA.security, ...(raw?.security || {}) }
-      };
-      if (Array.isArray(raw?.projects)) {
-        merged.projects = raw.projects.map(p => ({
-          title: p.title || '',
-          description: p.description || '',
-          tech: Array.isArray(p.tech) ? p.tech : [],
-          liveUrl: p.liveUrl ?? p.demoUrl ?? '',
-          githubUrl: p.githubUrl ?? p.repoUrl ?? ''
-        }));
-      }
-      return merged;
-    }
-
-    async function initStorage() {
-      const localRaw = localStorage.getItem(STORAGE_KEY);
-      if (localRaw) {
-        try { portfolioData = normalizeData(JSON.parse(localRaw)); } catch (_) {}
-      }
-      renderPortfolio();
-
-      if (FIREBASE_CONFIG.apiKey && FIREBASE_CONFIG.projectId) {
-        try {
-          const app = initializeApp(FIREBASE_CONFIG);
-          db = getFirestore(app);
-          cloudEnabled = true;
-          document.getElementById('sync-badge-text').textContent = 'Cloud Synced';
-          onSnapshot(doc(db, ...FIRESTORE_DOC_PATH), (snap) => {
-            if (snap.exists()) {
-              portfolioData = normalizeData(snap.data());
-              localStorage.setItem(STORAGE_KEY, JSON.stringify(portfolioData));
-              renderPortfolio();
-            }
-          });
-        } catch (err) {
-          console.error('Firebase init failed:', err);
-        }
-      }
-    }
-
-    async function persistData(newData) {
-      portfolioData = normalizeData(newData);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(portfolioData));
-      renderPortfolio();
-      if (cloudEnabled && db) {
-        await setDoc(doc(db, ...FIRESTORE_DOC_PATH), portfolioData, { merge: true });
-      }
-    }
-
-    function renderPortfolio() {
-      const d = portfolioData;
-      const brandParts = (d.hero.brand || 'Nakul.dev').split('.');
-      document.getElementById('nav-brand').innerHTML = brandParts.length > 1
-        ? `${escapeHtml(brandParts[0])}<span class="text-sky-400">.${escapeHtml(brandParts.slice(1).join('.'))}</span>`
-        : escapeHtml(d.hero.brand);
-
-      document.getElementById('hero-badge').textContent = d.hero.badge;
-      startNameTypewriter(d.hero.name);
-      document.getElementById('hero-role').textContent = d.hero.role;
-      document.getElementById('hero-tagline').textContent = d.hero.tagline;
-      document.getElementById('hero-github').href = d.hero.githubUrl || '#';
-      document.getElementById('hero-linkedin').href = d.hero.linkedinUrl || '#';
-      document.title = `${d.hero.name} | ${d.hero.role}`;
-
-      document.getElementById('about-bio').textContent = d.about.bio;
-      document.getElementById('about-location').textContent = d.about.location;
-      document.getElementById('about-cgpa').textContent = d.about.cgpa;
-      document.getElementById('about-focus').textContent = d.about.focus;
-      document.getElementById('edu-degree').textContent = d.about.degree;
-      document.getElementById('edu-institution').textContent = d.about.institution;
-      document.getElementById('edu-period').textContent = d.about.period;
-      document.getElementById('edu-details').textContent = d.about.eduDetails;
-
-      document.getElementById('skills-grid').innerHTML = (d.skills || []).map(group => `
-        <div class="neural-card rounded-2xl p-5 reveal">
-          <div class="flex items-center gap-3 mb-4">
-            <div class="w-9 h-9 rounded-xl bg-sky-500/15 text-sky-400 flex items-center justify-center">
-              <i class="fa-solid ${escapeHtml(group.icon || 'fa-code')}"></i>
-            </div>
-            <h3 class="font-semibold text-white text-sm">${escapeHtml(group.category)}</h3>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            ${(group.items || []).map(item => `
-              <span class="px-2.5 py-1 rounded-lg bg-slate-900/90 border border-sky-500/20 text-xs text-slate-200 font-mono hover:border-sky-400/60 hover:text-sky-300 transition">
-                ${escapeHtml(item)}
-              </span>
-            `).join('')}
-          </div>
-        </div>
-      `).join('');
-
-      document.getElementById('projects-grid').innerHTML = (d.projects || []).map(p => {
-        const hasLive = p.liveUrl && p.liveUrl.trim() !== '';
-        const hasGithub = p.githubUrl && p.githubUrl.trim() !== '';
-        return `
-          <article class="neural-card rounded-2xl p-5 sm:p-6 flex flex-col justify-between reveal">
-            <div>
-              <div class="flex items-center justify-between mb-4">
-                <div class="w-10 h-10 rounded-xl bg-sky-500/15 border border-sky-400/25 text-sky-400 flex items-center justify-center">
-                  <i class="fa-solid fa-microchip"></i>
-                </div>
-                ${hasLive ? `<span class="px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-400/30 text-emerald-300 text-[10px] font-mono">LIVE NODE</span>` : ''}
-              </div>
-              <h3 class="text-base sm:text-lg font-bold text-white leading-snug mb-2">${escapeHtml(p.title)}</h3>
-              <p class="text-xs sm:text-sm text-slate-300/90 leading-relaxed mb-5">${escapeHtml(p.description)}</p>
-            </div>
-            <div>
-              <div class="flex flex-wrap gap-1.5 mb-5">
-                ${(p.tech || []).map(t => `
-                  <span class="px-2 py-0.5 rounded-md bg-slate-950/80 border border-indigo-500/25 text-[11px] font-mono text-sky-300">
-                    ${escapeHtml(t)}
-                  </span>
-                `).join('')}
-              </div>
-              <div class="flex items-center gap-2.5 pt-4 border-t border-slate-800/80">
-                ${hasLive ? `
-                  <a href="${escapeHtml(p.liveUrl)}" target="_blank" rel="noopener" class="flex-1 min-h-[40px] py-2 px-3 rounded-xl bg-gradient-to-r from-sky-500 via-indigo-500 to-purple-600 text-white text-xs font-semibold hover:opacity-95 transition flex items-center justify-center gap-1.5">
-                    <i class="fa-solid fa-arrow-up-right-from-square text-[11px]"></i>
-                    <span>Live Project</span>
-                  </a>
-                ` : ''}
-                ${hasGithub ? `
-                  <a href="${escapeHtml(p.githubUrl)}" target="_blank" rel="noopener" class="${hasLive ? 'flex-1' : 'w-full'} min-h-[40px] py-2 px-3 rounded-xl bg-slate-900/90 border border-slate-700 text-slate-200 text-xs font-semibold hover:border-sky-400/50 hover:text-white transition flex items-center justify-center gap-1.5">
-                    <i class="fa-brands fa-github text-sm"></i>
-                    <span>GitHub</span>
-                  </a>
-                ` : ''}
-              </div>
-            </div>
-          </article>
-        `;
-      }).join('');
-
-      document.getElementById('experience-list').innerHTML = (d.experience || []).map(exp => `
-        <div class="relative pl-9 sm:pl-12 reveal">
-          <span class="absolute left-2 sm:left-3.5 top-2.5 w-3 h-3 rounded-full bg-sky-400 ring-4 ring-neural-950 shadow-lg shadow-sky-400/60"></span>
-          <div class="neural-card rounded-2xl p-4 sm:p-5">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 mb-2">
-              <h3 class="text-sm sm:text-base font-bold text-white">${escapeHtml(exp.role)}</h3>
-              <span class="text-xs font-mono text-sky-300 bg-sky-500/10 border border-sky-400/20 px-2.5 py-0.5 rounded-full w-fit">${escapeHtml(exp.period)}</span>
-            </div>
-            <p class="text-xs sm:text-sm font-medium text-indigo-300 mb-2">${escapeHtml(exp.organization)}</p>
-            <p class="text-xs sm:text-sm text-slate-300/90 leading-relaxed">${escapeHtml(exp.description)}</p>
-          </div>
-        </div>
-      `).join('');
-
-      document.getElementById('certifications-grid').innerHTML = (d.certifications || []).map(c => `
-        <div class="neural-card rounded-2xl p-4 sm:p-5 flex items-start gap-3.5 reveal">
-          <div class="w-9 h-9 rounded-xl bg-purple-500/15 text-purple-300 flex items-center justify-center shrink-0 mt-0.5">
-            <i class="fa-solid fa-certificate"></i>
-          </div>
-          <div>
-            <h3 class="text-sm font-semibold text-white leading-snug">${escapeHtml(c.title)}</h3>
-            <p class="text-xs text-slate-400 mt-1">${escapeHtml(c.issuer)}</p>
-            <span class="inline-block text-[11px] font-mono text-sky-400 mt-2">${escapeHtml(c.date)}</span>
-          </div>
-        </div>
-      `).join('');
-
-      document.getElementById('contact-subtitle').textContent = d.contact.subtitle;
-      document.getElementById('contact-email-text').textContent = d.contact.email;
-      document.getElementById('contact-email-link').href = `mailto:${d.contact.email}`;
-      document.getElementById('contact-github-card').href = d.hero.githubUrl || '#';
-      document.getElementById('contact-github-text').textContent = (d.hero.githubUrl || '').replace(/^https?:\/\//, '');
-      document.getElementById('contact-linkedin-card').href = d.hero.linkedinUrl || '#';
-      document.getElementById('contact-linkedin-text').textContent = (d.hero.linkedinUrl || '').replace(/^https?:\/\//, '');
-      document.getElementById('footer-name').textContent = d.hero.name;
-      document.getElementById('footer-year').textContent = new Date().getFullYear();
-
-      observeReveals();
-    }
-
-    /* =========================================================================
-       5. ADMIN EDITOR
-       ========================================================================= */
-    function renderAdminTab() {
-      const container = document.getElementById('admin-content');
-      document.querySelectorAll('.admin-tab').forEach(btn => {
-        btn.className = btn.dataset.tab === activeTab
-          ? 'admin-tab min-h-[36px] px-3.5 py-2 rounded-lg whitespace-nowrap bg-sky-500/15 text-sky-400'
-          : 'admin-tab min-h-[36px] px-3.5 py-2 rounded-lg whitespace-nowrap text-slate-400 hover:text-white';
-      });
-
-      const inputCls = 'w-full min-h-[40px] px-3 py-2 rounded-xl bg-slate-950/90 border border-slate-700 text-sm text-white focus:outline-none focus:border-sky-400';
-      const labelCls = 'block text-xs font-medium text-slate-400 mb-1';
-
-      if (activeTab === 'hero') {
-        const h = draftData.hero;
-        container.innerHTML = `
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div><label class="${labelCls}">Brand Logo Text</label><input data-path="hero.brand" value="${escapeHtml(h.brand)}" class="${inputCls}"></div>
-            <div><label class="${labelCls}">Status Badge</label><input data-path="hero.badge" value="${escapeHtml(h.badge)}" class="${inputCls}"></div>
-            <div><label class="${labelCls}">Full Name (Auto-Typing)</label><input data-path="hero.name" value="${escapeHtml(h.name)}" class="${inputCls}"></div>
-            <div><label class="${labelCls}">Headline Role</label><input data-path="hero.role" value="${escapeHtml(h.role)}" class="${inputCls}"></div>
-            <div class="sm:col-span-2"><label class="${labelCls}">Tagline</label><textarea data-path="hero.tagline" rows="3" class="${inputCls}">${escapeHtml(h.tagline)}</textarea></div>
-            <div><label class="${labelCls}">GitHub URL</label><input data-path="hero.githubUrl" value="${escapeHtml(h.githubUrl)}" class="${inputCls}"></div>
-            <div><label class="${labelCls}">LinkedIn URL</label><input data-path="hero.linkedinUrl" value="${escapeHtml(h.linkedinUrl)}" class="${inputCls}"></div>
-          </div>`;
-      } else if (activeTab === 'about') {
-        const a = draftData.about;
-        container.innerHTML = `
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div class="sm:col-span-2"><label class="${labelCls}">Bio</label><textarea data-path="about.bio" rows="4" class="${inputCls}">${escapeHtml(a.bio)}</textarea></div>
-            <div><label class="${labelCls}">Location</label><input data-path="about.location" value="${escapeHtml(a.location)}" class="${inputCls}"></div>
-            <div><label class="${labelCls}">CGPA</label><input data-path="about.cgpa" value="${escapeHtml(a.cgpa)}" class="${inputCls}"></div>
-            <div><label class="${labelCls}">Core Focus</label><input data-path="about.focus" value="${escapeHtml(a.focus)}" class="${inputCls}"></div>
-            <div><label class="${labelCls}">Education Period</label><input data-path="about.period" value="${escapeHtml(a.period)}" class="${inputCls}"></div>
-            <div class="sm:col-span-2"><label class="${labelCls}">Degree</label><input data-path="about.degree" value="${escapeHtml(a.degree)}" class="${inputCls}"></div>
-            <div class="sm:col-span-2"><label class="${labelCls}">Institution</label><input data-path="about.institution" value="${escapeHtml(a.institution)}" class="${inputCls}"></div>
-            <div class="sm:col-span-2"><label class="${labelCls}">Coursework / Details</label><textarea data-path="about.eduDetails" rows="2" class="${inputCls}">${escapeHtml(a.eduDetails)}</textarea></div>
-          </div>`;
-      } else if (activeTab === 'skills') {
-        container.innerHTML = `
-          <div class="flex justify-between items-center">
-            <h4 class="text-sm font-semibold text-white">Skill Categories</h4>
-            <button id="add-skill-btn" class="min-h-[36px] px-3 py-1.5 rounded-lg bg-sky-500/15 text-sky-400 text-xs font-semibold hover:bg-sky-500 hover:text-slate-950 transition">+ Add Category</button>
-          </div>
-          <div class="space-y-4">
-            ${draftData.skills.map((s, idx) => `
-              <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-3">
-                <div class="flex items-start justify-between gap-3">
-                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 flex-1">
-                    <div><label class="${labelCls}">Category Name</label><input data-arr="skills" data-idx="${idx}" data-key="category" value="${escapeHtml(s.category)}" class="${inputCls}"></div>
-                    <div><label class="${labelCls}">FontAwesome Icon</label><input data-arr="skills" data-idx="${idx}" data-key="icon" value="${escapeHtml(s.icon)}" class="${inputCls}"></div>
-                  </div>
-                  <button data-del-arr="skills" data-idx="${idx}" class="mt-5 w-10 h-10 rounded-lg text-rose-400 hover:bg-rose-500/10 flex items-center justify-center"><i class="fa-solid fa-trash"></i></button>
-                </div>
-                <div><label class="${labelCls}">Skills (comma-separated)</label><input data-arr="skills" data-idx="${idx}" data-key="items" data-csv="true" value="${escapeHtml((s.items || []).join(', '))}" class="${inputCls}"></div>
-              </div>
-            `).join('')}
-          </div>`;
-      } else if (activeTab === 'projects') {
-        container.innerHTML = `
-          <div class="flex justify-between items-center">
-            <h4 class="text-sm font-semibold text-white">Projects (${draftData.projects.length})</h4>
-            <button id="add-project-btn" class="min-h-[36px] px-3 py-1.5 rounded-lg bg-sky-500/15 text-sky-400 text-xs font-semibold hover:bg-sky-500 hover:text-slate-950 transition">+ Add Project</button>
-          </div>
-          <div class="space-y-4">
-            ${draftData.projects.map((p, idx) => `
-              <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-3">
-                <div class="flex items-start justify-between gap-3">
-                  <div class="flex-1"><label class="${labelCls}">Project Title</label><input data-arr="projects" data-idx="${idx}" data-key="title" value="${escapeHtml(p.title)}" class="${inputCls}"></div>
-                  <button data-del-arr="projects" data-idx="${idx}" class="mt-5 w-10 h-10 rounded-lg text-rose-400 hover:bg-rose-500/10 flex items-center justify-center"><i class="fa-solid fa-trash"></i></button>
-                </div>
-                <div><label class="${labelCls}">Description</label><textarea data-arr="projects" data-idx="${idx}" data-key="description" rows="2" class="${inputCls}">${escapeHtml(p.description)}</textarea></div>
-                <div><label class="${labelCls}">Tech Stack (comma-separated)</label><input data-arr="projects" data-idx="${idx}" data-key="tech" data-csv="true" value="${escapeHtml((p.tech || []).join(', '))}" class="${inputCls}"></div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div><label class="${labelCls}">Live Project URL (blank hides button)</label><input data-arr="projects" data-idx="${idx}" data-key="liveUrl" placeholder="https://..." value="${escapeHtml(p.liveUrl || '')}" class="${inputCls}"></div>
-                  <div><label class="${labelCls}">GitHub Repo URL</label><input data-arr="projects" data-idx="${idx}" data-key="githubUrl" placeholder="https://github.com/..." value="${escapeHtml(p.githubUrl || '')}" class="${inputCls}"></div>
-                </div>
-              </div>
-            `).join('')}
-          </div>`;
-      } else if (activeTab === 'experience') {
-        container.innerHTML = `
-          <div class="flex justify-between items-center">
-            <h4 class="text-sm font-semibold text-white">Experience & Achievements</h4>
-            <button id="add-exp-btn" class="min-h-[36px] px-3 py-1.5 rounded-lg bg-sky-500/15 text-sky-400 text-xs font-semibold hover:bg-sky-500 hover:text-slate-950 transition">+ Add Entry</button>
-          </div>
-          <div class="space-y-4">
-            ${draftData.experience.map((e, idx) => `
-              <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-3">
-                <div class="flex items-start justify-between gap-3">
-                  <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 flex-1">
-                    <div><label class="${labelCls}">Role / Title</label><input data-arr="experience" data-idx="${idx}" data-key="role" value="${escapeHtml(e.role)}" class="${inputCls}"></div>
-                    <div><label class="${labelCls}">Organization</label><input data-arr="experience" data-idx="${idx}" data-key="organization" value="${escapeHtml(e.organization)}" class="${inputCls}"></div>
-                    <div><label class="${labelCls}">Period</label><input data-arr="experience" data-idx="${idx}" data-key="period" value="${escapeHtml(e.period)}" class="${inputCls}"></div>
-                  </div>
-                  <button data-del-arr="experience" data-idx="${idx}" class="mt-5 w-10 h-10 rounded-lg text-rose-400 hover:bg-rose-500/10 flex items-center justify-center"><i class="fa-solid fa-trash"></i></button>
-                </div>
-                <div><label class="${labelCls}">Description</label><textarea data-arr="experience" data-idx="${idx}" data-key="description" rows="2" class="${inputCls}">${escapeHtml(e.description)}</textarea></div>
-              </div>
-            `).join('')}
-          </div>`;
-      } else if (activeTab === 'certifications') {
-        container.innerHTML = `
-          <div class="flex justify-between items-center">
-            <h4 class="text-sm font-semibold text-white">Certifications</h4>
-            <button id="add-cert-btn" class="min-h-[36px] px-3 py-1.5 rounded-lg bg-sky-500/15 text-sky-400 text-xs font-semibold hover:bg-sky-500 hover:text-slate-950 transition">+ Add Certification</button>
-          </div>
-          <div class="space-y-3">
-            ${draftData.certifications.map((c, idx) => `
-              <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 flex items-start gap-3">
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 flex-1">
-                  <div><label class="${labelCls}">Title</label><input data-arr="certifications" data-idx="${idx}" data-key="title" value="${escapeHtml(c.title)}" class="${inputCls}"></div>
-                  <div><label class="${labelCls}">Issuer</label><input data-arr="certifications" data-idx="${idx}" data-key="issuer" value="${escapeHtml(c.issuer)}" class="${inputCls}"></div>
-                  <div><label class="${labelCls}">Date</label><input data-arr="certifications" data-idx="${idx}" data-key="date" value="${escapeHtml(c.date)}" class="${inputCls}"></div>
-                </div>
-                <button data-del-arr="certifications" data-idx="${idx}" class="mt-5 w-10 h-10 rounded-lg text-rose-400 hover:bg-rose-500/10 flex items-center justify-center"><i class="fa-solid fa-trash"></i></button>
-              </div>
-            `).join('')}
-          </div>`;
-      } else if (activeTab === 'settings') {
-        container.innerHTML = `
-          <div class="space-y-5">
-            <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-4">
-              <h4 class="text-sm font-semibold text-white">Contact Section</h4>
-              <div><label class="${labelCls}">Email Address</label><input data-path="contact.email" value="${escapeHtml(draftData.contact.email)}" class="${inputCls}"></div>
-              <div><label class="${labelCls}">Contact Subtitle</label><textarea data-path="contact.subtitle" rows="2" class="${inputCls}">${escapeHtml(draftData.contact.subtitle)}</textarea></div>
-            </div>
-            <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 space-y-3">
-              <h4 class="text-sm font-semibold text-white">Update Secret Key (SHA-256 Hashed)</h4>
-              <div class="flex flex-col sm:flex-row gap-3">
-                <input id="new-secret-key" type="password" placeholder="Enter new secret key..." class="${inputCls} flex-1">
-                <button id="update-key-btn" class="min-h-[40px] px-4 py-2 rounded-xl bg-indigo-500 text-white text-xs font-semibold hover:bg-indigo-400 transition whitespace-nowrap">Update Key</button>
-              </div>
-            </div>
-            <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 flex flex-wrap items-center gap-3">
-              <button id="export-json-btn" class="min-h-[40px] px-4 py-2 rounded-xl bg-slate-800 text-slate-200 text-xs font-semibold hover:bg-slate-700 transition"><i class="fa-solid fa-download mr-1.5"></i> Export JSON</button>
-              <label class="min-h-[40px] px-4 py-2 rounded-xl bg-slate-800 text-slate-200 text-xs font-semibold hover:bg-slate-700 transition cursor-pointer flex items-center">
-                <i class="fa-solid fa-upload mr-1.5"></i> Import JSON
-                <input id="import-json-input" type="file" accept="application/json" class="hidden">
-              </label>
-              <button id="reset-defaults-btn" class="min-h-[40px] px-4 py-2 rounded-xl bg-rose-500/15 text-rose-400 text-xs font-semibold hover:bg-rose-500 hover:text-white transition sm:ml-auto"><i class="fa-solid fa-rotate-left mr-1.5"></i> Reset Defaults</button>
-            </div>
-          </div>`;
-      }
-
-      bindAdminInputs();
-    }
-
-    function bindAdminInputs() {
-      const container = document.getElementById('admin-content');
-      container.querySelectorAll('[data-path]').forEach(el => {
-        el.addEventListener('input', (e) => {
-          const [sec, key] = e.target.dataset.path.split('.');
-          draftData[sec][key] = e.target.value;
-        });
-      });
-      container.querySelectorAll('[data-arr]').forEach(el => {
-        el.addEventListener('input', (e) => {
-          const { arr, idx, key, csv } = e.target.dataset;
-          draftData[arr][Number(idx)][key] = csv === 'true'
-            ? e.target.value.split(',').map(v => v.trim()).filter(Boolean)
-            : e.target.value;
-        });
-      });
-      container.querySelectorAll('[data-del-arr]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          draftData[btn.dataset.delArr].splice(Number(btn.dataset.idx), 1);
-          renderAdminTab();
-        });
-      });
-
-      const addSkill = document.getElementById('add-skill-btn');
-      if (addSkill) addSkill.onclick = () => { draftData.skills.push({ category: 'New Category', icon: 'fa-code', items: ['Skill 1'] }); renderAdminTab(); };
-      const addProject = document.getElementById('add-project-btn');
-      if (addProject) addProject.onclick = () => {
-        draftData.projects.unshift({ title: 'New Project', description: 'Describe this project.', tech: ['Python', 'FastAPI'], liveUrl: '', githubUrl: draftData.hero.githubUrl || '' });
-        renderAdminTab();
-      };
-      const addExp = document.getElementById('add-exp-btn');
-      if (addExp) addExp.onclick = () => { draftData.experience.unshift({ role: 'Role / Achievement', organization: 'Organization', period: '2026', description: 'Key impact.' }); renderAdminTab(); };
-      const addCert = document.getElementById('add-cert-btn');
-      if (addCert) addCert.onclick = () => { draftData.certifications.unshift({ title: 'Certification Name', issuer: 'Platform', date: '2026' }); renderAdminTab(); };
-
-      const updateKeyBtn = document.getElementById('update-key-btn');
-      if (updateKeyBtn) updateKeyBtn.onclick = async () => {
-        const val = document.getElementById('new-secret-key').value.trim();
-        if (val.length < 4) return showToast('Secret key must be at least 4 characters', true);
-        draftData.security.passwordHash = await sha256(val);
-        document.getElementById('new-secret-key').value = '';
-        showToast('Secret key updated. Click Save to apply.');
-      };
-
-      const exportBtn = document.getElementById('export-json-btn');
-      if (exportBtn) exportBtn.onclick = () => {
-        const blob = new Blob([JSON.stringify(draftData, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url; a.download = 'nakul-neural-portfolio-backup.json'; a.click();
-        URL.revokeObjectURL(url);
-      };
-
-      const importInput = document.getElementById('import-json-input');
-      if (importInput) importInput.onchange = (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = () => {
-          try { draftData = normalizeData(JSON.parse(reader.result)); renderAdminTab(); showToast('Backup imported! Click Save.'); }
-          catch (_) { showToast('Invalid JSON file', true); }
-        };
-        reader.readAsText(file);
-      };
-
-      const resetBtn = document.getElementById('reset-defaults-btn');
-      if (resetBtn) resetBtn.onclick = () => {
-        if (!confirm('Reset all sections to default portfolio data?')) return;
-        draftData = structuredClone(DEFAULT_DATA);
-        renderAdminTab();
-        showToast('Defaults restored. Click Save to apply.');
-      };
-    }
-
-    // Mobile Menu Controls
-    const mobileMenu = document.getElementById('mobile-menu');
-    const mobileIcon = document.getElementById('mobile-menu-icon');
-    document.getElementById('mobile-menu-btn').addEventListener('click', () => {
-      const hidden = mobileMenu.classList.toggle('hidden');
-      mobileIcon.className = hidden ? 'fa-solid fa-bars text-lg' : 'fa-solid fa-xmark text-lg';
-    });
-    document.querySelectorAll('#mobile-menu a').forEach(link => {
-      link.addEventListener('click', () => {
-        mobileMenu.classList.add('hidden');
-        mobileIcon.className = 'fa-solid fa-bars text-lg';
-      });
-    });
-
-    // Copy Email
-    document.getElementById('copy-email-btn').addEventListener('click', async () => {
-      try { await navigator.clipboard.writeText(portfolioData.contact.email); showToast('Email copied to clipboard!'); }
-      catch (_) { showToast('Could not copy email', true); }
-    });
-
-    // Auth & Admin Modals
-    const authModal = document.getElementById('auth-modal');
-    const adminModal = document.getElementById('admin-modal');
-    const keyInput = document.getElementById('secret-key-input');
-    const authError = document.getElementById('auth-error');
-
-    document.getElementById('admin-lock-btn').addEventListener('click', () => {
-      keyInput.value = '';
-      authError.classList.add('hidden');
-      authModal.classList.remove('hidden');
-      authModal.classList.add('flex');
-      setTimeout(() => keyInput.focus(), 50);
-    });
-
-    document.getElementById('close-auth-btn').addEventListener('click', () => {
-      authModal.classList.add('hidden');
-      authModal.classList.remove('flex');
-    });
-
-    document.getElementById('auth-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const enteredHash = await sha256(keyInput.value);
-      const expectedHash = portfolioData.security.passwordHash || await sha256(DEFAULT_SECRET);
-      if (enteredHash === expectedHash) {
-        authModal.classList.add('hidden');
-        authModal.classList.remove('flex');
-        draftData = structuredClone(portfolioData);
-        activeTab = 'hero';
-        renderAdminTab();
-        adminModal.classList.remove('hidden');
-        adminModal.classList.add('flex');
-      } else {
-        authError.classList.remove('hidden');
-      }
-    });
-
-    document.getElementById('close-admin-btn').addEventListener('click', () => {
-      adminModal.classList.add('hidden');
-      adminModal.classList.remove('flex');
-    });
-
-    document.getElementById('admin-tabs').addEventListener('click', (e) => {
-      const btn = e.target.closest('.admin-tab');
-      if (!btn) return;
-      activeTab = btn.dataset.tab;
-      renderAdminTab();
-    });
-
-    document.getElementById('admin-save-btn').addEventListener('click', async () => {
-      try {
-        await persistData(draftData);
-        adminModal.classList.add('hidden');
-        adminModal.classList.remove('flex');
-        showToast(cloudEnabled ? 'Saved & synced to cloud!' : 'Saved locally!');
-      } catch (err) {
-        console.error(err);
-        showToast('Failed to save changes', true);
-      }
-    });
-
-    initStorage();
-  </script>
+    }catch(e){m.textContent="Wrong code or storage unavailable."}
+  };
+  $('#go').onclick=go;ov.querySelectorAll('input').forEach(i=>i.addEventListener('keydown',e=>{if(e.key==='Enter')go()}));
+  $('#c1').focus();
+}
+const fld=(l,k,v)=>`<label>${l}<input data-k="${k}" value="${esc(v)}"></label>`;
+const area=(l,k,v)=>`<label>${l}<textarea data-k="${k}">${esc(v)}</textarea></label>`;
+const projRow=p=>`<div class="row" data-g="projects">${fld('Title','title',p.title)}${fld('Tech used','tech',p.tech)}${fld('GitHub URL (https://github.com/...)','github',p.github)}${fld('Live demo link (optional)','link',p.link)}${area('Description','desc',p.desc)}<div class="bar"><button class="btn ghost rm" type="button">Remove</button></div></div>`;
+const eduRow=e=>`<div class="row" data-g="education">${fld('Title','title',e.title)}${fld('Details','detail',e.detail)}<div class="bar"><button class="btn ghost rm" type="button">Remove</button></div></div>`;
+function editor(d){
+  ov.innerHTML=`<div class="panel"><h2>Edit your portfolio</h2>
+  <h3>Intro</h3>${fld('Name','name',d.name)}${fld('Typing lines (separate with commas)','roles',d.roles.join(', '))}${area('Intro text','intro',d.intro)}
+  <h3>About</h3>${area('About text','about',d.about)}
+  <h3>Skills</h3>${fld('Skills (separate with commas)','skills',d.skills.join(', '))}
+  <h3>Projects</h3><div id="pl">${d.projects.map(projRow).join('')}</div><div class="bar"><button class="btn ghost" id="ap" type="button">+ Add project</button></div>
+  <h3>Education</h3><div id="el">${d.education.map(eduRow).join('')}</div><div class="bar"><button class="btn ghost" id="ae" type="button">+ Add entry</button></div>
+  <h3>Contact</h3>${fld('Email','email',d.email)}${fld('GitHub URL','github',d.github)}${fld('LinkedIn URL','linkedin',d.linkedin)}
+  <h3>Secret code</h3><label>New secret code (leave empty to keep current)<input id="nc" type="password" autocomplete="off"></label>
+  <div class="msg" id="em"></div>
+  <div class="bar"><button class="btn" id="sv">Save changes</button><button class="btn ghost" id="dl">Download updated HTML</button><button class="btn ghost" id="lk">Lock &amp; close</button></div>
+  <p class="note">Saving updates this browser only. To keep changes permanently, download the updated HTML and use that file as your site.</p></div>`;
+  const q=(r,k)=>r.querySelector(`[data-k="${k}"]`).value.trim();
+  const list=s=>s.split(',').map(x=>x.trim()).filter(Boolean);
+  const grab=()=>({
+    name:q(ov,'name')||'Your Name',roles:list(q(ov,'roles')),intro:q(ov,'intro'),about:q(ov,'about'),skills:list(q(ov,'skills')),
+    projects:[...ov.querySelectorAll('[data-g=projects]')].map(r=>({title:q(r,'title'),tech:q(r,'tech'),github:q(r,'github'),link:q(r,'link'),desc:q(r,'desc')})),
+    education:[...ov.querySelectorAll('[data-g=education]')].map(r=>({title:q(r,'title'),detail:q(r,'detail')})),
+    email:q(ov,'email'),github:q(ov,'github'),linkedin:q(ov,'linkedin')
+  });
+  const say=(t,ok)=>{const m=$('#em');m.textContent=t;m.className='msg'+(ok?' ok':'')};
+  ov.onclick=e=>{if(e.target.classList.contains('rm'))e.target.closest('.row').remove()};
+  $('#ap').onclick=()=>$('#pl').insertAdjacentHTML('beforeend',projRow({title:'',tech:'',link:'',desc:''}));
+  $('#ae').onclick=()=>$('#el').insertAdjacentHTML('beforeend',eduRow({title:'',detail:''}));
+  const save=async()=>{
+    const nc=$('#nc').value;
+    if(nc){if(nc.length<6){say('New code needs at least 6 characters.');return false}secret=nc;$('#nc').value=''}
+    data=grab();data._v=Date.now();
+    vault=await seal(data,secret);
+    try{localStorage.setItem('pf_public',JSON.stringify(data));localStorage.setItem('pf_vault',JSON.stringify(vault))}catch(e){say('Could not save in this browser. Use Download instead.')}
+    render();say('Saved.',true);return true;
+  };
+  $('#sv').onclick=save;
+  $('#lk').onclick=closeOv;
+  $('#dl').onclick=async()=>{
+    if(!(await save()))return;
+    const c=document.documentElement.cloneNode(true);
+    c.querySelector('#app').innerHTML='';c.querySelector('#ov').innerHTML='';c.querySelector('#ov').className='';
+    c.querySelector('#brand').textContent='';c.querySelector('#foot').textContent='';
+    const j=o=>JSON.stringify(o).replace(/</g,'\\u003c');
+    c.querySelector('#data').textContent=j(data);c.querySelector('#vault').textContent=j(vault);
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(new Blob(['<!DOCTYPE html>\n'+c.outerHTML],{type:'text/html'}));
+    a.download='portfolio.html';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000);
+  };
+}
+render();
+</script>
 </body>
 </html>
