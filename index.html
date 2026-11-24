@@ -209,18 +209,23 @@ function editor(d){
   <h3>Skills</h3>${fld('Skills (separate with commas)','skills',d.skills.join(', '))}
   <h3>Projects</h3><div id="pl">${d.projects.map(projRow).join('')}</div><div class="bar"><button class="btn ghost" id="ap" type="button">+ Add project</button></div>
   <h3>Education</h3><div id="el">${d.education.map(eduRow).join('')}</div><div class="bar"><button class="btn ghost" id="ae" type="button">+ Add entry</button></div>
-  <h3>Contact</h3>${fld('Email','email',d.email)}${fld('GitHub URL','github',d.github)}${fld('LinkedIn URL','linkedin',d.linkedin)}
+  <h3>Contact</h3>${fld('Email','email',d.email)}${fld('GitHub URL','cgithub',d.github)}${fld('LinkedIn URL','linkedin',d.linkedin)}
+  <h3>Publish to your live website</h3>
+  <p class="note" style="margin-top:0">Saves your changes into your GitHub repo so every visitor sees them (takes a few minutes). Use a fine-grained token limited to this one repo with Contents: Read and write.</p>
+  ${fld('GitHub username','gu','')}${fld('Repository name','gr','')}${fld('Branch','gb','main')}
+  <label>Access token<input id="gt" type="password" autocomplete="off"></label>
+  <label style="display:flex;gap:8px;align-items:center"><input id="gk" type="checkbox" style="width:auto;margin:0"> Remember token on this device (stored encrypted with your secret code)</label>
   <h3>Secret code</h3><label>New secret code (leave empty to keep current)<input id="nc" type="password" autocomplete="off"></label>
   <div class="msg" id="em"></div>
-  <div class="bar"><button class="btn" id="sv">Save changes</button><button class="btn ghost" id="dl">Download updated HTML</button><button class="btn ghost" id="lk">Lock &amp; close</button></div>
-  <p class="note">Saving updates this browser only. To keep changes permanently, download the updated HTML and use that file as your site.</p></div>`;
+  <div class="bar"><button class="btn" id="pb">Publish to website</button><button class="btn ghost" id="sv">Save in this browser</button><button class="btn ghost" id="dl">Download updated HTML</button><button class="btn ghost" id="lk">Lock &amp; close</button></div>
+  <p class="note">Save only updates this browser. Use Publish to website so every visitor sees your changes. Download HTML is a manual backup.</p></div>`;
   const q=(r,k)=>r.querySelector(`[data-k="${k}"]`).value.trim();
   const list=s=>s.split(',').map(x=>x.trim()).filter(Boolean);
   const grab=()=>({
     name:q(ov,'name')||'Your Name',roles:list(q(ov,'roles')),intro:q(ov,'intro'),about:q(ov,'about'),skills:list(q(ov,'skills')),
     projects:[...ov.querySelectorAll('[data-g=projects]')].map(r=>({title:q(r,'title'),tech:q(r,'tech'),github:q(r,'github'),link:q(r,'link'),desc:q(r,'desc')})),
     education:[...ov.querySelectorAll('[data-g=education]')].map(r=>({title:q(r,'title'),detail:q(r,'detail')})),
-    email:q(ov,'email'),github:q(ov,'github'),linkedin:q(ov,'linkedin')
+    email:q(ov,'email'),github:q(ov,'cgithub'),linkedin:q(ov,'linkedin')
   });
   const say=(t,ok)=>{const m=$('#em');m.textContent=t;m.className='msg'+(ok?' ok':'')};
   ov.onclick=e=>{if(e.target.classList.contains('rm'))e.target.closest('.row').remove()};
@@ -235,6 +240,28 @@ function editor(d){
     render();say('Saved.',true);return true;
   };
   $('#sv').onclick=save;
+  const gh=(()=>{try{return JSON.parse(localStorage.getItem('pf_gh')||'{}')}catch(e){return{}}})();
+  const setv=(k,v)=>{if(v)ov.querySelector(`[data-k="${k}"]`).value=v};
+  setv('gu',gh.owner);setv('gr',gh.repo);setv('gb',gh.branch);
+  try{const t=localStorage.getItem('pf_tok');if(t)unseal(JSON.parse(t),secret).then(o=>{$('#gt').value=o.t;$('#gk').checked=true}).catch(()=>{})}catch(e){}
+  $('#pb').onclick=async()=>{
+    const owner=q(ov,'gu'),repo=q(ov,'gr'),branch=q(ov,'gb')||'main',tok=$('#gt').value.trim();
+    if(!owner||!repo||!tok){say('Fill in GitHub username, repository and token.');return}
+    if(!(await save()))return;
+    say('Publishing...',true);
+    const api=`https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/contents/data.json`;
+    const H={Authorization:'Bearer '+tok,Accept:'application/vnd.github+json'};
+    try{
+      let sha;const g=await fetch(api+'?ref='+encodeURIComponent(branch),{headers:H,cache:'no-store'});
+      if(g.ok)sha=(await g.json()).sha;else if(g.status!==404){say('GitHub replied '+g.status+'. Check username, repo name and token.');return}
+      const body={message:'Update portfolio content',branch,content:b64(TE.encode(JSON.stringify({data,vault})))};if(sha)body.sha=sha;
+      const r=await fetch(api,{method:'PUT',headers:{...H,'Content-Type':'application/json'},body:JSON.stringify(body)});
+      if(!r.ok){say('Publish failed ('+r.status+'). The token needs Contents: Read and write on this repo.');return}
+      localStorage.setItem('pf_gh',JSON.stringify({owner,repo,branch}));
+      if($('#gk').checked)localStorage.setItem('pf_tok',JSON.stringify(await seal({t:tok},secret)));else localStorage.removeItem('pf_tok');
+      say('Published. Visitors will see it in a few minutes.',true);
+    }catch(e){say('Could not reach GitHub. Check your connection.')}
+  };
   $('#lk').onclick=closeOv;
   $('#dl').onclick=async()=>{
     if(!(await save()))return;
@@ -249,6 +276,7 @@ function editor(d){
   };
 }
 render();
+fetch('data.json?v='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(R=>{if(R&&R.data&&(R.data._v||0)>(data._v||0)){data=R.data;if(R.vault)vault=R.vault;render()}}).catch(()=>{});
 </script>
 </body>
 </html>
